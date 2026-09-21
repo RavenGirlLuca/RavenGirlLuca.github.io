@@ -1,7 +1,7 @@
 # COMP SCI 30 STUFF
 
 ## DEMOS
-- :P
+- [Chessboard Demo](basicgravsim_2026_09_21_20_47_02)
 
 
 ## PROJECTS
