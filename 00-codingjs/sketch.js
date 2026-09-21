@@ -12,7 +12,7 @@ async function setup() {
 
 function draw() {
   for(let i = 0; i < 10; i++) {
-    fill(color(random(255),random(255),random(255)))
+    fill(color(random(255),random(255),random(255)));
     circle(random(width),random(height),random(50));
   }
 }
