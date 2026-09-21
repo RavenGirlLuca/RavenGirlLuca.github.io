@@ -11,9 +11,8 @@ async function setup() {
 }
 
 function draw() {
-  background(220);
   for(let i = 0; i < 100; i++) {
     fill(color(random(255),random(255),random(255)))
-    circle(random(width),random(height),random(20));
+    circle(random(width),random(height),random(50));
   }
 }
