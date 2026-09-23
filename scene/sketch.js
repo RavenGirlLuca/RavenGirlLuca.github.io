@@ -60,6 +60,16 @@ class Bullet {
   }
 }
 
+function spawnBullets(style,amount,x1,y1,x2,y2,vel,angMin,angMax,siz,crv) {
+  for(let i = 0; i < amount; i++) {
+    let px  = lerp(x1,x2,((i+1)/amount));
+    let py  = lerp(y1,y2,((i+1)/amount));
+    let ang = ((angMax - angMin)/amount) * (i+1);
+
+    bullets.push(new Bullet(px,py,vel,ang,siz,crv));
+  }
+}
+
 //---------------------//
 //---PLAYER HANDLING---//
 //---------------------//
@@ -73,9 +83,9 @@ class Player {
     this.spd = this.baseSpeed; //players speed, gets added to the player while moving
     this.siz = 15;             //player size, used for collision and drawing
     this.run = false;          //if shift is being held, this is true
-    this.liv = 5               //players lives, if it reaches 0 you DIE MWAHAHA!!!
-    this.dif = 1               //game difficulty, you take more damage at higher difficulties
-    this.ded = false           //player dead state, if true u cant do anything cuz ur ded
+    this.liv = 5;              //players lives, if it reaches 0 you DIE MWAHAHA!!!
+    this.dif = 1;              //game difficulty, you take more damage at higher difficulties
+    this.ded = false;          //player dead state, if true u cant do anything cuz ur ded
   }
 
   draw() {
@@ -86,18 +96,14 @@ class Player {
   }
 
   bulletCol() {
-    //runs an AABB check for each bullet on the screen, if it hits, take damage
-    for (const bullet of bullets) {
-      if (this.px + this.siz > bullet.px && this.px < bullet.px + bullet.siz && this.py + this.siz > bullet.py && this.py < bullet.py + bullet.siz) {
-        this.liv -= this.dif;
-        console.log(this.liv);
-      }
-    }
+    this.liv -= this.dif;
   }
 
   update() {
     //handles most player functions that happen each frame
     if (!this.ded) {
+      if (this.liv <= 0) this.ded = true;
+
       //Running
       this.run = keyIsDown(SHIFT);
       if (this.run) this.spd = this.baseSpeed*1.5;
@@ -110,54 +116,39 @@ class Player {
       if (keyIsDown(DOWN_ARROW))  this.py += this.spd;
       if (keyIsDown(LEFT_ARROW))  this.px -= this.spd;
       if (keyIsDown(RIGHT_ARROW)) this.px += this.spd;
-
-      //Collisions
-      this.bulletCol();
-
-      if (this.liv <= 0) this.ded = true;
     }
   }
 }
 
 player = new Player();
 
-for (let i = 0; i < 20; i++) {
-  bullets.push(new Bullet(100,50,3,(360/20)*(i+1),20,0))
-}
-
-for (let i = 0; i < 20; i++) {
-  bullets.push(new Bullet(300,50,3,(360/20)*(i+1),20,0))
-}
-
-for (let i = 0; i < 20; i++) {
-  bullets.push(new Bullet(500,50,3,(360/20)*(i+1),20,0))
-}
-
-for (let i = 0; i < 20; i++) {
-  bullets.push(new Bullet(700,50,3,(360/20)*(i+1),20,0))
-}
 
 
 function draw() {
   background(220);
+
+  spawnBullets("word",25,800,0,0,600,3,0,0,10,0);
 
   //update loop for player
   player.update();
   player.draw();
 
   //update loop for each bullet inside the bullets array
-  for (let i = 0; i < bullets.length; i++) {
-    bullets[i].update();
-    bullets[i].draw();
+  if (!player.ded) {
+    for (let i = 0; i < bullets.length; i++) {
+      bullets[i].update();
+      bullets[i].draw();
 
-    //if bullet collides with player, delete it
-    if (player.px + player.siz > bullets[i].px && player.px < bullets[i].px + bullets[i].siz && player.py + player.siz > bullets[i].py && player.py < bullets[i].py + bullets[i].siz) {
-      bullets.splice(i,1); 
-    }
+      //if bullet collides with player, delete it
+      if (player.px + player.siz > bullets[i].px && player.px < bullets[i].px + bullets[i].siz && player.py + player.siz > bullets[i].py && player.py < bullets[i].py + bullets[i].siz) {
+        player.bulletCol();
+        bullets.splice(i,1); 
+      }
 
-    //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
-    if (bullets[i].despawnCheck()) {
-      bullets.splice(i,1); 
+      //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
+      if (bullets[i].despawnCheck()) {
+        bullets.splice(i,1); 
+      }
     }
   }
 }
