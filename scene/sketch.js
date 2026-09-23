@@ -3,13 +3,161 @@
 // Sept 22, 26
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Made a cool window size to game size converter multiplier thingy
+// Made a really cool system to handle bullets inside a single array AND handle their deletion when off screen
 
+let gameWidth  = 800;
+let gameHeight = 600;
+
+let widthMultiplier  = 0;
+let heightMultiplier = 0;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
+  widthMultiplier  = width/gameWidth;   //width draw conversion multiplier
+  heightMultiplier = height/gameHeight; //height draw conversion multiplier
 }
+
+//---------------------//
+//---BULLET HANDLING---//
+//---------------------//
+
+let bullets = []; //bullet array, stores all bullets on screen
+
+class Bullet {
+  constructor(px,py,vel,ang,siz,crv) {
+    this.px  = px;  //X Position in the game
+    this.py  = py;  //Y Position in the game
+    this.vel = vel; //Vector velocity, combined with angle to move the px and py
+    this.ang = ang; //Angle, used with velocity to determain the new bullet pos
+    this.siz = siz; //Bullets sized, used for both draw and determening collision with the player
+    this.crv = crv; //Bullet tragectory curve, used on some attacks to curve the bullet path
+  }
+
+  draw() {
+    //draws the bullets on screen, uses a multiplier to convert the games 4:3 gameplay ration to the screens size
+    fill("WHITE");
+    rect(this.px*widthMultiplier,this.py*heightMultiplier,this.siz*widthMultiplier,this.siz*heightMultiplier);
+  }
+
+  despawnCheck() {
+    //does a small AABB check to see if the bullets are still on screen, if not they despawn (treats bullets and rectangles)
+    if (!(this.px + this.siz > 0 && this.px < gameWidth && this.py + this.siz > 0 && this.py < gameHeight)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  update() {
+    //updates the bullets position in the game
+    let vx = Math.cos(radians(this.ang)) * this.vel;
+    let vy = Math.sin(radians(this.ang)) * this.vel;
+
+    this.ang += this.crv;
+    this.px  += vx;
+    this.py  += vy;
+  }
+}
+
+//---------------------//
+//---PLAYER HANDLING---//
+//---------------------//
+
+class Player {
+  constructor() {
+    this.baseSpeed = 3; //players base speed, should never change
+
+    this.px  = gameWidth/2;    //players x position in the world
+    this.py  = gameHeight/2;   //players y position in the world
+    this.spd = this.baseSpeed; //players speed, gets added to the player while moving
+    this.siz = 15;             //player size, used for collision and drawing
+    this.run = false;          //if shift is being held, this is true
+    this.liv = 5               //players lives, if it reaches 0 you DIE MWAHAHA!!!
+    this.dif = 1               //game difficulty, you take more damage at higher difficulties
+    this.ded = false           //player dead state, if true u cant do anything cuz ur ded
+  }
+
+  draw() {
+    //draws the player, same system as bullet draw
+    if (!this.ded) fill("RED");
+    else           fill("GREY");
+    rect(this.px*widthMultiplier,this.py*heightMultiplier,this.siz*widthMultiplier,this.siz*heightMultiplier);
+  }
+
+  bulletCol() {
+    //runs an AABB check for each bullet on the screen, if it hits, take damage
+    for (const bullet of bullets) {
+      if (this.px + this.siz > bullet.px && this.px < bullet.px + bullet.siz && this.py + this.siz > bullet.py && this.py < bullet.py + bullet.siz) {
+        this.liv -= this.dif;
+        console.log(this.liv);
+      }
+    }
+  }
+
+  update() {
+    //handles most player functions that happen each frame
+    if (!this.ded) {
+      //Running
+      this.run = keyIsDown(SHIFT);
+      if (this.run) this.spd = this.baseSpeed*1.5;
+      else          this.spd = this.baseSpeed;
+
+      //Movement
+      if ((keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) && ((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)))) this.spd * 0.707;
+
+      if (keyIsDown(UP_ARROW))    this.py -= this.spd;
+      if (keyIsDown(DOWN_ARROW))  this.py += this.spd;
+      if (keyIsDown(LEFT_ARROW))  this.px -= this.spd;
+      if (keyIsDown(RIGHT_ARROW)) this.px += this.spd;
+
+      //Collisions
+      this.bulletCol();
+
+      if (this.liv <= 0) this.ded = true;
+    }
+  }
+}
+
+player = new Player();
+
+for (let i = 0; i < 20; i++) {
+  bullets.push(new Bullet(100,50,3,(360/20)*(i+1),20,0))
+}
+
+for (let i = 0; i < 20; i++) {
+  bullets.push(new Bullet(300,50,3,(360/20)*(i+1),20,0))
+}
+
+for (let i = 0; i < 20; i++) {
+  bullets.push(new Bullet(500,50,3,(360/20)*(i+1),20,0))
+}
+
+for (let i = 0; i < 20; i++) {
+  bullets.push(new Bullet(700,50,3,(360/20)*(i+1),20,0))
+}
+
 
 function draw() {
   background(220);
+
+  //update loop for player
+  player.update();
+  player.draw();
+
+  //update loop for each bullet inside the bullets array
+  for (let i = 0; i < bullets.length; i++) {
+    bullets[i].update();
+    bullets[i].draw();
+
+    //if bullet collides with player, delete it
+    if (player.px + player.siz > bullets[i].px && player.px < bullets[i].px + bullets[i].siz && player.py + player.siz > bullets[i].py && player.py < bullets[i].py + bullets[i].siz) {
+      bullets.splice(i,1); 
+    }
+
+    //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
+    if (bullets[i].despawnCheck()) {
+      bullets.splice(i,1); 
+    }
+  }
 }
