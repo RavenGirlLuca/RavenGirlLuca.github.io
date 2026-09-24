@@ -99,8 +99,8 @@ class Player {
 
   draw() {
     //draws the player, same system as bullet draw
-    if (!this.ded) fill("RED");
-    else           fill("GREY");
+    if (!this.ded) fill(136,57,50);
+    else           fill(120,120,120);
     noStroke()
     rect(this.px*widthMultiplier,this.py*heightMultiplier,this.siz*widthMultiplier,this.siz*heightMultiplier);
   }
@@ -144,9 +144,9 @@ player = new Player();
 
 function drawGameBox() {
   //Draws a green border around the area the player can move
-  fill(color(0,0,0))
+  fill("BLACK")
   strokeWeight(4);
-  stroke(0,255,0);
+  stroke(86,160,73);
   rect(gameBoxX*widthMultiplier,gameBoxY*heightMultiplier,gameBoxW*widthMultiplier,gameBoxH*heightMultiplier);
 }
 
@@ -161,7 +161,7 @@ function drawMenu() {
   //Draws border
   fill("BLACK")
   strokeWeight(4);
-  stroke(0,255,0);
+  stroke(86,160,73);
   rect(statMenuX*widthMultiplier,statMenuY*heightMultiplier,statMenuW*widthMultiplier,statMenuH*heightMultiplier);
 
   //Draws Name
@@ -176,8 +176,8 @@ function drawMenu() {
   noStroke();
 
   for (let i = 0; i < 5; i++) {
-    if (i+1 <= player.liv) fill("RED");
-    else                   fill("GREY");
+    if (i+1 <= player.liv) fill(136,57,50);
+    else                   fill(120,120,120);
 
     rect(((statMenuX+10)+(31*i))*widthMultiplier,(statMenuY+75)*heightMultiplier,((statMenuW-20)/5)*widthMultiplier,(25)*heightMultiplier)
   }
