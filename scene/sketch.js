@@ -17,10 +17,17 @@ let gameBoxH = 550;
 let widthMultiplier  = 0;
 let heightMultiplier = 0;
 
+let enemyImg;
+
 async function setup() {
   createCanvas(windowWidth, windowHeight);
+  noSmooth();
+
   widthMultiplier  = width/gameWidth;   //width draw conversion multiplier
   heightMultiplier = height/gameHeight; //height draw conversion multiplier
+
+  enemyImg = await loadImage('/scene/assets/felos.png');
+  //font     = await loadFont('scene/fonts/C64_Pro_Mono-STYLE.otf');
 }
 
 //---------------------//
@@ -118,8 +125,6 @@ class Player {
   update() {
     //handles most player functions that happen each frame
     if (!this.ded) {
-      if (this.liv <= 0) this.ded = true;
-
       //Running
       this.run = keyIsDown(SHIFT);
       if (this.run) this.spd = this.baseSpeed*1.5;
@@ -153,9 +158,16 @@ function drawGameBox() {
 }
 
 let statMenuX = (gameBoxX + gameBoxW) + 25;
-let statMenuY = ((1/3)*gameHeight) + 25;
+let statMenuY = (0.5*gameHeight) + 25;
 let statMenuW = 175;
-let statMenuH = 350;
+let statMenuH = 250;
+
+let enemyX = (gameBoxX + gameBoxW) + 25;
+let enemyY = 25;
+let enemyW = 175;
+let enemyH = 260;
+
+let enemyName = "FELOS, THE PRISMATIC WITCH";
 
 function drawMenu() {
   //Draws a green border around the players stats, including if their health, if theyre running, their name, and what difficulty their playing on, and if theire alive
@@ -196,29 +208,41 @@ function drawMenu() {
 }
 
 function drawEnemy() {
+  //Draws a border around a png (or gif if i feel like it) of the enemy, also draws their name
 
+  //Draws border
+  fill("BLACK");
+  strokeWeight(4);
+  stroke(86,160,73);
+  rect(enemyX*widthMultiplier,enemyY*heightMultiplier,enemyW*widthMultiplier,enemyH*heightMultiplier);
+
+  //Draws Enemy Image
+  image(enemyImg,(enemyX+1)*widthMultiplier,(enemyY+1)*heightMultiplier,(enemyW-2)*widthMultiplier,(enemyH-26)*heightMultiplier);
+
+  //Draws Enemy Name
+  text(enemyName,(enemyX+8)*widthMultiplier,(enemyH+15)*heightMultiplier);
 }
 
 function draw() {
   background(0);
 
-  //createBullets("heh",20,400,50,400,50,5,0,360,10,0);
+  createBullets("heh",20,200,50,200,50,5,0,360,10,0);
+
+  createBullets("heh",20,200,550,200,550,5,0,360,10,0);
 
   //update loop for bg graphics
   drawGameBox();
   drawMenu();
-
-  spawnBullets("word",25,800,0,0,600,3,0,0,10,0);
+  drawEnemy();
 
   //update loop for player
   player.update();
   player.draw();
 
   //update loop for each bullet inside the bullets array
-  if (!player.ded) {
-    for (let i = 0; i < bullets.length; i++) {
-      bullets[i].update();
-      bullets[i].draw();
+  for (let i = 0; i < bullets.length; i++) {
+    bullets[i].update();
+    bullets[i].draw();
 
     //if bullet collides with player, delete it
     if (player.px + player.siz > bullets[i].px && player.px < bullets[i].px + bullets[i].siz && player.py + player.siz > bullets[i].py && player.py < bullets[i].py + bullets[i].siz) {
@@ -226,10 +250,9 @@ function draw() {
       bullets.splice(i,1); 
     }
 
-      //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
-      if (bullets[i].despawnCheck()) {
-        bullets.splice(i,1); 
-      }
+    //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
+    if (bullets[i].despawnCheck()) {
+      bullets.splice(i,1); 
     }
   }
 }
