@@ -106,7 +106,7 @@ class Player {
     this.spd = this.baseSpeed; //players speed, gets added to the player while moving
     this.siz = 15;             //player size, used for collision and drawing
     this.run = false;          //if shift is being held, this is true
-    this.liv = 500;              //players lives, if it reaches 0 you DIE MWAHAHA!!!
+    this.liv = 5;              //players lives, if it reaches 0 you DIE MWAHAHA!!!
     this.dif = 1;              //game difficulty, you take more damage at higher difficulties
     this.ded = false;          //player dead state, if true u cant do anything cuz ur ded
     this.scr = 0;              //players score, you gain more score the more attacks you survive
@@ -161,7 +161,7 @@ player = new Player();
 
 let attackFrame     = 0;              //Counts frames since an attack started
 let nextAttackFrame = 30;             //Once attackFrame reaches this number, an attack happens and attack frame resets
-let currentAttack   = 4;              //Controls what will happen when an attack happens and how long nextAttackFrame is
+let currentAttack   = 0;              //Controls what will happen when an attack happens and how long nextAttackFrame is
 let attacks         = 0;              //Goes up everytime an attack happens, once it goes up a certain amount a new attack starts, then it resets
 
 function attack() {
