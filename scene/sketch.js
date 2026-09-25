@@ -6,6 +6,8 @@
 // Made a cool window size to game size converter multiplier thingy
 // Made a really cool system to handle bullets inside a single array AND handle their deletion when off screen
 
+let state = 'MENU';
+
 let gameWidth  = 800;
 let gameHeight = 600;
 
@@ -18,6 +20,7 @@ let widthMultiplier  = 0;
 let heightMultiplier = 0;
 
 let enemyImg;
+let font;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -27,7 +30,9 @@ async function setup() {
   heightMultiplier = height/gameHeight; //height draw conversion multiplier
 
   enemyImg = await loadImage('/scene/assets/felos.png');
-  //font     = await loadFont('scene/fonts/C64_Pro_Mono-STYLE.otf');
+  font     = await loadFont('/scene/fonts/C64_Pro-STYLE.otf');
+
+  textFont(font);
 }
 
 //---------------------//
@@ -102,6 +107,7 @@ class Player {
     this.liv = 5;              //players lives, if it reaches 0 you DIE MWAHAHA!!!
     this.dif = 1;              //game difficulty, you take more damage at higher difficulties
     this.ded = false;          //player dead state, if true u cant do anything cuz ur ded
+    this.scr = 0;              //players score, you gain more score the more attacks you survive
   }
 
   draw() {
@@ -140,14 +146,15 @@ class Player {
 
       if (this.liv <= 0) this.ded = true;
     }
+    else state = 'DEAD'
   }
 }
 
 player = new Player();
 
-//--------------------//
-//---WORLD HANDLING---//
-//--------------------//
+//-------------------//
+//---MENU HANDLING---//
+//-------------------//
 
 function drawGameBox() {
   //Draws a green border around the area the player can move
@@ -169,9 +176,10 @@ let enemyH = 260;
 
 let enemyName = "FELOS, THE PRISMATIC WITCH";
 
-function drawMenu() {
+function drawStatMenu() {
   //Draws a green border around the players stats, including if their health, if theyre running, their name, and what difficulty their playing on, and if theire alive
-  
+  textAlign(LEFT);
+
   //Draws border
   fill("BLACK")
   strokeWeight(4);
@@ -198,7 +206,7 @@ function drawMenu() {
 
   //Draws States
   fill("WHITE");
-  textSize(25);
+  textSize(15);
 
   if (player.run) text('RUNNING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
   else            text('WALKING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
@@ -223,36 +231,367 @@ function drawEnemy() {
   text(enemyName,(enemyX+8)*widthMultiplier,(enemyH+15)*heightMultiplier);
 }
 
+let buttonX = 200;
+let buttonY = 200;
+let buttonW = 400;
+let buttonH = 80;
+
+function mainMenu() {
+  //Draws main menu, allows you to choose from 3 dificulties and shows the title
+  textAlign(CENTER);
+
+  stroke("WHITE")
+  strokeWeight(4);
+  textSize(64);
+
+  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > buttonY*heightMultiplier && mouseY < buttonY*heightMultiplier + buttonH*heightMultiplier) {
+    fill(64,49,141);
+    if (mouseIsPressed) {
+      player.dif = 1;
+      state = 'GAME';
+    }
+  }
+  else {
+    fill(120,105,196);
+  } 
+
+  rect(buttonX*widthMultiplier,buttonY*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
+
+  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > (buttonY+100)*heightMultiplier && mouseY < (buttonY+100)*heightMultiplier + buttonH*heightMultiplier) {
+    fill(85,160,73);
+    if (mouseIsPressed) {
+      player.dif = 2;
+      state = 'GAME';
+    }
+  }
+  else {
+    fill(148,224,137);
+  } 
+
+  rect(buttonX*widthMultiplier,(buttonY+100)*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
+
+  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > (buttonY+200)*heightMultiplier && mouseY < (buttonY+200)*heightMultiplier + buttonH*heightMultiplier) {
+    fill(136,57,50);
+    if (mouseIsPressed) {
+      player.dif = 3;
+      state = 'GAME';
+    }
+  }
+  else {
+    fill(184,105,98);
+  } 
+
+  rect(buttonX*widthMultiplier,(buttonY+200)*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
+
+  noStroke();
+  fill("WHITE")
+
+  text("EASY",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+15)*heightMultiplier)
+  text("NORMAL",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+115)*heightMultiplier)
+  text("HARD",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+215)*heightMultiplier)
+
+  textSize(64);
+  text("TOWER OF THE PRISMATIC WITCH",(gameWidth/2)*widthMultiplier,100);
+
+  textSize(82);
+  text("DEMO",(gameWidth/2)*widthMultiplier,200);
+}
+
+//----------------------//
+//---ATTACKS HANDLING---//
+//----------------------//
+
+let attackFrame     = 0;              //Counts frames since an attack started
+let nextAttackFrame = 30;             //Once attackFrame reaches this number, an attack happens and attack frame resets
+let currentAttack   = 0;              //Controls what will happen when an attack happens and how long nextAttackFrame is
+let attacks         = 0;              //Goes up everytime an attack happens, once it goes up a certain amount a new attack starts, then it resets
+
+function attack() {
+  //attack function, most logic surrounding the main attack loop is stored here
+
+  if (attackFrame >= nextAttackFrame) {
+    if (player.dif === 1) {
+      if (currentAttack === 0) {
+        createBullets(":P", 7,575,25,575,25,5,0+(attacks*5),360+(attacks*5),10,0);
+        createBullets(":P", 7,25,25,25,25,5,0+(attacks*5),360+(attacks*5),10,0);
+        
+        if (attacks >= 50) {    //once the attack has been repeated a set amount of times, do these actios
+          attacks = 0;          //reset attack counter to 0
+          currentAttack += 1;   //switch to next attack in the loop
+          player.scr += 10;     //add 10 the the player score for surviving the attack
+        }
+      }
+
+      else if (currentAttack === 1) {
+        createBullets(":P", 15,-500+(attacks*10),25,575+(attacks*10),25,5,90,90,10,0);
+        createBullets(":P", 15,-500+(attacks*10),575,575+(attacks*10),575,5,270,270,10,0);
+        
+        if (attacks >= 50) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 2) {
+        createBullets(":P", 10,-500+(attacks*10),25,575+(attacks*10),25,3,90,90,10,0);
+        createBullets(":P", 10,25,-500+(attacks*10),25,575+(attacks*10),3,0,0,10,0);
+        
+        if (attacks >= 50) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 3) {
+        createBullets(":P", 7,-500+(attacks*10),25,575+(attacks*10),25,5,90,90,10,0.2);
+        createBullets(":P", 7,25,-500+(attacks*10),25,575+(attacks*10),5,0,0,10,0.2);
+        
+        if (attacks >= 50) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 4) {
+        createBullets(":P",10,-15,25,550,25,5,90,90,10,0);
+        createBullets(":P",2,575,0+((Math.sin(45*attacks))*100),575,400+((Math.sin(45*attacks))*100),5,180,180,10,0);
+        
+        if (attacks >= 50) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else {
+        createBullets(":P", 20,275,275,275,275,5,0+(attacks*10),360+(attacks*10),10,0);
+
+        if (attacks >= 50) {
+          attacks = 0;
+          currentAttack = 0; //reset the current attack, restarting the loop
+          player.scr += 10; 
+          if (nextAttackFrame > 10) nextAttackFrame -= 1; //makes the next loop slightly harder up to a set limit
+        }
+      }
+    }
+
+    else if (player.dif === 2) {
+      if (currentAttack === 0) {
+        
+        if (attacks >= 60) {    
+          attacks = 0;          
+          currentAttack += 1;   
+          player.scr += 10;     
+        }
+      }
+
+      else if (currentAttack === 1) {
+        
+        if (attacks >= 60) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 2) {
+        
+        if (attacks >= 60) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 3) {
+        
+        if (attacks >= 60) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 4) {
+        
+        if (attacks >= 60) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 5) {
+        
+        if (attacks >= 60) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 6) {
+        
+        if (attacks >= 60) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else {
+
+        if (attacks >= 60) {
+          attacks = 0;
+          currentAttack = 0;
+          player.scr += 10; 
+          if (nextAttackFrame > 7) nextAttackFrame -= 1;
+        }
+      }
+    }
+
+    else if (player.dif === 3) {
+      if (currentAttack === 0) {
+        
+        if (attacks >= 70) {    
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 1) {
+        
+        if (attacks >= 70) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 2) {
+        
+        if (attacks >= 70) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 3) {
+        
+        if (attacks >= 70) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 4) {
+        
+        if (attacks >= 70) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 5) {
+        
+        if (attacks >= 70) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 6) {
+        
+        if (attacks >= 70) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 7) {
+        
+        if (attacks >= 70) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else if (currentAttack === 8) {
+        
+        if (attacks >= 70) {
+          attacks = 0;
+          currentAttack += 1;
+          player.scr += 10;
+        }
+      }
+
+      else {
+
+        if (attacks >= 70) {
+          attacks = 0;
+          currentAttack = 0; 
+          player.scr += 10; 
+          if (nextAttackFrame > 5) nextAttackFrame -= 1;
+        }
+      }
+    }
+
+    attacks += 1;    //add 1 to the attack counter
+    attackFrame = 0; //reset attack waiting frame counter
+  }
+
+  attackFrame += 1; //add one to the frame counter
+}
+
 function draw() {
   background(0);
 
-  createBullets("heh",20,200,50,200,50,5,0,360,10,0);
+  if (state === 'MENU') {
+    mainMenu();
+  }
 
-  createBullets("heh",20,200,550,200,550,5,0,360,10,0);
+  if (state === 'GAME') {
+    //update loop for bg graphics
+    drawGameBox();
+    drawStatMenu();
+    drawEnemy();
 
-  //update loop for bg graphics
-  drawGameBox();
-  drawMenu();
-  drawEnemy();
+    //update loop for enemy attacks
+    attack();
 
-  //update loop for player
-  player.update();
-  player.draw();
+    //update loop for player
+    player.update();
+    player.draw();
 
-  //update loop for each bullet inside the bullets array
-  for (let i = 0; i < bullets.length; i++) {
-    bullets[i].update();
-    bullets[i].draw();
+    //update loop for each bullet inside the bullets array
+    for (let i = 0; i < bullets.length; i++) {
+      bullets[i].update();
+      bullets[i].draw();
 
-    //if bullet collides with player, delete it
-    if (player.px + player.siz > bullets[i].px && player.px < bullets[i].px + bullets[i].siz && player.py + player.siz > bullets[i].py && player.py < bullets[i].py + bullets[i].siz) {
-      player.bulletCol();
-      bullets.splice(i,1); 
+      //if bullet collides with player, delete it
+      if (player.px + player.siz > bullets[i].px && player.px < bullets[i].px + bullets[i].siz && player.py + player.siz > bullets[i].py && player.py < bullets[i].py + bullets[i].siz) {
+        player.bulletCol();
+        bullets.splice(i,1); 
+      }
+
+      //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
+      if (bullets[i].despawnCheck()) {
+        bullets.splice(i,1); 
+      }
     }
+  }
 
-    //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
-    if (bullets[i].despawnCheck()) {
-      bullets.splice(i,1); 
-    }
+  if (state === 'DEAD') {
+
   }
 }
