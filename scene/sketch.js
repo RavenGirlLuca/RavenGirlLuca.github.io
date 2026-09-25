@@ -22,6 +22,8 @@ let heightMultiplier = 0;
 let enemyImg;
 let font;
 
+let mouseIsClicked = false;
+
 async function setup() {
   createCanvas(windowWidth, windowHeight);
   noSmooth();
@@ -104,7 +106,7 @@ class Player {
     this.spd = this.baseSpeed; //players speed, gets added to the player while moving
     this.siz = 15;             //player size, used for collision and drawing
     this.run = false;          //if shift is being held, this is true
-    this.liv = 5;              //players lives, if it reaches 0 you DIE MWAHAHA!!!
+    this.liv = 500;              //players lives, if it reaches 0 you DIE MWAHAHA!!!
     this.dif = 1;              //game difficulty, you take more damage at higher difficulties
     this.ded = false;          //player dead state, if true u cant do anything cuz ur ded
     this.scr = 0;              //players score, you gain more score the more attacks you survive
@@ -146,156 +148,12 @@ class Player {
 
       if (this.liv <= 0) this.ded = true;
     }
-    else state = 'DEAD'
+    else state = 'DEAD';
   }
 }
 
 player = new Player();
 
-//-------------------//
-//---MENU HANDLING---//
-//-------------------//
-
-function drawGameBox() {
-  //Draws a green border around the area the player can move
-  fill("BLACK")
-  strokeWeight(4);
-  stroke(86,160,73);
-  rect(gameBoxX*widthMultiplier,gameBoxY*heightMultiplier,gameBoxW*widthMultiplier,gameBoxH*heightMultiplier);
-}
-
-let statMenuX = (gameBoxX + gameBoxW) + 25;
-let statMenuY = (0.5*gameHeight) + 25;
-let statMenuW = 175;
-let statMenuH = 250;
-
-let enemyX = (gameBoxX + gameBoxW) + 25;
-let enemyY = 25;
-let enemyW = 175;
-let enemyH = 260;
-
-let enemyName = "FELOS, THE PRISMATIC WITCH";
-
-function drawStatMenu() {
-  //Draws a green border around the players stats, including if their health, if theyre running, their name, and what difficulty their playing on, and if theire alive
-  textAlign(LEFT);
-
-  //Draws border
-  fill("BLACK")
-  strokeWeight(4);
-  stroke(86,160,73);
-  rect(statMenuX*widthMultiplier,statMenuY*heightMultiplier,statMenuW*widthMultiplier,statMenuH*heightMultiplier);
-
-  //Draws Name
-
-  //Draws Health
-  fill("BLACK")
-  strokeWeight(8);
-  stroke("WHITE");
-
-  rect((statMenuX+10)*widthMultiplier,(statMenuY+75)*heightMultiplier,(statMenuW-20)*widthMultiplier,(25)*heightMultiplier);
-  
-  noStroke();
-
-  for (let i = 0; i < 5; i++) {
-    if (i+1 <= player.liv) fill(136,57,50);
-    else                   fill(120,120,120);
-
-    rect(((statMenuX+10)+(31*i))*widthMultiplier,(statMenuY+75)*heightMultiplier,((statMenuW-20)/5)*widthMultiplier,(25)*heightMultiplier)
-  }
-
-  //Draws States
-  fill("WHITE");
-  textSize(15);
-
-  if (player.run) text('RUNNING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
-  else            text('WALKING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
-
-  if (!player.ded) text('ALIVE',(statMenuX+8)*widthMultiplier,(statMenuY+175)*heightMultiplier);
-  else             text('DEAD' ,(statMenuX+8)*widthMultiplier,(statMenuY+175)*heightMultiplier);
-}
-
-function drawEnemy() {
-  //Draws a border around a png (or gif if i feel like it) of the enemy, also draws their name
-
-  //Draws border
-  fill("BLACK");
-  strokeWeight(4);
-  stroke(86,160,73);
-  rect(enemyX*widthMultiplier,enemyY*heightMultiplier,enemyW*widthMultiplier,enemyH*heightMultiplier);
-
-  //Draws Enemy Image
-  image(enemyImg,(enemyX+1)*widthMultiplier,(enemyY+1)*heightMultiplier,(enemyW-2)*widthMultiplier,(enemyH-26)*heightMultiplier);
-
-  //Draws Enemy Name
-  text(enemyName,(enemyX+8)*widthMultiplier,(enemyH+15)*heightMultiplier);
-}
-
-let buttonX = 200;
-let buttonY = 200;
-let buttonW = 400;
-let buttonH = 80;
-
-function mainMenu() {
-  //Draws main menu, allows you to choose from 3 dificulties and shows the title
-  textAlign(CENTER);
-
-  stroke("WHITE")
-  strokeWeight(4);
-  textSize(64);
-
-  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > buttonY*heightMultiplier && mouseY < buttonY*heightMultiplier + buttonH*heightMultiplier) {
-    fill(64,49,141);
-    if (mouseIsPressed) {
-      player.dif = 1;
-      state = 'GAME';
-    }
-  }
-  else {
-    fill(120,105,196);
-  } 
-
-  rect(buttonX*widthMultiplier,buttonY*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
-
-  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > (buttonY+100)*heightMultiplier && mouseY < (buttonY+100)*heightMultiplier + buttonH*heightMultiplier) {
-    fill(85,160,73);
-    if (mouseIsPressed) {
-      player.dif = 2;
-      state = 'GAME';
-    }
-  }
-  else {
-    fill(148,224,137);
-  } 
-
-  rect(buttonX*widthMultiplier,(buttonY+100)*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
-
-  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > (buttonY+200)*heightMultiplier && mouseY < (buttonY+200)*heightMultiplier + buttonH*heightMultiplier) {
-    fill(136,57,50);
-    if (mouseIsPressed) {
-      player.dif = 3;
-      state = 'GAME';
-    }
-  }
-  else {
-    fill(184,105,98);
-  } 
-
-  rect(buttonX*widthMultiplier,(buttonY+200)*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
-
-  noStroke();
-  fill("WHITE")
-
-  text("EASY",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+15)*heightMultiplier)
-  text("NORMAL",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+115)*heightMultiplier)
-  text("HARD",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+215)*heightMultiplier)
-
-  textSize(64);
-  text("TOWER OF THE PRISMATIC WITCH",(gameWidth/2)*widthMultiplier,100);
-
-  textSize(82);
-  text("DEMO",(gameWidth/2)*widthMultiplier,200);
-}
 
 //----------------------//
 //---ATTACKS HANDLING---//
@@ -303,7 +161,7 @@ function mainMenu() {
 
 let attackFrame     = 0;              //Counts frames since an attack started
 let nextAttackFrame = 30;             //Once attackFrame reaches this number, an attack happens and attack frame resets
-let currentAttack   = 0;              //Controls what will happen when an attack happens and how long nextAttackFrame is
+let currentAttack   = 4;              //Controls what will happen when an attack happens and how long nextAttackFrame is
 let attacks         = 0;              //Goes up everytime an attack happens, once it goes up a certain amount a new attack starts, then it resets
 
 function attack() {
@@ -334,8 +192,8 @@ function attack() {
       }
 
       else if (currentAttack === 2) {
-        createBullets(":P", 10,-500+(attacks*10),25,575+(attacks*10),25,3,90,90,10,0);
-        createBullets(":P", 10,25,-500+(attacks*10),25,575+(attacks*10),3,0,0,10,0);
+        createBullets(":P", 8,-500+(attacks*10),25,575+(attacks*10),25,3,90,90,10,0);
+        createBullets(":P", 8,25,-500+(attacks*10),25,575+(attacks*10),3,0,0,10,0);
         
         if (attacks >= 50) {
           attacks = 0;
@@ -357,7 +215,7 @@ function attack() {
 
       else if (currentAttack === 4) {
         createBullets(":P",10,-15,25,550,25,5,90,90,10,0);
-        createBullets(":P",2,575,0+((Math.sin(45*attacks))*100),575,400+((Math.sin(45*attacks))*100),5,180,180,10,0);
+        createBullets(":P",2,575,0+((Math.sin(radians(45*attacks)))*100),575,400+((Math.sin(radians(45*attacks)))*100),5,180,180,10,0);
         
         if (attacks >= 50) {
           attacks = 0;
@@ -380,6 +238,8 @@ function attack() {
 
     else if (player.dif === 2) {
       if (currentAttack === 0) {
+        createBullets(":P", 13,575,25,575,25,5.5,0+(attacks*5),360+(attacks*5),10,0);
+        createBullets(":P", 13,25,25,25,25,5.5,0+(attacks*5),360+(attacks*5),10,0);
         
         if (attacks >= 60) {    
           attacks = 0;          
@@ -389,6 +249,8 @@ function attack() {
       }
 
       else if (currentAttack === 1) {
+        createBullets(":P", 20,-600+(attacks*10),25,575+(attacks*10),25,6,90,90,10,0);
+        createBullets(":P", 20,-600+(attacks*10),575,575+(attacks*10),575,6,270,270,10,0);
         
         if (attacks >= 60) {
           attacks = 0;
@@ -398,6 +260,8 @@ function attack() {
       }
 
       else if (currentAttack === 2) {
+        createBullets(":P", 12,-600+(attacks*10),25,575+(attacks*10),25,3,90,90,10,0);
+        createBullets(":P", 12,25,-600+(attacks*10),25,575+(attacks*10),3,0,0,10,0);
         
         if (attacks >= 60) {
           attacks = 0;
@@ -407,6 +271,8 @@ function attack() {
       }
 
       else if (currentAttack === 3) {
+        createBullets(":P", 15,-750+(attacks*10),25,575+(attacks*10),25,5,90,90,10,0.2);
+        createBullets(":P", 15,25,-750+(attacks*10),25,575+(attacks*10),5,0,0,10,0.2);
         
         if (attacks >= 60) {
           attacks = 0;
@@ -416,6 +282,8 @@ function attack() {
       }
 
       else if (currentAttack === 4) {
+        createBullets(":P",13,-15,25,550,25,7,90,90,10,0);
+        createBullets(":P",4,575,0+((Math.sin(radians(15*attacks)))*100),575,500+((Math.sin(radians(15*attacks)))*100),5,180,180,10,0);
         
         if (attacks >= 60) {
           attacks = 0;
@@ -553,6 +421,203 @@ function attack() {
   attackFrame += 1; //add one to the frame counter
 }
 
+
+//-------------------//
+//---MENU HANDLING---//
+//-------------------//
+
+function drawGameBox() {
+  //Draws a green border around the area the player can move
+  fill("BLACK")
+  strokeWeight(4);
+  stroke(86,160,73);
+  rect(gameBoxX*widthMultiplier,gameBoxY*heightMultiplier,gameBoxW*widthMultiplier,gameBoxH*heightMultiplier);
+}
+
+let statMenuX = (gameBoxX + gameBoxW) + 25;
+let statMenuY = (0.5*gameHeight) + 25;
+let statMenuW = 175;
+let statMenuH = 250;
+
+let enemyX = (gameBoxX + gameBoxW) + 25;
+let enemyY = 25;
+let enemyW = 175;
+let enemyH = 260;
+
+let enemyName = "FELOS, THE PRISMATIC WITCH";
+
+function drawStatMenu() {
+  //Draws a green border around the players stats, including if their health, if theyre running, their name, and what difficulty their playing on, and if theire alive
+  textAlign(LEFT);
+
+  //Draws border
+  fill("BLACK")
+  strokeWeight(4);
+  stroke(86,160,73);
+  rect(statMenuX*widthMultiplier,statMenuY*heightMultiplier,statMenuW*widthMultiplier,statMenuH*heightMultiplier);
+
+  //Draws Name
+
+  //Draws Health
+  fill("BLACK")
+  strokeWeight(8);
+  stroke("WHITE");
+
+  rect((statMenuX+10)*widthMultiplier,(statMenuY+75)*heightMultiplier,(statMenuW-20)*widthMultiplier,(25)*heightMultiplier);
+  
+  noStroke();
+
+  for (let i = 0; i < 5; i++) {
+    if (i+1 <= player.liv) fill(136,57,50);
+    else                   fill(120,120,120);
+
+    rect(((statMenuX+10)+(31*i))*widthMultiplier,(statMenuY+75)*heightMultiplier,((statMenuW-20)/5)*widthMultiplier,(25)*heightMultiplier)
+  }
+
+  //Draws States
+  fill("WHITE");
+  textSize(15);
+
+  if (player.run)  text('RUNNING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
+  else             text('WALKING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
+
+  if (!player.ded) text('ALIVE',(statMenuX+8)*widthMultiplier,(statMenuY+175)*heightMultiplier);
+  else             text('DEAD' ,(statMenuX+8)*widthMultiplier,(statMenuY+175)*heightMultiplier);
+
+  //Draws Score
+  text("SCORE: " + player.scr,(statMenuX+8)*widthMultiplier,(statMenuY+225)*heightMultiplier);
+}
+
+function drawEnemy() {
+  //Draws a border around a png (or gif if i feel like it) of the enemy, also draws their name
+
+  //Draws border
+  fill("BLACK");
+  strokeWeight(4);
+  stroke(86,160,73);
+  rect(enemyX*widthMultiplier,enemyY*heightMultiplier,enemyW*widthMultiplier,enemyH*heightMultiplier);
+
+  //Draws Enemy Image
+  image(enemyImg,(enemyX+1)*widthMultiplier,(enemyY+1)*heightMultiplier,(enemyW-2)*widthMultiplier,(enemyH-26)*heightMultiplier);
+
+  //Draws Enemy Name
+  text(enemyName,(enemyX+8)*widthMultiplier,(enemyH+15)*heightMultiplier);
+}
+
+let buttonX = 200;
+let buttonY = 200;
+let buttonW = 400;
+let buttonH = 80;
+
+function mainMenu() {
+  //Draws main menu, allows you to choose from 3 dificulties and shows the title
+  textAlign(CENTER);
+
+  stroke("WHITE")
+  strokeWeight(4);
+  textSize(64);
+
+  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > buttonY*heightMultiplier && mouseY < buttonY*heightMultiplier + buttonH*heightMultiplier) {
+    fill(64,49,141);
+    if (mouseIsClicked) {
+      player.dif = 1;
+      nextAttackFrame = 30;
+      state = 'GAME';
+    }
+  }
+  else {
+    fill(120,105,196);
+  } 
+
+  rect(buttonX*widthMultiplier,buttonY*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
+
+  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > (buttonY+100)*heightMultiplier && mouseY < (buttonY+100)*heightMultiplier + buttonH*heightMultiplier) {
+    fill(85,160,73);
+    if (mouseIsClicked) {
+      player.dif = 2;
+      nextAttackFrame = 25;
+      state = 'GAME';
+    }
+  }
+  else {
+    fill(148,224,137);
+  } 
+
+  rect(buttonX*widthMultiplier,(buttonY+100)*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
+
+  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > (buttonY+200)*heightMultiplier && mouseY < (buttonY+200)*heightMultiplier + buttonH*heightMultiplier) {
+    fill(136,57,50);
+    if (mouseIsClicked) {
+      player.dif = 3;
+      nextAttackFrame = 20;
+      state = 'GAME';
+    }
+  }
+  else {
+    fill(184,105,98);
+  } 
+
+  rect(buttonX*widthMultiplier,(buttonY+200)*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
+
+  noStroke();
+  fill("WHITE")
+
+  text("EASY",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+15)*heightMultiplier);
+  text("NORMAL",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+115)*heightMultiplier);
+  text("HARD",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+215)*heightMultiplier);
+
+  textSize(64);
+  text("TOWER OF THE PRISMATIC WITCH",(gameWidth/2)*widthMultiplier,100);
+
+  textSize(82);
+  text("DEMO",(gameWidth/2)*widthMultiplier,200);
+}
+
+let retryButtonX  = gameWidth*(1/4);
+let retryButtonY  = (gameHeight*(1/2))-50;
+
+function deadMenu() {
+  //After you die this starts, shows your score and adds a button to the screen that sends you to the main menu and resets all stats and score
+  textAlign(CENTER);
+  
+  //Draws "Game Over"
+  noStroke();
+  fill("WHITE")
+  textSize(64);
+
+  text("GAME OVER",(gameWidth/2)*widthMultiplier,(gameHeight*(1/3))*heightMultiplier);
+
+  //Draws Score
+  text("SCORE: " + player.scr,(gameWidth/2)*widthMultiplier,(gameHeight*(2/3))*heightMultiplier);
+
+  //Try Again Button
+  if (mouseX > retryButtonX*widthMultiplier && mouseX < retryButtonX*widthMultiplier + buttonW*widthMultiplier && mouseY > retryButtonY*heightMultiplier && mouseY < retryButtonY*heightMultiplier + buttonH*heightMultiplier) {
+    fill(136,57,50);
+    if (mouseIsClicked) {
+      player.px  = gameWidth/2;
+      player.py  = gameHeight/2;
+      player.liv = 5;
+      player.dif = 1;     
+      player.ded = false;
+      player.scr = 0;
+      state = 'MENU';
+
+      attackFrame     = 0;
+      nextAttackFrame = 30;
+      currentAttack   = 0;
+      attacks         = 0;
+
+      bullets = [];
+    }
+  }
+  else {
+    fill(184,105,98);
+  } 
+
+  rect(retryButtonX*widthMultiplier,retryButtonY*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
+
+}
+
 function draw() {
   background(0);
 
@@ -592,6 +657,12 @@ function draw() {
   }
 
   if (state === 'DEAD') {
-
+    deadMenu();
   }
+
+  mouseIsClicked = false;
+}
+
+function mouseClicked() {
+  mouseIsClicked = true;
 }
