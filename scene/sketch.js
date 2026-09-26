@@ -181,8 +181,8 @@ function attack() {
       }
 
       else if (currentAttack === 1) {
-        createBullets(":P", 15,-500+(attacks*10),25,575+(attacks*10),25,5,90,90,10,0);
-        createBullets(":P", 15,-500+(attacks*10),575,575+(attacks*10),575,5,270,270,10,0);
+        createBullets(":P", 15,-500+(attacks*10),25,575+(attacks*10),25,4,90,90,10,0);
+        createBullets(":P", 15,-500+(attacks*10),575,575+(attacks*10),575,4,270,270,10,0);
         
         if (attacks >= 50) {
           attacks = 0;
@@ -203,8 +203,8 @@ function attack() {
       }
 
       else if (currentAttack === 3) {
-        createBullets(":P", 7,-500+(attacks*10),25,575+(attacks*10),25,5,90,90,10,0.2);
-        createBullets(":P", 7,25,-500+(attacks*10),25,575+(attacks*10),5,0,0,10,0.2);
+        createBullets(":P", 7,-500+(attacks*10),25,575+(attacks*10),25,4,90,90,10,0.2);
+        createBullets(":P", 7,25,-500+(attacks*10),25,575+(attacks*10),4,0,0,10,0.2);
         
         if (attacks >= 50) {
           attacks = 0;
@@ -214,8 +214,8 @@ function attack() {
       }
 
       else if (currentAttack === 4) {
-        createBullets(":P",10,-15,25,550,25,5,90,90,10,0);
-        createBullets(":P",2,575,0+((Math.sin(radians(45*attacks)))*100),575,400+((Math.sin(radians(45*attacks)))*100),5,180,180,10,0);
+        createBullets(":P",10,-15,25,550,25,6,90,90,10,0);
+        createBullets(":P",2,575,0+((Math.sin(radians(45*attacks)))*100),575,400+((Math.sin(radians(45*attacks)))*100),3,180,180,10,0);
         
         if (attacks >= 50) {
           attacks = 0;
@@ -225,7 +225,7 @@ function attack() {
       }
 
       else {
-        createBullets(":P", 20,275,275,275,275,5,0+(attacks*10),360+(attacks*10),10,0);
+        createBullets(":P", 10,275,275,275,275,5,0+(attacks*10),360+(attacks*10),10,0);
 
         if (attacks >= 50) {
           attacks = 0;
@@ -293,7 +293,8 @@ function attack() {
       }
 
       else if (currentAttack === 5) {
-        
+        createBullets(":P", 20,275,275,275,275,5,0+(attacks*10),360+(attacks*10),10,0);
+
         if (attacks >= 60) {
           attacks = 0;
           currentAttack += 1;
@@ -302,6 +303,10 @@ function attack() {
       }
 
       else if (currentAttack === 6) {
+        createBullets(":P", 8,25,25,25,25,6,0+(attacks*10),360+(attacks*10),10,0);
+        createBullets(":P", 8,575,25,575,25,5.5,0+(attacks*10),360+(attacks*10),10,0);
+        createBullets(":P", 8,25,575,25,575,6.5,0+(attacks*10),360+(attacks*10),10,0);
+        createBullets(":P", 8,575,575,575,575,5.5,0+(attacks*10),360+(attacks*10),10,0);
         
         if (attacks >= 60) {
           attacks = 0;
@@ -311,6 +316,8 @@ function attack() {
       }
 
       else {
+        createBullets(":P",6,575,0+((Math.sin(radians(15*attacks)))*100),575,500+((Math.sin(radians(15*attacks)))*100),5,180,180,10,0);
+        createBullets(":P",6,0+((Math.sin(radians(15*attacks)))*100),575,500+((Math.sin(radians(15*attacks)))*100),575,5,270,270,10,0);
 
         if (attacks >= 60) {
           attacks = 0;
@@ -323,17 +330,21 @@ function attack() {
 
     else if (player.dif === 3) {
       if (currentAttack === 0) {
+        createBullets(":P", 18,575,25,575,25,5.5,0+(attacks*5),360+(attacks*5),10,0);
+        createBullets(":P", 18,25,25,25,25,5.5,0+(attacks*5),360+(attacks*5),10,0);
         
-        if (attacks >= 70) {    
-          attacks = 0;
-          currentAttack += 1;
-          player.scr += 10;
+        if (attacks >= 60) {    
+          attacks = 0;          
+          currentAttack += 1;   
+          player.scr += 10;     
         }
       }
 
       else if (currentAttack === 1) {
+        createBullets(":P", 25,-600+(attacks*10),25,575+(attacks*10),25,6,90,90,10,0);
+        createBullets(":P", 25,-600+(attacks*10),575,575+(attacks*10),575,6,270,270,10,0);
         
-        if (attacks >= 70) {
+        if (attacks >= 60) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -341,8 +352,10 @@ function attack() {
       }
 
       else if (currentAttack === 2) {
+        createBullets(":P", 16,-600+(attacks*10),25,575+(attacks*10),25,2,90,90,10,0);
+        createBullets(":P", 16,25,-600+(attacks*10),25,575+(attacks*10),2,0,0,10,0);
         
-        if (attacks >= 70) {
+        if (attacks >= 60) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -350,8 +363,10 @@ function attack() {
       }
 
       else if (currentAttack === 3) {
+        createBullets(":P", 16,-750+(attacks*10),25,575+(attacks*10),25,5.5,90,90,10,0.2);
+        createBullets(":P", 16,25,-750+(attacks*10),25,575+(attacks*10),5.5,0,0,10,0.2);
         
-        if (attacks >= 70) {
+        if (attacks >= 60) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -359,8 +374,10 @@ function attack() {
       }
 
       else if (currentAttack === 4) {
+        createBullets(":P",13,-15,25,550,25,7,90,90,10,0);
+        createBullets(":P",8,575,0+((Math.sin(radians(15*attacks)))*100),575,500+((Math.sin(radians(15*attacks)))*100),4,180,180,10,0);
         
-        if (attacks >= 70) {
+        if (attacks >= 60) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -368,8 +385,9 @@ function attack() {
       }
 
       else if (currentAttack === 5) {
-        
-        if (attacks >= 70) {
+        createBullets(":P", 25,275,275,275,275,6,0+(attacks*15),360+(attacks*15),10,0);
+
+        if (attacks >= 60) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -377,8 +395,12 @@ function attack() {
       }
 
       else if (currentAttack === 6) {
+        createBullets(":P", 12,25,25,25,25,6,0+(attacks*10),360+(attacks*10),10,0);
+        createBullets(":P", 12,575,25,575,25,5.5,0+(attacks*10),360+(attacks*10),10,0);
+        createBullets(":P", 12,25,575,25,575,6.5,0+(attacks*10),360+(attacks*10),10,0);
+        createBullets(":P", 12,575,575,575,575,5.5,0+(attacks*10),360+(attacks*10),10,0);
         
-        if (attacks >= 70) {
+        if (attacks >= 60) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -386,6 +408,8 @@ function attack() {
       }
 
       else if (currentAttack === 7) {
+        createBullets(":P",8,575,0+((Math.sin(radians(15*attacks)))*100),575,500+((Math.sin(radians(15*attacks)))*100),4,180,180,10,0);
+        createBullets(":P",8,0+((Math.cos(radians(15*attacks)))*100),575,500+((Math.cos(radians(15*attacks)))*100),575,4,270,270,10,0);
         
         if (attacks >= 70) {
           attacks = 0;
@@ -395,6 +419,8 @@ function attack() {
       }
 
       else if (currentAttack === 8) {
+        createBullets(":P",13,-15,25,550,25,7,90,90,10,0);
+        createBullets(":P",8,575,0+((Math.sin(radians((15*attacks)*(Math.sin(radians(15*attacks))))))*100),575,500+((Math.sin(radians((15*attacks)*(Math.sin(radians(15*attacks))))))*100),4,180,180,10,0);
         
         if (attacks >= 70) {
           attacks = 0;
@@ -404,6 +430,8 @@ function attack() {
       }
 
       else {
+        createBullets(":P", 20,575,25+(attacks*7.5),575,25+(attacks*7.5),4,0+(attacks*15),360+(attacks*15),10,0);
+        createBullets(":P", 20,25,575-(attacks*7.5),25,575-(attacks*7.5),4,0+(attacks*15),360+(attacks*15),10,0);
 
         if (attacks >= 70) {
           attacks = 0;
