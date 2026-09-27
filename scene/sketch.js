@@ -333,7 +333,7 @@ function attack() {
         createBullets(":P", 18,575,25,575,25,5.5,0+(attacks*5),360+(attacks*5),10,0);
         createBullets(":P", 18,25,25,25,25,5.5,0+(attacks*5),360+(attacks*5),10,0);
         
-        if (attacks >= 60) {    
+        if (attacks >= 70) {    
           attacks = 0;          
           currentAttack += 1;   
           player.scr += 10;     
@@ -341,10 +341,10 @@ function attack() {
       }
 
       else if (currentAttack === 1) {
-        createBullets(":P", 25,-600+(attacks*10),25,575+(attacks*10),25,6,90,90,10,0);
-        createBullets(":P", 25,-600+(attacks*10),575,575+(attacks*10),575,6,270,270,10,0);
+        createBullets(":P", 25,-600+(attacks*10),0,575+(attacks*10),0,4,90,90,10,0);
+        createBullets(":P", 25,-600+(attacks*10),600,575+(attacks*10),600,4,270,270,10,0);
         
-        if (attacks >= 60) {
+        if (attacks >= 70) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -355,7 +355,7 @@ function attack() {
         createBullets(":P", 16,-600+(attacks*10),25,575+(attacks*10),25,2,90,90,10,0);
         createBullets(":P", 16,25,-600+(attacks*10),25,575+(attacks*10),2,0,0,10,0);
         
-        if (attacks >= 60) {
+        if (attacks >= 70) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -366,7 +366,7 @@ function attack() {
         createBullets(":P", 16,-750+(attacks*10),25,575+(attacks*10),25,5.5,90,90,10,0.2);
         createBullets(":P", 16,25,-750+(attacks*10),25,575+(attacks*10),5.5,0,0,10,0.2);
         
-        if (attacks >= 60) {
+        if (attacks >= 70) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -377,7 +377,7 @@ function attack() {
         createBullets(":P",13,-15,25,550,25,7,90,90,10,0);
         createBullets(":P",8,575,0+((Math.sin(radians(15*attacks)))*100),575,500+((Math.sin(radians(15*attacks)))*100),4,180,180,10,0);
         
-        if (attacks >= 60) {
+        if (attacks >= 70) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -387,7 +387,7 @@ function attack() {
       else if (currentAttack === 5) {
         createBullets(":P", 25,275,275,275,275,6,0+(attacks*15),360+(attacks*15),10,0);
 
-        if (attacks >= 60) {
+        if (attacks >= 70) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -400,7 +400,7 @@ function attack() {
         createBullets(":P", 12,25,575,25,575,6.5,0+(attacks*10),360+(attacks*10),10,0);
         createBullets(":P", 12,575,575,575,575,5.5,0+(attacks*10),360+(attacks*10),10,0);
         
-        if (attacks >= 60) {
+        if (attacks >= 70) {
           attacks = 0;
           currentAttack += 1;
           player.scr += 10;
@@ -642,7 +642,15 @@ function deadMenu() {
     fill(184,105,98);
   } 
 
+  stroke('WHITE');
+  strokeWeight(4);
+
   rect(retryButtonX*widthMultiplier,retryButtonY*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
+
+  noStroke();
+  fill("WHITE")
+
+  text("RETRY",(buttonW)*widthMultiplier,(retryButtonY+(buttonH/2)+15)*heightMultiplier);
 
 }
 
