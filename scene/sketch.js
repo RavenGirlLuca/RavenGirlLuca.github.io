@@ -31,7 +31,9 @@ async function setup() {
   widthMultiplier  = width/gameWidth;   //width draw conversion multiplier
   heightMultiplier = height/gameHeight; //height draw conversion multiplier
 
-  enemyImg = await loadImage('/scene/assets/felos.png');
+  enemyImg  = await loadImage('/scene/assets/felos.png');
+  bulletImg = await loadImage('/scene/assets/bullet.png');
+
   font     = await loadFont('/scene/fonts/C64_Pro-STYLE.otf');
 
   textFont(font);
@@ -55,8 +57,18 @@ class Bullet {
 
   draw() {
     //draws the bullets on screen, uses a multiplier to convert the games 4:3 gameplay ration to the screens size
+    push();
+
+    angleMode(DEGREES);
+    imageMode("center");
+
+    rotate(this.ang);
+    image(bulletImg,((this.px-8)+(this.siz*1.25))*widthMultiplier,((this.py-8)+(this.siz*1.25))*heightMultiplier,(this.siz+8)*widthMultiplier,(this.siz+8)*heightMultiplier);
+    
+    pop();
+
     fill("WHITE");
-    noStroke()
+    noStroke();
     rect(this.px*widthMultiplier,this.py*heightMultiplier,this.siz*widthMultiplier,this.siz*heightMultiplier);
   }
 
