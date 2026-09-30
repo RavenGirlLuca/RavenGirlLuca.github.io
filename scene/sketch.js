@@ -27,6 +27,17 @@ let heightMultiplier = 0;
 let enemyImg;
 let font;
 
+let bulletImg;
+let bulletImgRed;
+let bulletImgOrange;
+let bulletImgYellow;
+let bulletImgGreen;
+let bulletImgBlue;
+let bulletImgPurple;
+
+let playerImgBottom;
+let playerImgTop;
+
 let mouseIsClicked = false;
 
 async function setup() {
@@ -41,7 +52,17 @@ async function setup() {
   enemyImg  = await loadImage('/scene/assets/felos.png');
   bulletImg = await loadImage('/scene/assets/bullet.png');
 
-  font     = await loadFont('/scene/fonts/C64_Pro-STYLE.otf');
+  bulletImgRed    = await loadImage('/scene/assets/bulletred.png');
+  bulletImgOrange = await loadImage('/scene/assets/bulletorange.png');
+  bulletImgYellow = await loadImage('/scene/assets/bulletyellow.png');
+  bulletImgGreen  = await loadImage('/scene/assets/bulletgreen.png');
+  bulletImgBlue   = await loadImage('/scene/assets/bulletblue.png');
+  bulletImgPurple = await loadImage('/scene/assets/bulletpurple.png');
+
+  playerImgBottom = await loadImage('/scene/assets/playerbottom.png');
+  playerImgTop    = await loadImage('/scene/assets/playertop.png');
+
+  font      = await loadFont('/scene/fonts/C64_Pro-STYLE.otf');
 
   textFont(font);
 }
@@ -135,8 +156,13 @@ class Player {
   constructor() {
     this.baseSpeed = 3; //players base speed, should never change
 
+    this.sensitivity = 4.5;  //these 3 are used in the skirt function
+    this.gravity     = 0.2; 
+    this.friction    = 0.5;
+
     this.px  = gameWidth/2;    //players x position in the world
     this.py  = gameHeight/2;   //players y position in the world
+    this.pvx = 0               //players x velocity, used for the skirt
     this.spd = this.baseSpeed; //players speed, gets added to the player while moving
     this.siz = 15;             //player size, used for collision and drawing
     this.run = false;          //if shift is being held, this is true
@@ -144,14 +170,27 @@ class Player {
     this.dif = 1;              //game difficulty, you take more damage at higher difficulties
     this.ded = false;          //player dead state, if true u cant do anything cuz ur ded
     this.scr = 0;              //players score, you gain more score the more attacks you survive
+    this.srt = 0;              //skirt rotation, while the player is moving the skirt will be rotated with a physics sim to simulate cloth moving with inertia
+    this.sps = this.px;        //skirt position, used with px to calculate how fast the players going
+    this.skv = 0               //skirt velocity
   }
 
   draw() {
-    //draws the player, same system as bullet draw
-    if (!this.ded) fill(136,57,50);
-    else           fill(120,120,120);
-    noStroke()
-    rect(this.px*widthMultiplier,this.py*heightMultiplier,this.siz*widthMultiplier,this.siz*heightMultiplier);
+    //draws the player
+
+    image(playerImgTop,(this.px-(this.siz*.25))*widthMultiplier,(this.py-(this.siz*.5))*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier,)
+
+    push();
+    
+    imageMode(CENTER);
+    translate((this.px*widthMultiplier)+((this.siz*widthMultiplier)/2), (this.py*heightMultiplier)+((this.siz*heightMultiplier)/2));
+
+    angleMode(DEGREES);
+    rotate(-this.srt);
+
+    image(playerImgBottom,0,(this.siz*1.25)*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier);
+
+    pop();
   }
 
   bulletCol() {
@@ -164,6 +203,20 @@ class Player {
     return ((px > gameBoxX && px + this.siz < gameBoxX + gameBoxW && py > gameBoxY && py + this.siz < gameBoxY + gameBoxH )) 
   }
 
+  skirtPhysics() {
+    //Applys a sort of cloth sim to the players skirt
+    this.pvx = this.px - this.sps;
+    
+    this.sps = this.px;
+    
+    this.skv -= this.pvx * this.sensitivity;
+    this.skv -= this.srt * this.gravity;
+    this.skv *= this.friction;
+    this.srt += this.skv;
+    
+    this.srt = constrain(this.srt, -5*this.spd, 5*this.spd);
+  }
+
   update() {
     //handles most player functions that happen each frame
     if (!this.ded) {
@@ -173,12 +226,14 @@ class Player {
       else          this.spd = this.baseSpeed;
 
       //Movement
-      if ((keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) && ((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)))) this.spd * 0.707;
+      if ((keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) && ((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)))) this.spd *= 0.707;
 
       if (keyIsDown(UP_ARROW) && this.gameBoxCol(this.px,this.py - this.spd))     this.py -= this.spd;
       if (keyIsDown(DOWN_ARROW) && this.gameBoxCol(this.px,this.py + this.spd))   this.py += this.spd;
       if (keyIsDown(LEFT_ARROW) && this.gameBoxCol(this.px - this.spd ,this.py))  this.px -= this.spd;
       if (keyIsDown(RIGHT_ARROW) && this.gameBoxCol(this.px + this.spd, this.py)) this.px += this.spd;
+
+      this.skirtPhysics();
 
       if (this.liv <= 0) this.ded = true;
     }
@@ -478,6 +533,13 @@ function attack() {
 
     attacks += 1;    //add 1 to the attack counter
     attackFrame = 0; //reset attack waiting frame counter
+
+    if      (bulletImg === bulletImgRed)    bulletImg = bulletImgOrange;
+    else if (bulletImg === bulletImgOrange) bulletImg = bulletImgYellow;
+    else if (bulletImg === bulletImgYellow) bulletImg = bulletImgGreen;
+    else if (bulletImg === bulletImgGreen)  bulletImg = bulletImgBlue;
+    else if (bulletImg === bulletImgBlue)   bulletImg = bulletImgPurple;
+    else                                    bulletImg = bulletImgRed;
   }
 
   attackFrame += 1; //add one to the frame counter
@@ -538,7 +600,7 @@ function drawStatMenu() {
 
   //Draws States
   fill("WHITE");
-  textSize(15);
+  textSize(9*widthMultiplier);
 
   if (player.run)  text('RUNNING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
   else             text('WALKING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
@@ -578,7 +640,7 @@ function mainMenu() {
 
   stroke("WHITE")
   strokeWeight(4);
-  textSize(64);
+  textSize(40*widthMultiplier);
 
   if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > buttonY*heightMultiplier && mouseY < buttonY*heightMultiplier + buttonH*heightMultiplier) {
     fill(64,49,141);
@@ -629,11 +691,11 @@ function mainMenu() {
   text("NORMAL",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+115)*heightMultiplier);
   text("HARD",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+215)*heightMultiplier);
 
-  textSize(64);
-  text("TOWER\nOF THE\nPRISMATIC WITCH",(gameWidth/2)*widthMultiplier,50*heightMultiplier);
+  textSize(40*widthMultiplier);
+  text("TOWER\nOF THE\nPRISMATIC WITCH",(gameWidth/2)*widthMultiplier,60*heightMultiplier);
 
-  textSize(82);
-  text("DEMO",700*widthMultiplier,100);
+  textSize(52*widthMultiplier);
+  text("DEMO",700*widthMultiplier,50*heightMultiplier);
 }
 
 let retryButtonX  = gameWidth*(1/4);
@@ -705,10 +767,6 @@ function draw() {
     //update loop for enemy attacks
     attack();
 
-    //update loop for player
-    player.update();
-    player.draw();
-
     //update loop for each bullet inside the bullets array
     for (let i = 0; i < bullets.length; i++) {
       bullets[i].update();
@@ -721,10 +779,14 @@ function draw() {
       }
 
       //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
-      if (bullets[i].despawnCheck()) {
+      else if (bullets[i].despawnCheck()) {
         bullets.splice(i,1); 
       }
     }
+
+    //update loop for player
+    player.update();
+    player.draw();
   }
 
   if (state === 'DEAD') {
