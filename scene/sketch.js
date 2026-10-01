@@ -591,18 +591,18 @@ let enemyY = 25;
 let enemyW = 175;
 let enemyH = 200;
 
-let mobileButtonW      = 30;
-let mobileButtonH      = 30;
-let mobileButtonUpX    = statMenuX + ((statMenuW/2)-(mobileButtonW/2))
-let mobileButtonUpY    = statMenuY+190;
-let mobileButtonDownX  = statMenuX + ((statMenuW/2)-(mobileButtonW/2))
+let mobileButtonW      = 50;
+let mobileButtonH      = 50;
+let mobileButtonUpX    = statMenuX + ((statMenuW/2)-(mobileButtonW/2));
+let mobileButtonUpY    = statMenuY+160;
+let mobileButtonDownX  = statMenuX + ((statMenuW/2)-(mobileButtonW/2));
 let mobileButtonDownY  = statMenuY+270;
-let mobileButtonLeftX  = statMenuX + ((statMenuW/2)-((mobileButtonW*1.5)+10))
-let mobileButtonLeftY  = statMenuY+230;
-let mobileButtonRightX = statMenuX + ((statMenuW/2)+((mobileButtonW)-5))
-let mobileButtonRightY = statMenuY+230;
-let mobileButtonRunX   = statMenuX + ((statMenuW/2)-(mobileButtonW/2))
-let mobileButtonRunY   = statMenuY+230;
+let mobileButtonLeftX  = statMenuX + ((statMenuW/2)-((mobileButtonW*1.5)+5));
+let mobileButtonLeftY  = statMenuY+215;
+let mobileButtonRightX = statMenuX + ((statMenuW/2)+((mobileButtonW/2)+5));
+let mobileButtonRightY = statMenuY+215;
+let mobileButtonRunX   = statMenuX + ((statMenuW/2)-(mobileButtonW/2));
+let mobileButtonRunY   = statMenuY+215;
 
 
 let enemyName = "FELOS\nTHE PRISMATIC WITCH";
@@ -642,11 +642,11 @@ function drawStatMenu() {
   if (player.run)  text('RUNNING',(statMenuX+8)*widthMultiplier,(statMenuY+60)*heightMultiplier);
   else             text('WALKING',(statMenuX+8)*widthMultiplier,(statMenuY+60)*heightMultiplier);
 
-  if (!player.ded) text('ALIVE',(statMenuX+8)*widthMultiplier,(statMenuY+110)*heightMultiplier);
-  else             text('DEAD' ,(statMenuX+8)*widthMultiplier,(statMenuY+110)*heightMultiplier);
+  if (!player.ded) text('ALIVE',(statMenuX+8)*widthMultiplier,(statMenuY+90)*heightMultiplier);
+  else             text('DEAD' ,(statMenuX+8)*widthMultiplier,(statMenuY+90)*heightMultiplier);
 
   //Draws Score
-  text("SCORE: " + player.scr,(statMenuX+8)*widthMultiplier,(statMenuY+160)*heightMultiplier);
+  text("SCORE: " + player.scr,(statMenuX+8)*widthMultiplier,(statMenuY+120)*heightMultiplier);
 
   //Mobile Buttons
   if (platform === 'MOBILE') {
