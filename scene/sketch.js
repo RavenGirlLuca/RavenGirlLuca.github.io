@@ -6,7 +6,7 @@
 // Made a cool window size to game size converter multiplier thingy
 // Made a really cool system to handle bullets inside a single array AND handle their deletion when off screen
 
-let state = 'MENU';
+let state = 'START';
 
 let baseWidth  = 4;
 let baseHeight = 3;
@@ -37,6 +37,11 @@ let bulletImgPurple;
 
 let playerImgBottom;
 let playerImgTop;
+let playerImgSkirt;
+
+let felosMusic;
+let menuMusic;
+let gameoverSFX;
 
 let mouseIsClicked = false;
 
@@ -49,7 +54,7 @@ async function setup() {
   widthMultiplier  = width/gameWidth;   //width draw conversion multiplier
   heightMultiplier = height/gameHeight; //height draw conversion multiplier
 
-  enemyImg  = await loadImage('/scene/assets/felos.png');
+  enemyImg  = await loadImage('/scene/assets/felos.gif');
   bulletImg = await loadImage('/scene/assets/bullet.png');
 
   bulletImgRed    = await loadImage('/scene/assets/bulletred.png');
@@ -61,6 +66,14 @@ async function setup() {
 
   playerImgBottom = await loadImage('/scene/assets/playerbottom.png');
   playerImgTop    = await loadImage('/scene/assets/playertop.png');
+  playerImgSkirt  = await loadImage('/scene/assets/playerskirt.png');
+
+  felosMusic      = await loadSound('/scene/assets/PRISMATIC-WITCH-I.ogg');
+  menuMusic       = await loadSound('/scene/assets/MENU-I.ogg');
+  gameoverSFX     = await loadSound('/scene/assets/GAMEOVER-I.ogg');
+
+  felosMusic.loop(true);
+  menuMusic.loop(true);
 
   font      = await loadFont('/scene/fonts/C64_Pro-STYLE.otf');
 
@@ -178,7 +191,8 @@ class Player {
   draw() {
     //draws the player
 
-    image(playerImgTop,(this.px-(this.siz*.25))*widthMultiplier,(this.py-(this.siz*.5))*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier,)
+    image(playerImgTop,   (this.px-(this.siz*.25))*widthMultiplier,(this.py-(this.siz*.5))*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier,);
+    image(playerImgBottom,(this.px-(this.siz*.25))*widthMultiplier,(this.py+this.siz)*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier,);
 
     push();
     
@@ -188,7 +202,7 @@ class Player {
     angleMode(DEGREES);
     rotate(-this.srt);
 
-    image(playerImgBottom,0,(this.siz*1.25)*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier);
+    image(playerImgSkirt,0,(this.siz*1.25)*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier);
 
     pop();
   }
@@ -237,7 +251,12 @@ class Player {
 
       if (this.liv <= 0) this.ded = true;
     }
-    else state = 'DEAD';
+    
+    else {
+      state = 'DEAD';
+      felosMusic.stop();
+      gameoverSFX.start();
+    }
   }
 }
 
@@ -636,6 +655,7 @@ let buttonH = 80;
 
 function mainMenu() {
   //Draws main menu, allows you to choose from 3 dificulties and shows the title
+
   textAlign(CENTER);
 
   stroke("WHITE")
@@ -648,6 +668,8 @@ function mainMenu() {
       player.dif = 1;
       nextAttackFrame = 30;
       state = 'GAME';
+      felosMusic.start();
+      menuMusic.stop();
     }
   }
   else {
@@ -662,6 +684,8 @@ function mainMenu() {
       player.dif = 2;
       nextAttackFrame = 25;
       state = 'GAME';
+      felosMusic.start();
+      menuMusic.stop();
     }
   }
   else {
@@ -676,6 +700,8 @@ function mainMenu() {
       player.dif = 3;
       nextAttackFrame = 20;
       state = 'GAME';
+      felosMusic.start();
+      menuMusic.stop();
     }
   }
   else {
@@ -708,7 +734,7 @@ function deadMenu() {
   //Draws "Game Over"
   noStroke();
   fill("WHITE")
-  textSize(64);
+  textSize(39*widthMultiplier);
 
   text("GAME OVER",(gameWidth/2)*widthMultiplier,(gameHeight*(1/3))*heightMultiplier);
 
@@ -733,6 +759,8 @@ function deadMenu() {
       attacks         = 0;
 
       bullets = [];
+      menuMusic.start();
+      gameoverSFX.stop();
     }
   }
   else {
@@ -751,8 +779,29 @@ function deadMenu() {
 
 }
 
+function startMenu() {
+
+  textAlign(CENTER);
+  noStroke();
+  fill("WHITE")
+  textSize(64*widthMultiplier);
+
+  text("CLICK ANYWHERE\nTO START",(gameWidth/2)*widthMultiplier,(gameHeight*(1/3))*heightMultiplier);
+
+  if (mouseIsClicked) {
+    mouseIsClicked = false;
+    state = 'MENU'
+    menuMusic.start();
+  }
+  console.log(widthMultiplier)
+}
+
 function draw() {
   background(0);
+
+  if (state === 'START') {
+    startMenu()
+  }
 
   if (state === 'MENU') {
     mainMenu();
