@@ -6,7 +6,8 @@
 // Made a cool window size to game size converter multiplier thingy
 // Made a really cool system to handle bullets inside a single array AND handle their deletion when off screen
 
-let state = 'START';
+let state    = 'START';
+let platform = 'PC';
 
 let baseWidth  = 4;
 let baseHeight = 3;
@@ -44,6 +45,9 @@ let menuMusic;
 let gameoverSFX;
 
 let mouseIsClicked = false;
+
+let currentDir = 'NONE';
+let mobileRun  = false;
 
 async function setup() {
   let { w, h } = calculateCanvasSize();
@@ -235,17 +239,17 @@ class Player {
     //handles most player functions that happen each frame
     if (!this.ded) {
       //Running
-      this.run = keyIsDown(SHIFT);
+      this.run = (keyIsDown(SHIFT) || mobileRun);
       if (this.run) this.spd = this.baseSpeed*1.5;
       else          this.spd = this.baseSpeed;
 
       //Movement
       if ((keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) && ((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)))) this.spd *= 0.707;
 
-      if (keyIsDown(UP_ARROW) && this.gameBoxCol(this.px,this.py - this.spd))     this.py -= this.spd;
-      if (keyIsDown(DOWN_ARROW) && this.gameBoxCol(this.px,this.py + this.spd))   this.py += this.spd;
-      if (keyIsDown(LEFT_ARROW) && this.gameBoxCol(this.px - this.spd ,this.py))  this.px -= this.spd;
-      if (keyIsDown(RIGHT_ARROW) && this.gameBoxCol(this.px + this.spd, this.py)) this.px += this.spd;
+      if ((keyIsDown(UP_ARROW) || currentDir === 'UP') && this.gameBoxCol(this.px,this.py - this.spd))        this.py -= this.spd;
+      if ((keyIsDown(DOWN_ARROW) || currentDir === 'DOWN') && this.gameBoxCol(this.px,this.py + this.spd))    this.py += this.spd;
+      if ((keyIsDown(LEFT_ARROW) || currentDir === 'LEFT') && this.gameBoxCol(this.px - this.spd ,this.py))   this.px -= this.spd;
+      if ((keyIsDown(RIGHT_ARROW) || currentDir === 'RIGHT') && this.gameBoxCol(this.px + this.spd, this.py)) this.px += this.spd;
 
       this.skirtPhysics();
 
@@ -587,6 +591,20 @@ let enemyY = 25;
 let enemyW = 175;
 let enemyH = 200;
 
+let mobileButtonW      = 30;
+let mobileButtonH      = 30;
+let mobileButtonUpX    = statMenuX + ((statMenuW/2)-(mobileButtonW/2))
+let mobileButtonUpY    = statMenuY+190;
+let mobileButtonDownX  = statMenuX + ((statMenuW/2)-(mobileButtonW/2))
+let mobileButtonDownY  = statMenuY+270;
+let mobileButtonLeftX  = statMenuX + ((statMenuW/2)-((mobileButtonW*1.5)+10))
+let mobileButtonLeftY  = statMenuY+230;
+let mobileButtonRightX = statMenuX + ((statMenuW/2)+((mobileButtonW)-5))
+let mobileButtonRightY = statMenuY+230;
+let mobileButtonRunX   = statMenuX + ((statMenuW/2)-(mobileButtonW/2))
+let mobileButtonRunY   = statMenuY+230;
+
+
 let enemyName = "FELOS\nTHE PRISMATIC WITCH";
 
 function drawStatMenu() {
@@ -606,7 +624,7 @@ function drawStatMenu() {
   strokeWeight(8);
   stroke("WHITE");
 
-  rect((statMenuX+10)*widthMultiplier,(statMenuY+75)*heightMultiplier,(statMenuW-20)*widthMultiplier,(25)*heightMultiplier);
+  rect((statMenuX+10)*widthMultiplier,(statMenuY+10)*heightMultiplier,(statMenuW-20)*widthMultiplier,(25)*heightMultiplier);
   
   noStroke();
 
@@ -614,21 +632,101 @@ function drawStatMenu() {
     if (i+1 <= player.liv) fill(136,57,50);
     else                   fill(120,120,120);
 
-    rect(((statMenuX+10)+(31*i))*widthMultiplier,(statMenuY+75)*heightMultiplier,((statMenuW-20)/5)*widthMultiplier,(25)*heightMultiplier)
+    rect(((statMenuX+10)+(31*i))*widthMultiplier,(statMenuY+10)*heightMultiplier,((statMenuW-20)/5)*widthMultiplier,(25)*heightMultiplier)
   }
 
   //Draws States
   fill("WHITE");
   textSize(9*widthMultiplier);
 
-  if (player.run)  text('RUNNING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
-  else             text('WALKING',(statMenuX+8)*widthMultiplier,(statMenuY+125)*heightMultiplier);
+  if (player.run)  text('RUNNING',(statMenuX+8)*widthMultiplier,(statMenuY+60)*heightMultiplier);
+  else             text('WALKING',(statMenuX+8)*widthMultiplier,(statMenuY+60)*heightMultiplier);
 
-  if (!player.ded) text('ALIVE',(statMenuX+8)*widthMultiplier,(statMenuY+175)*heightMultiplier);
-  else             text('DEAD' ,(statMenuX+8)*widthMultiplier,(statMenuY+175)*heightMultiplier);
+  if (!player.ded) text('ALIVE',(statMenuX+8)*widthMultiplier,(statMenuY+110)*heightMultiplier);
+  else             text('DEAD' ,(statMenuX+8)*widthMultiplier,(statMenuY+110)*heightMultiplier);
 
   //Draws Score
-  text("SCORE: " + player.scr,(statMenuX+8)*widthMultiplier,(statMenuY+225)*heightMultiplier);
+  text("SCORE: " + player.scr,(statMenuX+8)*widthMultiplier,(statMenuY+160)*heightMultiplier);
+
+  //Mobile Buttons
+  if (platform === 'MOBILE') {
+    if (mouseX > mobileButtonUpX*widthMultiplier && 
+        mouseX < mobileButtonUpX*widthMultiplier + mobileButtonW*widthMultiplier && 
+        mouseY > mobileButtonUpY*heightMultiplier && 
+        mouseY < mobileButtonUpY*heightMultiplier + mobileButtonH*heightMultiplier) {
+      fill(80,80,80);
+      if (mouseIsPressed) {
+        currentDir = 'UP'
+      }
+    }
+    else {
+      fill(159,159,159);
+    } 
+
+    rect(mobileButtonUpX*widthMultiplier,mobileButtonUpY*heightMultiplier,mobileButtonW*widthMultiplier,mobileButtonH*heightMultiplier);
+
+    if (mouseX > mobileButtonDownX*widthMultiplier && 
+        mouseX < mobileButtonDownX*widthMultiplier + mobileButtonW*widthMultiplier && 
+        mouseY > mobileButtonDownY*heightMultiplier && 
+        mouseY < mobileButtonDownY*heightMultiplier + mobileButtonH*heightMultiplier) {
+      fill(80,80,80);
+      if (mouseIsPressed) {
+        currentDir = 'DOWN'
+      }
+    }
+    else {
+      fill(159,159,159);
+    } 
+
+    rect(mobileButtonDownX*widthMultiplier,mobileButtonDownY*heightMultiplier,mobileButtonW*widthMultiplier,mobileButtonH*heightMultiplier);
+
+    if (mouseX > mobileButtonLeftX*widthMultiplier && 
+        mouseX < mobileButtonLeftX*widthMultiplier + mobileButtonW*widthMultiplier && 
+        mouseY > mobileButtonLeftY*heightMultiplier && 
+        mouseY < mobileButtonLeftY*heightMultiplier + mobileButtonH*heightMultiplier) {
+      fill(80,80,80);
+      if (mouseIsPressed) {
+        currentDir = 'LEFT'
+      }
+    }
+    else {
+      fill(159,159,159);
+    } 
+
+    rect(mobileButtonLeftX*widthMultiplier,mobileButtonLeftY*heightMultiplier,mobileButtonW*widthMultiplier,mobileButtonH*heightMultiplier);
+
+    if (mouseX > mobileButtonRightX*widthMultiplier && 
+        mouseX < mobileButtonRightX*widthMultiplier + mobileButtonW*widthMultiplier && 
+        mouseY > mobileButtonRightY*heightMultiplier && 
+        mouseY < mobileButtonRightY*heightMultiplier + mobileButtonH*heightMultiplier) {
+      fill(80,80,80);
+      if (mouseIsPressed) {
+        currentDir = 'RIGHT'
+      }
+    }
+    else {
+      fill(159,159,159);
+    } 
+
+    rect(mobileButtonRightX*widthMultiplier,mobileButtonRightY*heightMultiplier,mobileButtonW*widthMultiplier,mobileButtonH*heightMultiplier);
+
+    if (mouseX > mobileButtonRunX*widthMultiplier && 
+        mouseX < mobileButtonRunX*widthMultiplier + mobileButtonW*widthMultiplier && 
+        mouseY > mobileButtonRunY*heightMultiplier && 
+        mouseY < mobileButtonRunY*heightMultiplier + mobileButtonH*heightMultiplier) {
+      fill(80,80,80);
+      if (mouseIsClicked) {
+        mobileRun = !mobileRun;
+      }
+    }
+    else {
+      fill(159,159,159);
+    } 
+
+    rect(mobileButtonRunX*widthMultiplier,mobileButtonRunY*heightMultiplier,mobileButtonW*widthMultiplier,mobileButtonH*heightMultiplier);
+
+    if (!mouseIsPressed) currentDir = 'NONE';
+  }
 }
 
 function drawEnemy() {
@@ -710,12 +808,28 @@ function mainMenu() {
 
   rect(buttonX*widthMultiplier,(buttonY+200)*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
 
+  if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > (buttonY+300)*heightMultiplier && mouseY < (buttonY+300)*heightMultiplier + buttonH*heightMultiplier) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      if (platform === 'PC') platform = 'MOBILE';
+      else                   platform = 'PC';
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect(buttonX*widthMultiplier,(buttonY+300)*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
+
   noStroke();
   fill("WHITE")
 
   text("EASY",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+15)*heightMultiplier);
   text("NORMAL",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+115)*heightMultiplier);
   text("HARD",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+215)*heightMultiplier);
+
+  if (platform === 'PC') text("PC",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+315)*heightMultiplier);
+  else                   text("MOBILE",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+315)*heightMultiplier);
 
   textSize(40*widthMultiplier);
   text("TOWER\nOF THE\nPRISMATIC WITCH",(gameWidth/2)*widthMultiplier,60*heightMultiplier);
