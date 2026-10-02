@@ -6,6 +6,8 @@
 // Made a cool window size to game size converter multiplier thingy
 // Made a really cool system to handle bullets inside a single array AND handle their deletion when off screen
 
+/* eslint-disable no-extra-parens */
+
 let state    = 'START';
 let platform = 'PC';
 
@@ -179,7 +181,7 @@ class Player {
 
     this.px  = gameWidth/2;    //players x position in the world
     this.py  = gameHeight/2;   //players y position in the world
-    this.pvx = 0               //players x velocity, used for the skirt
+    this.pvx = 0;               //players x velocity, used for the skirt
     this.spd = this.baseSpeed; //players speed, gets added to the player while moving
     this.siz = 15;             //player size, used for collision and drawing
     this.run = false;          //if shift is being held, this is true
@@ -189,14 +191,14 @@ class Player {
     this.scr = 0;              //players score, you gain more score the more attacks you survive
     this.srt = 0;              //skirt rotation, while the player is moving the skirt will be rotated with a physics sim to simulate cloth moving with inertia
     this.sps = this.px;        //skirt position, used with px to calculate how fast the players going
-    this.skv = 0               //skirt velocity
+    this.skv = 0;               //skirt velocity
   }
 
   draw() {
     //draws the player
 
-    image(playerImgTop,   (this.px-(this.siz*.25))*widthMultiplier,(this.py-(this.siz*.5))*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier,);
-    image(playerImgBottom,(this.px-(this.siz*.25))*widthMultiplier,(this.py+this.siz)*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier,);
+    image(playerImgTop,   (this.px-(this.siz*0.25))*widthMultiplier,(this.py-(this.siz*0.5))*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier,);
+    image(playerImgBottom,(this.px-(this.siz*0.25))*widthMultiplier,(this.py+this.siz)*heightMultiplier,(this.siz*1.5)*widthMultiplier,(this.siz*1.5)*heightMultiplier,);
 
     push();
     
@@ -218,7 +220,7 @@ class Player {
 
   gameBoxCol(px,py) {
     //returns false if the players action will leave the box
-    return ((px > gameBoxX && px + this.siz < gameBoxX + gameBoxW && py > gameBoxY && py + this.siz < gameBoxY + gameBoxH )) 
+    return ((px > gameBoxX && px + this.siz < gameBoxX + gameBoxW && py > gameBoxY && py + this.siz < gameBoxY + gameBoxH )); 
   }
 
   skirtPhysics() {
@@ -240,20 +242,36 @@ class Player {
     if (!this.ded) {
       //Running
       this.run = (keyIsDown(SHIFT) || mobileRun);
-      if (this.run) this.spd = this.baseSpeed*1.5;
-      else          this.spd = this.baseSpeed;
+      if (this.run) {
+        this.spd = this.baseSpeed*1.5;
+      }
+      else          {
+        this.spd = this.baseSpeed;
+      }
 
       //Movement
-      if ((keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) && ((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)))) this.spd *= 0.707;
+      if ((keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) && ((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)))) {
+        this.spd *= 0.707;
+      }
 
-      if ((keyIsDown(UP_ARROW) || currentDir === 'UP') && this.gameBoxCol(this.px,this.py - this.spd))        this.py -= this.spd;
-      if ((keyIsDown(DOWN_ARROW) || currentDir === 'DOWN') && this.gameBoxCol(this.px,this.py + this.spd))    this.py += this.spd;
-      if ((keyIsDown(LEFT_ARROW) || currentDir === 'LEFT') && this.gameBoxCol(this.px - this.spd ,this.py))   this.px -= this.spd;
-      if ((keyIsDown(RIGHT_ARROW) || currentDir === 'RIGHT') && this.gameBoxCol(this.px + this.spd, this.py)) this.px += this.spd;
+      if ((keyIsDown(UP_ARROW) || currentDir === 'UP') && this.gameBoxCol(this.px,this.py - this.spd))        {
+        this.py -= this.spd;
+      }
+      if ((keyIsDown(DOWN_ARROW) || currentDir === 'DOWN') && this.gameBoxCol(this.px,this.py + this.spd))    {
+        this.py += this.spd;
+      }
+      if ((keyIsDown(LEFT_ARROW) || currentDir === 'LEFT') && this.gameBoxCol(this.px - this.spd ,this.py))   {
+        this.px -= this.spd;
+      }
+      if ((keyIsDown(RIGHT_ARROW) || currentDir === 'RIGHT') && this.gameBoxCol(this.px + this.spd, this.py)) {
+        this.px += this.spd;
+      }
 
       this.skirtPhysics();
 
-      if (this.liv <= 0) this.ded = true;
+      if (this.liv <= 0) {
+        this.ded = true;
+      }
     }
     
     else {
@@ -343,7 +361,9 @@ function attack() {
           attacks = 0;
           currentAttack = 0; //reset the current attack, restarting the loop
           player.scr += 10; 
-          if (nextAttackFrame > 10) nextAttackFrame -= 1; //makes the next loop slightly harder up to a set limit
+          if (nextAttackFrame > 10) {
+            nextAttackFrame -= 1;
+          } //makes the next loop slightly harder up to a set limit
         }
       }
     }
@@ -435,7 +455,9 @@ function attack() {
           attacks = 0;
           currentAttack = 0;
           player.scr += 10; 
-          if (nextAttackFrame > 7) nextAttackFrame -= 1;
+          if (nextAttackFrame > 7) {
+            nextAttackFrame -= 1;
+          }
         }
       }
     }
@@ -549,7 +571,9 @@ function attack() {
           attacks = 0;
           currentAttack = 0; 
           player.scr += 10; 
-          if (nextAttackFrame > 5) nextAttackFrame -= 1;
+          if (nextAttackFrame > 5) {
+            nextAttackFrame -= 1;
+          }
         }
       }
     }
@@ -557,12 +581,24 @@ function attack() {
     attacks += 1;    //add 1 to the attack counter
     attackFrame = 0; //reset attack waiting frame counter
 
-    if      (bulletImg === bulletImgRed)    bulletImg = bulletImgOrange;
-    else if (bulletImg === bulletImgOrange) bulletImg = bulletImgYellow;
-    else if (bulletImg === bulletImgYellow) bulletImg = bulletImgGreen;
-    else if (bulletImg === bulletImgGreen)  bulletImg = bulletImgBlue;
-    else if (bulletImg === bulletImgBlue)   bulletImg = bulletImgPurple;
-    else                                    bulletImg = bulletImgRed;
+    if      (bulletImg === bulletImgRed)    {
+      bulletImg = bulletImgOrange;
+    }
+    else if (bulletImg === bulletImgOrange) {
+      bulletImg = bulletImgYellow;
+    }
+    else if (bulletImg === bulletImgYellow) {
+      bulletImg = bulletImgGreen;
+    }
+    else if (bulletImg === bulletImgGreen)  {
+      bulletImg = bulletImgBlue;
+    }
+    else if (bulletImg === bulletImgBlue)   {
+      bulletImg = bulletImgPurple;
+    }
+    else                                    {
+      bulletImg = bulletImgRed;
+    }
   }
 
   attackFrame += 1; //add one to the frame counter
@@ -575,7 +611,7 @@ function attack() {
 
 function drawGameBox() {
   //Draws a green border around the area the player can move
-  fill("BLACK")
+  fill("BLACK");
   strokeWeight(4);
   stroke(86,160,73);
   rect(gameBoxX*widthMultiplier,gameBoxY*heightMultiplier,gameBoxW*widthMultiplier,gameBoxH*heightMultiplier);
@@ -612,7 +648,7 @@ function drawStatMenu() {
   textAlign(LEFT);
 
   //Draws border
-  fill("BLACK")
+  fill("BLACK");
   strokeWeight(4);
   stroke(86,160,73);
   rect(statMenuX*widthMultiplier,statMenuY*heightMultiplier,statMenuW*widthMultiplier,statMenuH*heightMultiplier);
@@ -620,7 +656,7 @@ function drawStatMenu() {
   //Draws Name
 
   //Draws Health
-  fill("BLACK")
+  fill("BLACK");
   strokeWeight(8);
   stroke("WHITE");
 
@@ -629,21 +665,33 @@ function drawStatMenu() {
   noStroke();
 
   for (let i = 0; i < 5; i++) {
-    if (i+1 <= player.liv) fill(136,57,50);
-    else                   fill(120,120,120);
+    if (i+1 <= player.liv) {
+      fill(136,57,50);
+    }
+    else                   {
+      fill(120,120,120);
+    }
 
-    rect(((statMenuX+10)+(31*i))*widthMultiplier,(statMenuY+10)*heightMultiplier,((statMenuW-20)/5)*widthMultiplier,(25)*heightMultiplier)
+    rect(((statMenuX+10)+(31*i))*widthMultiplier,(statMenuY+10)*heightMultiplier,((statMenuW-20)/5)*widthMultiplier,(25)*heightMultiplier);
   }
 
   //Draws States
   fill("WHITE");
   textSize(9*widthMultiplier);
 
-  if (player.run)  text('RUNNING',(statMenuX+8)*widthMultiplier,(statMenuY+60)*heightMultiplier);
-  else             text('WALKING',(statMenuX+8)*widthMultiplier,(statMenuY+60)*heightMultiplier);
+  if (player.run)  {
+    text('RUNNING',(statMenuX+8)*widthMultiplier,(statMenuY+60)*heightMultiplier);
+  }
+  else             {
+    text('WALKING',(statMenuX+8)*widthMultiplier,(statMenuY+60)*heightMultiplier);
+  }
 
-  if (!player.ded) text('ALIVE',(statMenuX+8)*widthMultiplier,(statMenuY+90)*heightMultiplier);
-  else             text('DEAD' ,(statMenuX+8)*widthMultiplier,(statMenuY+90)*heightMultiplier);
+  if (!player.ded) {
+    text('ALIVE',(statMenuX+8)*widthMultiplier,(statMenuY+90)*heightMultiplier);
+  }
+  else             {
+    text('DEAD' ,(statMenuX+8)*widthMultiplier,(statMenuY+90)*heightMultiplier);
+  }
 
   //Draws Score
   text("SCORE: " + player.scr,(statMenuX+8)*widthMultiplier,(statMenuY+120)*heightMultiplier);
@@ -656,7 +704,7 @@ function drawStatMenu() {
         mouseY < mobileButtonUpY*heightMultiplier + mobileButtonH*heightMultiplier) {
       fill(80,80,80);
       if (mouseIsPressed) {
-        currentDir = 'UP'
+        currentDir = 'UP';
       }
     }
     else {
@@ -671,7 +719,7 @@ function drawStatMenu() {
         mouseY < mobileButtonDownY*heightMultiplier + mobileButtonH*heightMultiplier) {
       fill(80,80,80);
       if (mouseIsPressed) {
-        currentDir = 'DOWN'
+        currentDir = 'DOWN';
       }
     }
     else {
@@ -686,7 +734,7 @@ function drawStatMenu() {
         mouseY < mobileButtonLeftY*heightMultiplier + mobileButtonH*heightMultiplier) {
       fill(80,80,80);
       if (mouseIsPressed) {
-        currentDir = 'LEFT'
+        currentDir = 'LEFT';
       }
     }
     else {
@@ -701,7 +749,7 @@ function drawStatMenu() {
         mouseY < mobileButtonRightY*heightMultiplier + mobileButtonH*heightMultiplier) {
       fill(80,80,80);
       if (mouseIsPressed) {
-        currentDir = 'RIGHT'
+        currentDir = 'RIGHT';
       }
     }
     else {
@@ -725,7 +773,9 @@ function drawStatMenu() {
 
     rect(mobileButtonRunX*widthMultiplier,mobileButtonRunY*heightMultiplier,mobileButtonW*widthMultiplier,mobileButtonH*heightMultiplier);
 
-    if (!mouseIsPressed) currentDir = 'NONE';
+    if (!mouseIsPressed) {
+      currentDir = 'NONE';
+    }
   }
 }
 
@@ -756,7 +806,7 @@ function mainMenu() {
 
   textAlign(CENTER);
 
-  stroke("WHITE")
+  stroke("WHITE");
   strokeWeight(4);
   textSize(40*widthMultiplier);
 
@@ -811,8 +861,12 @@ function mainMenu() {
   if (mouseX > buttonX*widthMultiplier && mouseX < buttonX*widthMultiplier + buttonW*widthMultiplier && mouseY > (buttonY+300)*heightMultiplier && mouseY < (buttonY+300)*heightMultiplier + buttonH*heightMultiplier) {
     fill(80,80,80);
     if (mouseIsClicked) {
-      if (platform === 'PC') platform = 'MOBILE';
-      else                   platform = 'PC';
+      if (platform === 'PC') {
+        platform = 'MOBILE';
+      }
+      else                   {
+        platform = 'PC';
+      }
     }
   }
   else {
@@ -822,14 +876,18 @@ function mainMenu() {
   rect(buttonX*widthMultiplier,(buttonY+300)*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
 
   noStroke();
-  fill("WHITE")
+  fill("WHITE");
 
   text("EASY",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+15)*heightMultiplier);
   text("NORMAL",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+115)*heightMultiplier);
   text("HARD",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+215)*heightMultiplier);
 
-  if (platform === 'PC') text("PC",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+315)*heightMultiplier);
-  else                   text("MOBILE",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+315)*heightMultiplier);
+  if (platform === 'PC') {
+    text("PC",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+315)*heightMultiplier);
+  }
+  else                   {
+    text("MOBILE",(buttonW)*widthMultiplier,(buttonY+(buttonH/2)+315)*heightMultiplier);
+  }
 
   textSize(40*widthMultiplier);
   text("TOWER\nOF THE\nPRISMATIC WITCH",(gameWidth/2)*widthMultiplier,60*heightMultiplier);
@@ -847,7 +905,7 @@ function deadMenu() {
   
   //Draws "Game Over"
   noStroke();
-  fill("WHITE")
+  fill("WHITE");
   textSize(39*widthMultiplier);
 
   text("GAME OVER",(gameWidth/2)*widthMultiplier,(gameHeight*(1/3))*heightMultiplier);
@@ -887,7 +945,7 @@ function deadMenu() {
   rect(retryButtonX*widthMultiplier,retryButtonY*heightMultiplier,buttonW*widthMultiplier,buttonH*heightMultiplier);
 
   noStroke();
-  fill("WHITE")
+  fill("WHITE");
 
   text("RETRY",(buttonW)*widthMultiplier,(retryButtonY+(buttonH/2)+15)*heightMultiplier);
 
@@ -897,24 +955,24 @@ function startMenu() {
 
   textAlign(CENTER);
   noStroke();
-  fill("WHITE")
+  fill("WHITE");
   textSize(64*widthMultiplier);
 
   text("CLICK ANYWHERE\nTO START",(gameWidth/2)*widthMultiplier,(gameHeight*(1/3))*heightMultiplier);
 
   if (mouseIsClicked) {
     mouseIsClicked = false;
-    state = 'MENU'
+    state = 'MENU';
     menuMusic.start();
   }
-  console.log(widthMultiplier)
+  console.log(widthMultiplier);
 }
 
 function draw() {
   background(0);
 
   if (state === 'START') {
-    startMenu()
+    startMenu();
   }
 
   if (state === 'MENU') {
