@@ -5,13 +5,13 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let screenRatioX = 4;
-let screenRatioY = 3;
+
 
 async function setup() {
-  createCanvas(windowWidth, windowHeight);
+  let { w, h } = calculateCanvasSize();
+  createCanvas(w, h);
 }
 
 function draw() {
-  background(220);
+  background('black');
 }
