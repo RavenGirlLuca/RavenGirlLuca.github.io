@@ -5,6 +5,7 @@
 - [Coding JS](00-codingjs)
 - [Square Around Edge of Screen](01-square)
 - [Traffic Light](traffic-light)
+- [Bouncy Balls](bballs)
 
 ## PROJECTS
 - [Interactive Scene](scene)
