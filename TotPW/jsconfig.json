@@ -5,5 +5,5 @@
     "/home/ravengirl/.var/app/com.vscodium.codium/data/codium/extensions/wmcicompsci.cs30-p5-1.9.7-universal/p5types/global.d.ts",
     "/home/ravengirl/.var/app/com.vscodium.codium/data/codium/extensions/wmcicompsci.cs30-p5-1.9.7-universal/p5types/p5.sound.d.ts",
     "/home/ravengirl/.var/app/com.vscodium.codium/data/codium/extensions/wmcicompsci.cs30-p5-1.9.7-universal/p5types/p5.sound.global.d.ts"
-  ]
+, "src/window.js", "src/bullets.js", "src/sketch.js"  ]
 }

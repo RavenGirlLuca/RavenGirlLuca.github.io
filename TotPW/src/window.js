@@ -3,6 +3,8 @@ const GAMEHEIGHT = 600;
 
 const ASPECTRATIO = GAMEWIDTH/GAMEHEIGHT;
 
+let WindowMultiplier;
+
 function calculateCanvasSize() {
   //calculates how large the canvas should be to fit the required aspect ration
   let w = windowWidth;

@@ -12,6 +12,8 @@ class Bullet {
 
   draw() {
     //draws the bullets on screen, uses a multiplier to convert the games 4:3 gameplay ration to the screens size
+    rect(this.px,this.py,this.siz,this.siz)
+
     push();
     
     translate((this.px + (this.siz/2)) * widthMultiplier, (this.py + (this.siz/2)) * heightMultiplier);
