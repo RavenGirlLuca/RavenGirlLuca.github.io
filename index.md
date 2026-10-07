@@ -6,6 +6,7 @@
 - [Square Around Edge of Screen](01-square)
 - [Traffic Light](traffic-light)
 - [Bouncy Balls](bballs)
+- [Perlin Noise](noise)
 
 ## PROJECTS
 - [Interactive Scene](scene)

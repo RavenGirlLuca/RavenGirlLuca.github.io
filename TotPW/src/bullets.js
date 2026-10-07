@@ -1,35 +1,34 @@
 let bullets = []; //bullet array, stores all bullets on screen
 
 class Bullet {
-  constructor(px,py,vel,ang,siz,crv) {
+  constructor(px,py,vel,ang,siz,crv,img) {
     this.px  = px;  //X Position in the game
     this.py  = py;  //Y Position in the game
     this.vel = vel; //Vector velocity, combined with angle to move the px and py
     this.ang = ang; //Angle, used with velocity to determain the new bullet pos
     this.siz = siz; //Bullets sized, used for both draw and determening collision with the player
     this.crv = crv; //Bullet tragectory curve, used on some attacks to curve the bullet path
+    this.img = img;
   }
 
   draw() {
     //draws the bullets on screen, uses a multiplier to convert the games 4:3 gameplay ration to the screens size
-    rect(this.px,this.py,this.siz,this.siz)
-
     push();
     
-    translate((this.px + (this.siz/2)) * widthMultiplier, (this.py + (this.siz/2)) * heightMultiplier);
+    translate((this.px + (this.siz/2)) * WINDOWMULTIPLIER, (this.py + (this.siz/2)) * WINDOWMULTIPLIER);
 
     angleMode(DEGREES);
     rotate(this.ang+90);
 
     imageMode(CENTER); 
-    image(bulletImg, 0, 0,16*widthMultiplier,16*heightMultiplier);
+    image(this.img, 0, 0,16*WINDOWMULTIPLIER,16*WINDOWMULTIPLIER);
 
     pop();
   }
 
   despawnCheck() {
     //does a small AABB check to see if the bullets are still on screen, if not they despawn (treats bullets and rectangles)
-    if (!(this.px + this.siz > 0 && this.px < gameWidth && this.py + this.siz > 0 && this.py < gameHeight)) {
+    if (!(this.px + this.siz > 0 && this.px < GAMEWIDTH && this.py + this.siz > 0 && this.py < GAMEHEIGHT)) {
       return true;
     }
 
@@ -47,7 +46,7 @@ class Bullet {
   }
 }
 
-function createBullets(type,amount,x1,y1,x2,y2,vel,minAng,maxAng,siz,crv) {
+function createBullets(type,image,amount,x1,y1,x2,y2,vel,minAng,maxAng,siz,crv) {
   //used to summon bullets with set properties
 
   for (let i = 0; i < amount; i++) {
@@ -56,6 +55,6 @@ function createBullets(type,amount,x1,y1,x2,y2,vel,minAng,maxAng,siz,crv) {
 
     let ang = (((maxAng - minAng)/amount)*i)+minAng; //if u want the bullets to spawn along a ring, or a semi circle, this handles that using min, and max Ang
 
-    bullets.push(new Bullet(px,py,vel,ang,siz,crv));
+    bullets.push(new Bullet(px,py,vel,ang,siz,crv,image));
   }
 }

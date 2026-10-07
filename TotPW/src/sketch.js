@@ -15,5 +15,24 @@ async function setup() {
 function draw() {
   background('black');
 
-  image(felosBulletBlank,50,50)
+  createBullets(":P",felosBulletBlank,5,100,100,100,100,1,0,0,10,0);
+
+  for (let i = 0; i < bullets.length; i++) {
+    bullets[i].update();
+    bullets[i].draw();
+
+    //if bullet collides with player, delete it
+    if (player.px + player.siz > bullets[i].px && player.px < bullets[i].px + bullets[i].siz && player.py + player.siz > bullets[i].py && player.py < bullets[i].py + bullets[i].siz) {
+      player.bulletCol();
+      bullets.splice(i,1); 
+    }
+
+    //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
+    else if (bullets[i].despawnCheck()) {
+      bullets.splice(i,1); 
+    }
+  }
+
+  player.update();
+  player.draw();
 }
