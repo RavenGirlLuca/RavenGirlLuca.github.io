@@ -1,14 +1,13 @@
 let bullets = []; //bullet array, stores all bullets on screen
 
 class Bullet {
-  constructor(px,py,vel,ang,siz,crv,img) {
+  constructor(px,py,vel,ang,siz,crv) {
     this.px  = px;  //X Position in the game
     this.py  = py;  //Y Position in the game
     this.vel = vel; //Vector velocity, combined with angle to move the px and py
     this.ang = ang; //Angle, used with velocity to determain the new bullet pos
     this.siz = siz; //Bullets sized, used for both draw and determening collision with the player
     this.crv = crv; //Bullet tragectory curve, used on some attacks to curve the bullet path
-    this.img = img;
   }
 
   draw() {
@@ -21,7 +20,7 @@ class Bullet {
     rotate(this.ang+90);
 
     imageMode(CENTER); 
-    image(this.img, 0, 0,16*WINDOWMULTIPLIER,16*WINDOWMULTIPLIER);
+    image(felosBulletBlank, 0, 0,16*WINDOWMULTIPLIER,16*WINDOWMULTIPLIER);
 
     pop();
   }
@@ -46,7 +45,7 @@ class Bullet {
   }
 }
 
-function createBullets(type,image,amount,x1,y1,x2,y2,vel,minAng,maxAng,siz,crv) {
+function createBullets(type,amount,x1,y1,x2,y2,vel,minAng,maxAng,siz,crv) {
   //used to summon bullets with set properties
 
   for (let i = 0; i < amount; i++) {
@@ -55,6 +54,27 @@ function createBullets(type,image,amount,x1,y1,x2,y2,vel,minAng,maxAng,siz,crv) 
 
     let ang = (((maxAng - minAng)/amount)*i)+minAng; //if u want the bullets to spawn along a ring, or a semi circle, this handles that using min, and max Ang
 
-    bullets.push(new Bullet(px,py,vel,ang,siz,crv,image));
+    bullets.push(new Bullet(px,py,vel,ang,siz,crv));
   }
+}
+
+function updateBullets() {
+  for (let i = bullets.length-1; i >= 0; i--) {
+      bullets[i].update();
+
+      //if bullet collides with player, delete it
+      if (player.px + player.siz > bullets[i].px && player.px < bullets[i].px + bullets[i].siz && player.py + player.siz > bullets[i].py && player.py < bullets[i].py + bullets[i].siz) {
+        player.bulletCol();
+        bullets.splice(i,1); 
+      }
+
+      //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
+      else if (bullets[i].despawnCheck()) {
+        bullets.splice(i,1); 
+      }
+    }
+}
+
+function drawBullets() {
+  for (let i = bullets.length-1; i >= 0; i--) bullets[i].draw();
 }

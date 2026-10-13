@@ -1,5 +1,3 @@
-let player;
-
 class Player {
   constructor() {
     this.baseSpeed = 3; //players base speed, should never change
@@ -8,9 +6,9 @@ class Player {
     this.gravity     = 0.2; 
     this.friction    = 0.5;
 
-    this.px  = GAMEWIDTH/2;    //players x position in the world
-    this.py  = GAMEHEIGHT/2;   //players y position in the world
-    this.pvx = 0;               //players x velocity, used for the skirt
+    this.px  = GAMEBOXX+(GAMEBOXW/2);    //players x position in the world
+    this.py  = GAMEBOXY+(GAMEBOXH/2);   //players y position in the world
+    this.pvx = 0;              //players x velocity, used for the skirt
     this.spd = this.baseSpeed; //players speed, gets added to the player while moving
     this.siz = 15;             //player size, used for collision and drawing
     this.run = false;          //if shift is being held, this is true
@@ -20,7 +18,7 @@ class Player {
     this.scr = 0;              //players score, you gain more score the more attacks you survive
     this.srt = 0;              //skirt rotation, while the player is moving the skirt will be rotated with a physics sim to simulate cloth moving with inertia
     this.sps = this.px;        //skirt position, used with px to calculate how fast the players going
-    this.skv = 0;               //skirt velocity
+    this.skv = 0;              //skirt velocity
   }
 
   draw() {
@@ -49,8 +47,7 @@ class Player {
 
   gameBoxCol(px,py) {
     //returns false if the players action will leave the box
-    //return ((px > gameBoxX && px + this.siz < gameBoxX + gameBoxW && py > gameBoxY && py + this.siz < gameBoxY + gameBoxH ));
-    return true; 
+    return ((px > GAMEBOXX && px + this.siz < GAMEBOXX + GAMEBOXW && py > GAMEBOXY && py + this.siz < GAMEBOXY + GAMEBOXH )); 
   }
 
   skirtPhysics() {
@@ -71,7 +68,7 @@ class Player {
     //handles most player functions that happen each frame
     if (!this.ded) {
       //Running
-      this.run = (keyIsDown(SHIFT));
+      this.run = (keyIsDown(SHIFT) || mobileRun);
       if (this.run) {
         this.spd = this.baseSpeed*1.5;
       }
@@ -84,16 +81,16 @@ class Player {
         this.spd *= 0.707;
       }
 
-      if ((keyIsDown(UP_ARROW)) && this.gameBoxCol(this.px,this.py - this.spd))        {
+      if ((keyIsDown(UP_ARROW) || currentDir === 'UP') && this.gameBoxCol(this.px,this.py - this.spd))        {
         this.py -= this.spd;
       }
-      if ((keyIsDown(DOWN_ARROW)) && this.gameBoxCol(this.px,this.py + this.spd))    {
+      if ((keyIsDown(DOWN_ARROW) || currentDir === 'DOWN') && this.gameBoxCol(this.px,this.py + this.spd))    {
         this.py += this.spd;
       }
-      if ((keyIsDown(LEFT_ARROW)) && this.gameBoxCol(this.px - this.spd ,this.py))   {
+      if ((keyIsDown(LEFT_ARROW) || currentDir === 'LEFT') && this.gameBoxCol(this.px - this.spd ,this.py))   {
         this.px -= this.spd;
       }
-      if ((keyIsDown(RIGHT_ARROW)) && this.gameBoxCol(this.px + this.spd, this.py)) {
+      if ((keyIsDown(RIGHT_ARROW) || currentDir === 'RIGHT') && this.gameBoxCol(this.px + this.spd, this.py)) {
         this.px += this.spd;
       }
 
