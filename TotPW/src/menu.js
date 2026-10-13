@@ -1,10 +1,4 @@
-function drawGameBox() {
-  //Draws a green border around the area the player can move
-  fill("BLACK");
-  strokeWeight(4);
-  stroke(86,160,73);
-  rect(GAMEBOXX*WINDOWMULTIPLIER,GAMEBOXY*WINDOWMULTIPLIER,GAMEBOXW*WINDOWMULTIPLIER,GAMEBOXH*WINDOWMULTIPLIER);
-}
+let version = 'v0.1.2-BETA';
 
 let statMenuX = (GAMEBOXX + GAMEBOXW) + 25;
 let statMenuY = (0.375*GAMEHEIGHT) + 25;
@@ -29,8 +23,16 @@ let mobileButtonRightY = statMenuY+215;
 let mobileButtonRunX   = statMenuX + ((statMenuW/2)-(mobileButtonW/2));
 let mobileButtonRunY   = statMenuY+215;
 
-
 let enemyName = "FELOS\nTHE PRISMATIC WITCH";
+
+function drawGameBox() {
+  //Draws a green border around the area the player can move
+  fill("BLACK");
+  strokeWeight(4);
+  stroke(86,160,73);
+  rect(GAMEBOXX*WINDOWMULTIPLIER,GAMEBOXY*WINDOWMULTIPLIER,GAMEBOXW*WINDOWMULTIPLIER,GAMEBOXH*WINDOWMULTIPLIER);
+}
+
 
 function drawStatMenu() {
   //Draws a green border around the players stats, including if their health, if theyre running, their name, and what difficulty their playing on, and if theire alive
@@ -188,9 +190,7 @@ function drawEnemy() {
 let buttonX = 20;
 let buttonY = 200;
 let buttonW = 400;
-let buttonH = 80;
-
-let version = 'v0.1.1-BETA';
+let buttonH = 60;
 
 function mainMenu() {
   //Draws main menu, allows you to choose from 3 dificulties and shows the title
@@ -204,11 +204,8 @@ function mainMenu() {
   if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > buttonY*WINDOWMULTIPLIER && mouseY < buttonY*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
     fill(64,49,141);
     if (mouseIsClicked) {
-      player.dif = 1;
-      nextAttackFrame = 30;
-      state = 'GAME';
-      felosMusic.start();
-      menuMusic.stop();
+      mouseIsClicked = false;
+      state = 'DIFMENU';
     }
   }
   else {
@@ -217,68 +214,66 @@ function mainMenu() {
 
   rect(buttonX*WINDOWMULTIPLIER,buttonY*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
-  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+100)*WINDOWMULTIPLIER && mouseY < (buttonY+100)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+80)*WINDOWMULTIPLIER && mouseY < (buttonY+80)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
     fill(85,160,73);
     if (mouseIsClicked) {
-      player.dif = 2;
-      nextAttackFrame = 25;
-      state = 'GAME';
-      felosMusic.start();
-      menuMusic.stop();
+      mouseIsClicked = false;
+      state = 'BONUSMENU';
     }
   }
   else {
     fill(148,224,137);
   } 
 
-  rect(buttonX*WINDOWMULTIPLIER,(buttonY+100)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+80)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
-  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+200)*WINDOWMULTIPLIER && mouseY < (buttonY+200)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+160)*WINDOWMULTIPLIER && mouseY < (buttonY+160)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
     fill(136,57,50);
     if (mouseIsClicked) {
-      player.dif = 3;
-      nextAttackFrame = 20;
-      state = 'GAME';
-      felosMusic.start();
-      menuMusic.stop();
+      mouseIsClicked = false;
+      state = 'OPTIONSMENU';
     }
   }
   else {
     fill(184,105,98);
   } 
 
-  rect(buttonX*WINDOWMULTIPLIER,(buttonY+200)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+160)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
-  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+300)*WINDOWMULTIPLIER && mouseY < (buttonY+300)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+240)*WINDOWMULTIPLIER && mouseY < (buttonY+240)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
     fill(80,80,80);
     if (mouseIsClicked) {
-      if (platform === 'PC') {
-        platform = 'MOBILE';
-      }
-      else                   {
-        platform = 'PC';
-      }
+      mouseIsClicked = false;
+      //WILL SAVE GAME
     }
   }
   else {
     fill(159,159,159);
   } 
 
-  rect(buttonX*WINDOWMULTIPLIER,(buttonY+300)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+240)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+320)*WINDOWMULTIPLIER && mouseY < (buttonY+320)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      mouseIsClicked = false;
+      window.location.href = '../';
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+320)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
   noStroke();
   fill("WHITE");
 
-  text("EASY",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+15)*WINDOWMULTIPLIER);
-  text("NORMAL",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+115)*WINDOWMULTIPLIER);
-  text("HARD",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+215)*WINDOWMULTIPLIER);
-
-  if (platform === 'PC') {
-    text("PC",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+315)*WINDOWMULTIPLIER);
-  }
-  else                   {
-    text("MOBILE",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+315)*WINDOWMULTIPLIER);
-  }
+  text("PLAY",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+15)*WINDOWMULTIPLIER);
+  text("BONUS",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+95)*WINDOWMULTIPLIER);
+  text("OPTIONS",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+175)*WINDOWMULTIPLIER);
+  text("SAVE",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+255)*WINDOWMULTIPLIER);
+  text("EXIT",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+335)*WINDOWMULTIPLIER);
 
   textAlign(LEFT);
   textSize(40*WINDOWMULTIPLIER);
@@ -310,13 +305,14 @@ function deadMenu() {
   if (mouseX > retryButtonX*WINDOWMULTIPLIER && mouseX < retryButtonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > retryButtonY*WINDOWMULTIPLIER && mouseY < retryButtonY*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
     fill(136,57,50);
     if (mouseIsClicked) {
+      mouseIsClicked = false;
       player.px  = GAMEWIDTH/2;
       player.py  = GAMEHEIGHT/2;
       player.liv = 5;
       player.dif = 1;     
       player.ded = false;
       player.scr = 0;
-      state = 'MENU';
+      state = 'MAINMENU';
 
       attackFrame     = 0;
       nextAttackFrame = 30;
@@ -341,11 +337,9 @@ function deadMenu() {
   fill("WHITE");
 
   text("RETRY",(buttonW)*WINDOWMULTIPLIER,(retryButtonY+(buttonH/2)+15)*WINDOWMULTIPLIER);
-
 }
 
 function startMenu() {
-
   textAlign(CENTER);
   noStroke();
   fill("WHITE");
@@ -355,7 +349,94 @@ function startMenu() {
 
   if (mouseIsClicked) {
     mouseIsClicked = false;
-    state = 'MENU';
+    state = 'MAINMENU';
     menuMusic.start();
   }
+}
+
+let diffMenuButtonX = 30;
+let diffMenuButtonY = GAMEHEIGHT*(3/8);
+let diffMenuButtonW = (GAMEWIDTH/2)-40;
+let diffMenuButtonH = 80;
+
+function diffMenu() {
+  textAlign(CENTER);
+  noStroke();
+  fill("WHITE");
+  textSize(64*WINDOWMULTIPLIER);
+
+  text("SELECT A\nDIFFICULTY",(GAMEWIDTH/2)*WINDOWMULTIPLIER,(GAMEHEIGHT*(1/8))*WINDOWMULTIPLIER);
+
+  stroke("WHITE");
+  strokeWeight(4);
+  textSize(40*WINDOWMULTIPLIER);
+
+  if (mouseX > diffMenuButtonX*WINDOWMULTIPLIER && 
+      mouseX < diffMenuButtonX*WINDOWMULTIPLIER + diffMenuButtonW*WINDOWMULTIPLIER && 
+      mouseY > diffMenuButtonY*WINDOWMULTIPLIER && 
+      mouseY < diffMenuButtonY*WINDOWMULTIPLIER + diffMenuButtonH*WINDOWMULTIPLIER) {
+    fill(64,49,141);
+    if (mouseIsClicked) {
+      player.dif = 1;
+      nextAttackFrame = 30;
+      state = 'GAME';
+      felosMusic.start();
+      menuMusic.stop();
+    }
+  }
+  else {
+    fill(120,105,196);
+  } 
+
+  rect(diffMenuButtonX*WINDOWMULTIPLIER,diffMenuButtonY*WINDOWMULTIPLIER,diffMenuButtonW*WINDOWMULTIPLIER,diffMenuButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER && 
+      mouseX < (diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER + diffMenuButtonW*WINDOWMULTIPLIER && 
+      mouseY > diffMenuButtonY*WINDOWMULTIPLIER && 
+      mouseY < diffMenuButtonY*WINDOWMULTIPLIER + diffMenuButtonH*WINDOWMULTIPLIER) {
+    fill(64,49,141);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(120,105,196);
+  } 
+
+  rect((diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER,diffMenuButtonY*WINDOWMULTIPLIER,diffMenuButtonW*WINDOWMULTIPLIER,diffMenuButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > diffMenuButtonX*WINDOWMULTIPLIER && 
+      mouseX < diffMenuButtonX*WINDOWMULTIPLIER + diffMenuButtonW*WINDOWMULTIPLIER && 
+      mouseY > (diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER && 
+      mouseY < (diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER + diffMenuButtonH*WINDOWMULTIPLIER) {
+    fill(64,49,141);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(120,105,196);
+  } 
+
+  rect(diffMenuButtonX*WINDOWMULTIPLIER,(diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER,diffMenuButtonW*WINDOWMULTIPLIER,diffMenuButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER && 
+      mouseX < (diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER + diffMenuButtonW*WINDOWMULTIPLIER && 
+      mouseY > (diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER && 
+      mouseY < (diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER + diffMenuButtonH*WINDOWMULTIPLIER) {
+    fill(64,49,141);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(120,105,196);
+  } 
+
+  rect((diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER,(diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER,diffMenuButtonW*WINDOWMULTIPLIER,diffMenuButtonH*WINDOWMULTIPLIER);
+
+  noStroke();
+  fill("WHITE");
+
+  text("EASY",(diffMenuButtonX+(diffMenuButtonW/2))*WINDOWMULTIPLIER,(diffMenuButtonY+(diffMenuButtonH/2)+15)*WINDOWMULTIPLIER);
 }

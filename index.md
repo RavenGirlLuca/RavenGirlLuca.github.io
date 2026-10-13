@@ -7,6 +7,7 @@
 - [Traffic Light](traffic-light)
 - [Bouncy Balls](bballs)
 - [Perlin Noise](noise)
+- [Collision Library](libdemo)
 
 ## PROJECTS
 - [Interactive Scene](scene)

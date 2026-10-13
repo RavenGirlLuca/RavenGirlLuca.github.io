@@ -61,7 +61,7 @@ class Player {
     this.skv *= this.friction;
     this.srt += this.skv;
     
-    this.srt = constrain(this.srt, -5*this.spd, 5*this.spd);
+    this.srt = constrain(this.srt, -2*(this.spd*2), 2*(this.spd*2));
   }
 
   update() {

@@ -24,8 +24,28 @@ function draw() {
     startMenu();
   }
 
-  if (state === 'MENU') {
+  if (state === 'MAINMENU') {
     mainMenu();
+  }
+
+  if (state === 'DIFMENU') {
+    diffMenu();
+  }
+  
+  if (state === 'BONUSMENU') {
+    
+  }
+
+  if (state === 'OPTIONSMENU') {
+    
+  }
+
+  if (state === 'LEVELMENU') {
+    
+  }
+
+  if (state === 'MASLEVELMENU') {
+    
   }
 
   if (state === 'GAME') {
