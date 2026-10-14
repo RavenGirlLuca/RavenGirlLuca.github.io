@@ -81,10 +81,10 @@ function mouseClicked() {
   mouseIsClicked = true;
 }
 
-function keyTyped() {
+function keyPressed() {
   if (state === 'DATAINPUT') {
-    if (keyCode === 8) {
-      currentInputName = currentInputName.pop();
+    if (key === 'Backspace') {
+      currentInputName = currentInputName.slice(0, -1);
       console.log('WORKING');
     } 
 

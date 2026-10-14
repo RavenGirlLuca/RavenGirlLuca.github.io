@@ -1,5 +1,19 @@
 class Player {
   constructor() {
+    this.name    = 'MISSINGNAME';
+
+    this.easyScr = 0;
+    this.normScr = 0;
+    this.hardScr = 0;
+    this.mastScr = 0;
+    this.masoScr = 0;
+
+    this.easyWin = false;
+    this.normWin = false;
+    this.hardWin = false;
+    this.mastWin = false;
+    this.masoWin = false;
+
     this.baseSpeed = 3; //players base speed, should never change
 
     this.sensitivity = 4.5;  //these 3 are used in the skirt function
@@ -105,6 +119,12 @@ class Player {
       state = 'DEAD';
       felosMusic.stop();
       gameoverSFX.start();
+
+      if      (player.dif === 1) player.easyScr = player.scr;
+      else if (player.dif === 2) player.normScr = player.scr;
+      else if (player.dif === 3) player.hardScr = player.scr;
+      else if (player.dif === 4) player.mastScr = player.scr;
+      else if (player.dif === 5) player.masoScr = player.scr;
     }
   }
 }

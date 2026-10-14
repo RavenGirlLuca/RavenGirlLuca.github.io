@@ -1,4 +1,4 @@
-let version = 'v0.1.3-BETA';
+let version = 'v0.1.4-BETA';
 
 let statMenuX = (GAMEBOXX + GAMEBOXW) + 25;
 let statMenuY = (0.375*GAMEHEIGHT) + 25;
@@ -245,7 +245,7 @@ function mainMenu() {
     fill(80,80,80);
     if (mouseIsClicked) {
       mouseIsClicked = false;
-      //WILL SAVE GAME
+      saveData();
     }
   }
   else {
@@ -460,6 +460,14 @@ function diffMenu() {
   text("HARD",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+175)*WINDOWMULTIPLIER);
   text("MASTER",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+255)*WINDOWMULTIPLIER);
   text("MASOCHIST",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+335)*WINDOWMULTIPLIER);
+
+  textAlign(LEFT);
+
+  text("SCR: " + player.easyScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+15)*WINDOWMULTIPLIER);
+  text("SCR: " + player.normScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+95)*WINDOWMULTIPLIER);
+  text("SCR: " + player.hardScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+175)*WINDOWMULTIPLIER);
+  text("SCR: " + player.mastScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+255)*WINDOWMULTIPLIER);
+  text("SCR: " + player.masoScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+335)*WINDOWMULTIPLIER);
 }
 
 let currentInputName = '';
@@ -489,5 +497,10 @@ function dataMenu() {
   else {
     fill("WHITE");
     text(currentInputName,(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER)
+  }
+
+  if(!(currentInputName === '') && keyIsDown(ENTER) && currentInputName.length <= 8) {
+    createData(currentInputName);
+    state = 'MAINMENU';
   }
 }
