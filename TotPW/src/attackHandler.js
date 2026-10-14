@@ -171,7 +171,7 @@ function attack() {
       }
     }
 
-    else if (player.dif === 3) {
+    else if (player.dif >= 3) {
       if (currentAttack === 0) {
         createBullets(":P", 18,575,25,575,25,5.5,0+(attacks*5),360+(attacks*5),8,0);
         createBullets(":P", 18,25,25,25,25,5.5,0+(attacks*5),360+(attacks*5),8,0);

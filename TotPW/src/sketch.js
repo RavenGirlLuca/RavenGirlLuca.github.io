@@ -15,6 +15,8 @@ async function setup() {
   await loadGIFs();
   await loadAudio();
   await loadFonts();
+
+  loadData();
 }
 
 function draw() {
@@ -24,31 +26,35 @@ function draw() {
     startMenu();
   }
 
-  if (state === 'MAINMENU') {
+  else if (state === 'DATAINPUT') {
+    dataMenu();
+  }
+
+  else if (state === 'MAINMENU') {
     mainMenu();
   }
 
-  if (state === 'DIFMENU') {
+  else if (state === 'DIFMENU') {
     diffMenu();
   }
   
-  if (state === 'BONUSMENU') {
+  else if (state === 'BONUSMENU') {
     
   }
 
-  if (state === 'OPTIONSMENU') {
+  else if (state === 'OPTIONSMENU') {
     
   }
 
-  if (state === 'LEVELMENU') {
+  else if (state === 'LEVELMENU') {
     
   }
 
-  if (state === 'MASLEVELMENU') {
+  else if (state === 'MASLEVELMENU') {
     
   }
 
-  if (state === 'GAME') {
+  else if (state === 'GAME') {
     attack();
     updateBullets();
     player.update();
@@ -60,8 +66,12 @@ function draw() {
     player.draw();
   }
 
-  if (state === 'DEAD') {
+  else if (state === 'DEAD') {
     deadMenu();
+  }
+
+  else {
+    state = 'MAINMENU';
   }
 
   mouseIsClicked = false;
@@ -70,3 +80,17 @@ function draw() {
 function mouseClicked() {
   mouseIsClicked = true;
 }
+
+function keyTyped() {
+  if (state === 'DATAINPUT') {
+    if (keyCode === 8) {
+      currentInputName = currentInputName.pop();
+      console.log('WORKING');
+    } 
+
+    else if (key.length === 1) {
+      currentInputName += key;
+    }
+  }
+}
+

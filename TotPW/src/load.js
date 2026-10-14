@@ -1,3 +1,4 @@
+//Important Global Variables
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
 const GAMEBOXW = 550;
@@ -22,6 +23,7 @@ let felosBulletPurple;
 let playerTopNormal;
 let playerBottomNormal;
 let playerSkirtNormal;
+let mainMenuBg0;
 
 async function loadImages() {
   //Load Images
@@ -35,6 +37,7 @@ async function loadImages() {
   playerTopNormal    = await loadImage('/TotPW/src/assets/playertop.png');
   playerBottomNormal = await loadImage('/TotPW/src/assets/playerbottom.png');
   playerSkirtNormal  = await loadImage('/TotPW/src/assets/playerskirt.png');
+  mainMenuBg0        = await loadImage('/TotPW/src/assets/felosBG.png');
 }
 
 //Define GIFs

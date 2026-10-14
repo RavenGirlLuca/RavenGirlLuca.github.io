@@ -1,4 +1,4 @@
-let version = 'v0.1.2-BETA';
+let version = 'v0.1.3-BETA';
 
 let statMenuX = (GAMEBOXX + GAMEBOXW) + 25;
 let statMenuY = (0.375*GAMEHEIGHT) + 25;
@@ -194,6 +194,7 @@ let buttonH = 60;
 
 function mainMenu() {
   //Draws main menu, allows you to choose from 3 dificulties and shows the title
+  image(mainMenuBg0, 0,0, GAMEWIDTH*WINDOWMULTIPLIER, GAMEHEIGHT*WINDOWMULTIPLIER);
 
   textAlign(CENTER);
 
@@ -367,14 +368,11 @@ function diffMenu() {
 
   text("SELECT A\nDIFFICULTY",(GAMEWIDTH/2)*WINDOWMULTIPLIER,(GAMEHEIGHT*(1/8))*WINDOWMULTIPLIER);
 
+  textSize(40*WINDOWMULTIPLIER);
   stroke("WHITE");
   strokeWeight(4);
-  textSize(40*WINDOWMULTIPLIER);
 
-  if (mouseX > diffMenuButtonX*WINDOWMULTIPLIER && 
-      mouseX < diffMenuButtonX*WINDOWMULTIPLIER + diffMenuButtonW*WINDOWMULTIPLIER && 
-      mouseY > diffMenuButtonY*WINDOWMULTIPLIER && 
-      mouseY < diffMenuButtonY*WINDOWMULTIPLIER + diffMenuButtonH*WINDOWMULTIPLIER) {
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > buttonY*WINDOWMULTIPLIER && mouseY < buttonY*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
     fill(64,49,141);
     if (mouseIsClicked) {
       player.dif = 1;
@@ -388,55 +386,108 @@ function diffMenu() {
     fill(120,105,196);
   } 
 
-  rect(diffMenuButtonX*WINDOWMULTIPLIER,diffMenuButtonY*WINDOWMULTIPLIER,diffMenuButtonW*WINDOWMULTIPLIER,diffMenuButtonH*WINDOWMULTIPLIER);
+  rect(buttonX*WINDOWMULTIPLIER,buttonY*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
-  if (mouseX > (diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER && 
-      mouseX < (diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER + diffMenuButtonW*WINDOWMULTIPLIER && 
-      mouseY > diffMenuButtonY*WINDOWMULTIPLIER && 
-      mouseY < diffMenuButtonY*WINDOWMULTIPLIER + diffMenuButtonH*WINDOWMULTIPLIER) {
-    fill(64,49,141);
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+80)*WINDOWMULTIPLIER && mouseY < (buttonY+80)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(85,160,73);
     if (mouseIsClicked) {
-      
+      player.dif = 2;
+      nextAttackFrame = 25;
+      state = 'GAME';
+      felosMusic.start();
+      menuMusic.stop();
     }
   }
   else {
-    fill(120,105,196);
+    fill(148,224,137);
   } 
 
-  rect((diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER,diffMenuButtonY*WINDOWMULTIPLIER,diffMenuButtonW*WINDOWMULTIPLIER,diffMenuButtonH*WINDOWMULTIPLIER);
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+80)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
-  if (mouseX > diffMenuButtonX*WINDOWMULTIPLIER && 
-      mouseX < diffMenuButtonX*WINDOWMULTIPLIER + diffMenuButtonW*WINDOWMULTIPLIER && 
-      mouseY > (diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER && 
-      mouseY < (diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER + diffMenuButtonH*WINDOWMULTIPLIER) {
-    fill(64,49,141);
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+160)*WINDOWMULTIPLIER && mouseY < (buttonY+160)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(136,57,50);
     if (mouseIsClicked) {
-      
+      player.dif = 3;
+      nextAttackFrame = 20;
+      state = 'GAME';
+      felosMusic.start();
+      menuMusic.stop();
     }
   }
   else {
-    fill(120,105,196);
+    fill(184,105,98);
   } 
 
-  rect(diffMenuButtonX*WINDOWMULTIPLIER,(diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER,diffMenuButtonW*WINDOWMULTIPLIER,diffMenuButtonH*WINDOWMULTIPLIER);
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+160)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
-  if (mouseX > (diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER && 
-      mouseX < (diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER + diffMenuButtonW*WINDOWMULTIPLIER && 
-      mouseY > (diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER && 
-      mouseY < (diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER + diffMenuButtonH*WINDOWMULTIPLIER) {
-    fill(64,49,141);
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+240)*WINDOWMULTIPLIER && mouseY < (buttonY+240)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
     if (mouseIsClicked) {
-      
+      player.dif = 4;
+      nextAttackFrame = 15;
+      state = 'GAME';
+      felosMusic.start();
+      menuMusic.stop();
     }
   }
   else {
-    fill(120,105,196);
+    fill(159,159,159);
   } 
 
-  rect((diffMenuButtonX + (diffMenuButtonW + 20))*WINDOWMULTIPLIER,(diffMenuButtonY + (diffMenuButtonH + 20))*WINDOWMULTIPLIER,diffMenuButtonW*WINDOWMULTIPLIER,diffMenuButtonH*WINDOWMULTIPLIER);
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+240)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+320)*WINDOWMULTIPLIER && mouseY < (buttonY+320)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      player.dif = 5;
+      nextAttackFrame = 10;
+      state = 'GAME';
+      felosMusic.start();
+      menuMusic.stop();
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+320)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
   noStroke();
   fill("WHITE");
 
-  text("EASY",(diffMenuButtonX+(diffMenuButtonW/2))*WINDOWMULTIPLIER,(diffMenuButtonY+(diffMenuButtonH/2)+15)*WINDOWMULTIPLIER);
+  text("EASY",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+15)*WINDOWMULTIPLIER);
+  text("NORMAL",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+95)*WINDOWMULTIPLIER);
+  text("HARD",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+175)*WINDOWMULTIPLIER);
+  text("MASTER",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+255)*WINDOWMULTIPLIER);
+  text("MASOCHIST",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+335)*WINDOWMULTIPLIER);
+}
+
+let currentInputName = '';
+
+function dataMenu() {
+  textAlign(CENTER);
+  noStroke();
+  fill("WHITE");
+  textSize(64*WINDOWMULTIPLIER);
+
+  text("ENTER A\nUSERNAME",(GAMEWIDTH/2)*WINDOWMULTIPLIER,(GAMEHEIGHT*(1/8))*WINDOWMULTIPLIER);
+
+  textSize(40*WINDOWMULTIPLIER);
+  stroke("WHITE");
+  strokeWeight(4);
+  fill('BLACK');
+
+
+  rect(20*WINDOWMULTIPLIER,300*WINDOWMULTIPLIER,(GAMEWIDTH-40)*WINDOWMULTIPLIER,80*WINDOWMULTIPLIER);
+
+  noStroke();
+
+  if (currentInputName === '') {
+    fill("GREY");
+    text("ENTER A NAME...",(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER)
+  }
+  else {
+    fill("WHITE");
+    text(currentInputName,(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER)
+  }
 }
