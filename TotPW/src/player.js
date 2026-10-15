@@ -78,6 +78,22 @@ class Player {
     this.srt = constrain(this.srt, -2*(this.spd*2), 2*(this.spd*2));
   }
 
+  reset() {
+    this.px  = GAMEBOXX+(GAMEBOXW/2);    
+    this.py  = GAMEBOXY+(GAMEBOXH/2);   
+    this.pvx = 0;              
+    this.spd = this.baseSpeed; 
+    this.siz = 15;             
+    this.run = false;         
+    this.liv = 5;              
+    this.dif = 1;              
+    this.ded = false;          
+    this.scr = 0;              
+    this.srt = 0;              
+    this.sps = this.px;        
+    this.skv = 0; 
+  }
+
   update() {
     //handles most player functions that happen each frame
     if (!this.ded) {
@@ -110,6 +126,8 @@ class Player {
 
       this.skirtPhysics();
 
+      if (cheaterMode) this.liv = 5;
+
       if (this.liv <= 0) {
         this.ded = true;
       }
@@ -119,12 +137,14 @@ class Player {
       state = 'DEAD';
       felosMusic.stop();
       gameoverSFX.start();
+      this.reset();
 
-      if      (player.dif === 1) player.easyScr = player.scr;
-      else if (player.dif === 2) player.normScr = player.scr;
-      else if (player.dif === 3) player.hardScr = player.scr;
-      else if (player.dif === 4) player.mastScr = player.scr;
-      else if (player.dif === 5) player.masoScr = player.scr;
+      if      (player.dif === 1 && player.easyScr < player.scr) player.easyScr = player.scr;
+      else if (player.dif === 2 && player.normScr < player.scr) player.normScr = player.scr;
+      else if (player.dif === 3 && player.hardScr < player.scr) player.hardScr = player.scr;
+      else if (player.dif === 4 && player.mastScr < player.scr) player.mastScr = player.scr;
+      else if (player.dif === 5 && player.masoScr < player.scr) player.masoScr = player.scr;
+      saveData();
     }
   }
 }

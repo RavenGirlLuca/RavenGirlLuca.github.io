@@ -30,6 +30,10 @@ function draw() {
     dataMenu();
   }
 
+  else if (state === 'NAMEINPUT') {
+    nameMenu();
+  }
+
   else if (state === 'MAINMENU') {
     mainMenu();
   }
@@ -43,7 +47,7 @@ function draw() {
   }
 
   else if (state === 'OPTIONSMENU') {
-    
+    settingsMenu();
   }
 
   else if (state === 'LEVELMENU') {
@@ -82,14 +86,24 @@ function mouseClicked() {
 }
 
 function keyPressed() {
-  if (state === 'DATAINPUT') {
+  if (state === 'DATAINPUT' || state === 'NAMEINPUT') {
     if (key === 'Backspace') {
       currentInputName = currentInputName.slice(0, -1);
-      console.log('WORKING');
     } 
 
     else if (key.length === 1) {
       currentInputName += key;
+    }
+  }
+  else if (!(state === 'START')){
+    if (key === 'Escape') {
+      state = 'MAINMENU';
+      player.reset();
+      bullets = [];
+      attackFrame     = 0;
+      nextAttackFrame = 30;             
+      currentAttack   = 0;              
+      attacks         = 0; 
     }
   }
 }

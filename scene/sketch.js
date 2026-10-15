@@ -892,8 +892,10 @@ function mainMenu() {
   textSize(40*widthMultiplier);
   text("TOWER\nOF THE\nPRISMATIC WITCH",(gameWidth/2)*widthMultiplier,60*heightMultiplier);
 
-  textSize(52*widthMultiplier);
-  text("DEMO",700*widthMultiplier,50*heightMultiplier);
+  textAlign(RIGHT);
+
+  textSize(10*widthMultiplier);
+  text("PLAY THE NEW VERSION AT https://ravengirlluca.github.io/TotPW/",800*widthMultiplier,15*heightMultiplier);
 }
 
 let retryButtonX  = gameWidth*(1/4);

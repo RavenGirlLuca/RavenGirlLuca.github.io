@@ -12,6 +12,9 @@ let mouseIsClicked = false;
 let currentDir = 'NONE';
 let mobileRun  = false;
 
+//Settings
+let cheaterMode = false;
+
 //Define Images
 let felosBulletBlank;
 let felosBulletRed;

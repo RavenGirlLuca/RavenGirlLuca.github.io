@@ -1,4 +1,4 @@
-let version = 'v0.1.4-BETA';
+let version = 'v0.1.5-BETA';
 
 let statMenuX = (GAMEBOXX + GAMEBOXW) + 25;
 let statMenuY = (0.375*GAMEHEIGHT) + 25;
@@ -22,6 +22,8 @@ let mobileButtonRightX = statMenuX + ((statMenuW/2)+((mobileButtonW/2)+5));
 let mobileButtonRightY = statMenuY+215;
 let mobileButtonRunX   = statMenuX + ((statMenuW/2)-(mobileButtonW/2));
 let mobileButtonRunY   = statMenuY+215;
+
+let currentInputName = '';
 
 let enemyName = "FELOS\nTHE PRISMATIC WITCH";
 
@@ -216,14 +218,16 @@ function mainMenu() {
   rect(buttonX*WINDOWMULTIPLIER,buttonY*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
   if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+80)*WINDOWMULTIPLIER && mouseY < (buttonY+80)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
-    fill(85,160,73);
+    //fill(85,160,73);
+    fill(80,80,80);
     if (mouseIsClicked) {
       mouseIsClicked = false;
-      state = 'BONUSMENU';
+      //state = 'BONUSMENU';
     }
   }
   else {
-    fill(148,224,137);
+    //fill(148,224,137);
+    fill(80,80,80);
   } 
 
   rect(buttonX*WINDOWMULTIPLIER,(buttonY+80)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
@@ -289,7 +293,7 @@ let retryButtonX  = GAMEWIDTH*(1/4);
 let retryButtonY  = (GAMEHEIGHT*(1/2))-50;
 
 function deadMenu() {
-  //After you die this starts, shows your score and adds a button to the screen that sends you to the main menu and resets all stats and score
+  //After you die player starts, shows your score and adds a button to the screen that sends you to the main menu and resets all stats and score
   textAlign(CENTER);
   
   //Draws "Game Over"
@@ -470,7 +474,290 @@ function diffMenu() {
   text("SCR: " + player.masoScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+335)*WINDOWMULTIPLIER);
 }
 
-let currentInputName = '';
+let settingsButtonX = 20;
+let settingsButtonY = 120;
+let settingsButtonW = 240;
+let settingsButtonH = 60;
+
+function settingsMenu() {
+  textAlign(CENTER);
+  noStroke();
+  fill("WHITE");
+  textSize(64*WINDOWMULTIPLIER);
+
+  text("SETTINGS",(GAMEWIDTH/2)*WINDOWMULTIPLIER,(GAMEHEIGHT*(1/8))*WINDOWMULTIPLIER);
+
+  textSize(20*WINDOWMULTIPLIER);
+  stroke("WHITE");
+  strokeWeight(4);
+
+  //ROW 1
+
+  if (mouseX > settingsButtonX*WINDOWMULTIPLIER && 
+    mouseX < settingsButtonX*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+0)*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+0)*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      storeItem('dataExists', false);
+      state = 'DATAINPUT';
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect(settingsButtonX*WINDOWMULTIPLIER,(settingsButtonY+0)*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+0)*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+0)*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      player.easyScr = 0;
+      player.normScr = 0;
+      player.hardScr = 0;
+      player.mastScr = 0;
+      player.masoScr = 0;
+
+      player.easyWin = false;
+      player.normWin = false;
+      player.hardWin = false;
+      player.mastWin = false;
+      player.masoWin = false;
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER,(settingsButtonY+0)*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+0)*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+0)*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      currentInputName = '';
+      state = 'NAMEINPUT';
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER,(settingsButtonY+0)*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  //ROW 2
+
+  if (mouseX > settingsButtonX*WINDOWMULTIPLIER && 
+    mouseX < settingsButtonX*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(settingsButtonH + 20))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(settingsButtonH + 20))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      cheaterMode = !cheaterMode;
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect(settingsButtonX*WINDOWMULTIPLIER,(settingsButtonY+(settingsButtonH + 20))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(settingsButtonH + 20))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(settingsButtonH + 20))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER,(settingsButtonY+(settingsButtonH + 20))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(settingsButtonH + 20))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(settingsButtonH + 20))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER,(settingsButtonY+(settingsButtonH + 20))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  //ROW 3
+
+  if (mouseX > settingsButtonX*WINDOWMULTIPLIER && 
+    mouseX < settingsButtonX*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(2*(settingsButtonH + 20)))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(2*(settingsButtonH + 20)))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect(settingsButtonX*WINDOWMULTIPLIER,(settingsButtonY+(2*(settingsButtonH + 20)))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(2*(settingsButtonH + 20)))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(2*(settingsButtonH + 20)))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER,(settingsButtonY+(2*(settingsButtonH + 20)))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(2*(settingsButtonH + 20)))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(2*(settingsButtonH + 20)))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER,(settingsButtonY+(2*(settingsButtonH + 20)))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  //ROW 4
+
+  if (mouseX > settingsButtonX*WINDOWMULTIPLIER && 
+    mouseX < settingsButtonX*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(3*(settingsButtonH + 20)))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(3*(settingsButtonH + 20)))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect(settingsButtonX*WINDOWMULTIPLIER,(settingsButtonY+(3*(settingsButtonH + 20)))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(3*(settingsButtonH + 20)))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(3*(settingsButtonH + 20)))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (settingsButtonW + 20))*WINDOWMULTIPLIER,(settingsButtonY+(3*(settingsButtonH + 20)))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(3*(settingsButtonH + 20)))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(3*(settingsButtonH + 20)))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER,(settingsButtonY+(3*(settingsButtonH + 20)))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  //Page Buttons
+
+  if (mouseX > (settingsButtonX)*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX)*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(4*(settingsButtonH + 20)))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(4*(settingsButtonH + 20)))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX)*WINDOWMULTIPLIER,(settingsButtonY+(4*(settingsButtonH + 20)))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  if (mouseX > (settingsButtonX + (1 * (settingsButtonW + 20)))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (1 * (settingsButtonW + 20)))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(4*(settingsButtonH + 20)))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(4*(settingsButtonH + 20)))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      state = 'MAINMENU';
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (1 * (settingsButtonW + 20)))*WINDOWMULTIPLIER,(settingsButtonY+(4*(settingsButtonH + 20)))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+
+  if (mouseX > (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER && 
+    mouseX < (settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER + settingsButtonW*WINDOWMULTIPLIER && 
+    mouseY > (settingsButtonY+(4*(settingsButtonH + 20)))*WINDOWMULTIPLIER && 
+    mouseY < (settingsButtonY+(4*(settingsButtonH + 20)))*WINDOWMULTIPLIER + settingsButtonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      
+    }
+  }
+  else {
+    fill(159,159,159);
+  } 
+
+  rect((settingsButtonX + (2 * (settingsButtonW + 20)))*WINDOWMULTIPLIER,(settingsButtonY+(4*(settingsButtonH + 20)))*WINDOWMULTIPLIER,settingsButtonW*WINDOWMULTIPLIER,settingsButtonH*WINDOWMULTIPLIER);
+
+  noStroke();
+  fill("WHITE");
+
+  text("RESET DATA",  (settingsButtonX+(settingsButtonW/2))*WINDOWMULTIPLIER                         ,(settingsButtonY+(settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("RESET SCORE", (settingsButtonX+((settingsButtonW+20)+(settingsButtonW/2)))*WINDOWMULTIPLIER  ,(settingsButtonY+(settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("CHANEGE NAME",(settingsButtonX+((2*(settingsButtonW+20))+settingsButtonW/2))*WINDOWMULTIPLIER,(settingsButtonY+(settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("CHEATER MODE",(settingsButtonX+(settingsButtonW/2))*WINDOWMULTIPLIER                         ,(settingsButtonY+((settingsButtonH+20)+(settingsButtonH/2))+10)*WINDOWMULTIPLIER);
+  text("NULL",        (settingsButtonX+((settingsButtonW+20)+(settingsButtonW/2)))*WINDOWMULTIPLIER  ,(settingsButtonY+((settingsButtonH+20)+(settingsButtonH/2))+10)*WINDOWMULTIPLIER);
+  text("NULL",        (settingsButtonX+((2*(settingsButtonW+20))+settingsButtonW/2))*WINDOWMULTIPLIER,(settingsButtonY+((settingsButtonH+20)+(settingsButtonH/2))+10)*WINDOWMULTIPLIER);
+  text("NULL",        (settingsButtonX+(settingsButtonW/2))*WINDOWMULTIPLIER                         ,(settingsButtonY+((2*(settingsButtonH+20))+settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("NULL",        (settingsButtonX+((settingsButtonW+20)+(settingsButtonW/2)))*WINDOWMULTIPLIER  ,(settingsButtonY+((2*(settingsButtonH+20))+settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("NULL",        (settingsButtonX+((2*(settingsButtonW+20))+settingsButtonW/2))*WINDOWMULTIPLIER,(settingsButtonY+((2*(settingsButtonH+20))+settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("NULL",        (settingsButtonX+(settingsButtonW/2))*WINDOWMULTIPLIER                         ,(settingsButtonY+((3*(settingsButtonH+20))+settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("NULL",        (settingsButtonX+((settingsButtonW+20)+(settingsButtonW/2)))*WINDOWMULTIPLIER  ,(settingsButtonY+((3*(settingsButtonH+20))+settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("NULL",        (settingsButtonX+((2*(settingsButtonW+20))+settingsButtonW/2))*WINDOWMULTIPLIER,(settingsButtonY+((3*(settingsButtonH+20))+settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("<--",         (settingsButtonX+(settingsButtonW/2))*WINDOWMULTIPLIER                         ,(settingsButtonY+((4*(settingsButtonH+20))+settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("MAINMENU",    (settingsButtonX+((settingsButtonW+20)+(settingsButtonW/2)))*WINDOWMULTIPLIER  ,(settingsButtonY+((4*(settingsButtonH+20))+settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+  text("-->",         (settingsButtonX+((2*(settingsButtonW+20))+settingsButtonW/2))*WINDOWMULTIPLIER,(settingsButtonY+((4*(settingsButtonH+20))+settingsButtonH/2)+10)*WINDOWMULTIPLIER);
+}
 
 function dataMenu() {
   textAlign(CENTER);
@@ -501,6 +788,39 @@ function dataMenu() {
 
   if(!(currentInputName === '') && keyIsDown(ENTER) && currentInputName.length <= 8) {
     createData(currentInputName);
+    state = 'MAINMENU';
+  }
+}
+
+function nameMenu() {
+  textAlign(CENTER);
+  noStroke();
+  fill("WHITE");
+  textSize(64*WINDOWMULTIPLIER);
+
+  text("ENTER A\nUSERNAME",(GAMEWIDTH/2)*WINDOWMULTIPLIER,(GAMEHEIGHT*(1/8))*WINDOWMULTIPLIER);
+
+  textSize(40*WINDOWMULTIPLIER);
+  stroke("WHITE");
+  strokeWeight(4);
+  fill('BLACK');
+
+
+  rect(20*WINDOWMULTIPLIER,300*WINDOWMULTIPLIER,(GAMEWIDTH-40)*WINDOWMULTIPLIER,80*WINDOWMULTIPLIER);
+
+  noStroke();
+
+  if (currentInputName === '') {
+    fill("GREY");
+    text("ENTER A NAME...",(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER)
+  }
+  else {
+    fill("WHITE");
+    text(currentInputName,(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER)
+  }
+
+  if(!(currentInputName === '') && keyIsDown(ENTER) && currentInputName.length <= 8) {
+    storeItem('name', currentInputName);
     state = 'MAINMENU';
   }
 }
