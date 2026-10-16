@@ -137,7 +137,6 @@ class Player {
       state = 'DEAD';
       felosMusic.stop();
       gameoverSFX.start();
-      this.reset();
 
       if      (player.dif === 1 && player.easyScr < player.scr) player.easyScr = player.scr;
       else if (player.dif === 2 && player.normScr < player.scr) player.normScr = player.scr;

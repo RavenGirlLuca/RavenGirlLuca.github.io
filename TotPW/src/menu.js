@@ -1,4 +1,4 @@
-let version = 'v0.1.5-BETA';
+let version = 'v0.1.6-BETA';
 
 let statMenuX = (GAMEBOXX + GAMEBOXW) + 25;
 let statMenuY = (0.375*GAMEHEIGHT) + 25;
@@ -311,12 +311,7 @@ function deadMenu() {
     fill(136,57,50);
     if (mouseIsClicked) {
       mouseIsClicked = false;
-      player.px  = GAMEWIDTH/2;
-      player.py  = GAMEHEIGHT/2;
-      player.liv = 5;
-      player.dif = 1;     
-      player.ded = false;
-      player.scr = 0;
+      player.reset();
       state = 'MAINMENU';
 
       attackFrame     = 0;
