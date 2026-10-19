@@ -93,6 +93,7 @@ function keyPressed() {
 
     else if (key.length === 1) {
       currentInputName += key;
+      currentInputName = currentInputName.toUpperCase();
     }
   }
   else if (!(state === 'START')){

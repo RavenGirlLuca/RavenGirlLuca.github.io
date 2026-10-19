@@ -1,5 +1,3 @@
-let version = 'v0.1.6-BETA';
-
 let statMenuX = (GAMEBOXX + GAMEBOXW) + 25;
 let statMenuY = (0.375*GAMEHEIGHT) + 25;
 let statMenuW = 175;
@@ -286,7 +284,7 @@ function mainMenu() {
 
   textAlign(RIGHT);
   textSize(20*WINDOWMULTIPLIER);
-  text(version,800*WINDOWMULTIPLIER,20*WINDOWMULTIPLIER);
+  text(VERSION,800*WINDOWMULTIPLIER,20*WINDOWMULTIPLIER);
 }
 
 let retryButtonX  = GAMEWIDTH*(1/4);
