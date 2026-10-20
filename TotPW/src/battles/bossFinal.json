@@ -1,0 +1,75 @@
+{
+    "name" : "FELOS\nTHE PRISMATIC WITCH",
+    "sprite" : "felosSprite",
+    "music" : "felosMusic",
+    "background" : "NIL",
+    "difs" : [
+        {
+            "attacks" : [
+                {
+                    "framesPerLoop" : 30,
+                    "totalLoops" : 15,
+                    "emptyLoops" : 5,
+                    "bullets" : [
+                        {
+                            "type" : "bullet",
+                            "amount" : 25,
+                            "x1" : "0",
+                            "y1" : "0",
+                            "x2" : "0",
+                            "y2" : "0",
+                            "vel" : "2",
+                            "minAng" : "0",
+                            "maxAng" : "360",
+                            "siz" : "10",
+                            "curve" : "0"
+                        },
+
+                        {
+                            "type" : "bullet",
+                            "amount" : 25,
+                            "x1" : "500",
+                            "y1" : "0",
+                            "x2" : "500",
+                            "y2" : "0",
+                            "vel" : "2",
+                            "minAng" : "0",
+                            "maxAng" : "360",
+                            "siz" : "10",
+                            "curve" : "0"
+                        }
+                    ],
+                    "altBullets" : [
+                        {
+                            "type" : "bullet",
+                            "amount" : 25,
+                            "x1" : "0",
+                            "y1" : "500",
+                            "x2" : "0",
+                            "y2" : "500",
+                            "vel" : "2",
+                            "minAng" : "0",
+                            "maxAng" : "360",
+                            "siz" : "10",
+                            "curve" : "0"
+                        },
+
+                        {
+                            "type" : "bullet",
+                            "amount" : 25,
+                            "x1" : "500",
+                            "y1" : "500",
+                            "x2" : "500",
+                            "y2" : "500",
+                            "vel" : "2",
+                            "minAng" : "0",
+                            "maxAng" : "360",
+                            "siz" : "10",
+                            "curve" : "0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -15,6 +15,7 @@ async function setup() {
   await loadGIFs();
   await loadAudio();
   await loadFonts();
+  await loadJSONs();
 
   loadData();
 }
@@ -59,7 +60,6 @@ function draw() {
   }
 
   else if (state === 'GAME') {
-    attack();
     updateBullets();
     player.update();
 
@@ -101,10 +101,6 @@ function keyPressed() {
       state = 'MAINMENU';
       player.reset();
       bullets = [];
-      attackFrame     = 0;
-      nextAttackFrame = 30;             
-      currentAttack   = 0;              
-      attacks         = 0; 
     }
   }
 }

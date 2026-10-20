@@ -23,6 +23,8 @@ let mobileButtonRunY   = statMenuY+215;
 
 let currentInputName = '';
 
+let enemySprite;
+
 let enemyName = "FELOS\nTHE PRISMATIC WITCH";
 
 function drawGameBox() {
@@ -181,7 +183,7 @@ function drawEnemy() {
   rect(enemyX*WINDOWMULTIPLIER,enemyY*WINDOWMULTIPLIER,enemyW*WINDOWMULTIPLIER,enemyH*WINDOWMULTIPLIER);
 
   //Draws Enemy Image
-  image(felosSprite,(enemyX+1)*WINDOWMULTIPLIER,(enemyY+1)*WINDOWMULTIPLIER,(enemyW-2)*WINDOWMULTIPLIER,(enemyH-27)*WINDOWMULTIPLIER);
+  image(enemySprite,(enemyX+1)*WINDOWMULTIPLIER,(enemyY+1)*WINDOWMULTIPLIER,(enemyW-2)*WINDOWMULTIPLIER,(enemyH-27)*WINDOWMULTIPLIER);
 
   //Draws Enemy Name
   text(enemyName,(enemyX+(enemyW/2))*WINDOWMULTIPLIER,(enemyH+8)*WINDOWMULTIPLIER);

@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.2.0-BETA';
+const VERSION = 'v0.2.1-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
@@ -72,8 +72,16 @@ async function loadAudio() {
 let C64Font;
 
 async function loadFonts() {
-  //Load Audio
+  //Load Fonts
   font = await loadFont('/TotPW/src/assets/fonts/C64_Pro-STYLE.otf');
 
   textFont(font);
+}
+
+//Define JSONs
+let bossFinalJSON;
+
+async function loadJSONs() {
+  //Load JSONs
+  bossFinalJSON = await loadJSON('/TotPW/src/battles/bossFinal.json');
 }
