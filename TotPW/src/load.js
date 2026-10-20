@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.2.1-BETA';
+const VERSION = 'v0.2.2-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
@@ -13,6 +13,12 @@ let mouseIsClicked = false;
 
 let currentDir = 'NONE';
 let mobileRun  = false;
+
+let enemySprite;
+let enemyName;
+let enemyBG;
+let enemyMusic;
+let currentBattle;
 
 //Settings
 let cheaterMode = false;

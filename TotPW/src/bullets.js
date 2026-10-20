@@ -45,32 +45,14 @@ class Bullet {
   }
 }
 
-class attack {
-  constructor(type,amount,x1,y1,x2,y2,vel,minAng,maxAng,siz,crv,) {
-    this.type   = type;
-    this.amount = amount;
-    this.x1     = x1;
-    this.y1     = y1;
-    this.x2     = x2;
-    this.y2     = y2;
-    this.vel    = vel;
-    this.minAng = minAng;
-    this.maxAng = maxAng;
-    this.siz    = siz;
-    this.curve  = crv;
-  }
+function spawnBullets(type,amount,img,x1,y1,x2,y2,vel,minAng,maxAng,siz,crv) {
+  for (let i = 0; i < amount; i++) {
+    let px  = lerp(x1,x2,((i+1)/amount)); //if u want the bullets to spawn evenly along a line, this handles that using x1, x2, y1, and y2
+    let py  = lerp(y1,y2,((i+1)/amount));
 
-  run() {
-  //used to summon bullets with set properties
+    let ang = (((maxAng - minAng)/amount)*i)+minAng; //if u want the bullets to spawn along a ring, or a semi circle, this handles that using min, and max Ang
 
-    for (let i = 0; i < amount; i++) {
-      let px  = lerp(x1,x2,((i+1)/amount)); //if u want the bullets to spawn evenly along a line, this handles that using x1, x2, y1, and y2
-      let py  = lerp(y1,y2,((i+1)/amount));
-
-      let ang = (((maxAng - minAng)/amount)*i)+minAng; //if u want the bullets to spawn along a ring, or a semi circle, this handles that using min, and max Ang
-
-      bullets.push(new Bullet(px,py,this.vel,ang,this.siz,this.crv));
-    }
+    bullets.push(new Bullet(px,py,vel,ang,siz,crv));
   }
 }
 

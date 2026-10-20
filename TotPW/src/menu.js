@@ -23,10 +23,6 @@ let mobileButtonRunY   = statMenuY+215;
 
 let currentInputName = '';
 
-let enemySprite;
-
-let enemyName = "FELOS\nTHE PRISMATIC WITCH";
-
 function drawGameBox() {
   //Draws a green border around the area the player can move
   fill("BLACK");
@@ -377,6 +373,8 @@ function diffMenu() {
       player.dif = 1;
       nextAttackFrame = 30;
       state = 'GAME';
+      loadBattle(bossFinalJSON);
+      currentBattle = bossFinalJSON;
       felosMusic.start();
       menuMusic.stop();
     }
@@ -774,11 +772,11 @@ function dataMenu() {
 
   if (currentInputName === '') {
     fill("GREY");
-    text("ENTER A NAME...",(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER)
+    text("ENTER A NAME...",(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER);
   }
   else {
     fill("WHITE");
-    text(currentInputName,(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER)
+    text(currentInputName,(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER);
   }
 
   if(!(currentInputName === '') && keyIsDown(ENTER) && currentInputName.length <= 8) {
@@ -807,11 +805,11 @@ function nameMenu() {
 
   if (currentInputName === '') {
     fill("GREY");
-    text("ENTER A NAME...",(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER)
+    text("ENTER A NAME...",(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER);
   }
   else {
     fill("WHITE");
-    text(currentInputName,(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER)
+    text(currentInputName,(GAMEWIDTH/2)*WINDOWMULTIPLIER,355*WINDOWMULTIPLIER);
   }
 
   if(!(currentInputName === '') && keyIsDown(ENTER) && currentInputName.length <= 8) {

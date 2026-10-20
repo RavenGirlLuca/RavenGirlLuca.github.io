@@ -55,10 +55,6 @@ function draw() {
     
   }
 
-  else if (state === 'MASLEVELMENU') {
-    
-  }
-
   else if (state === 'GAME') {
     updateBullets();
     player.update();
@@ -68,6 +64,7 @@ function draw() {
     drawEnemy();
     drawBullets();
     player.draw();
+    updateBattle(currentBattle);
   }
 
   else if (state === 'DEAD') {
