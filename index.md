@@ -8,6 +8,7 @@
 - [Bouncy Balls](bballs)
 - [Perlin Noise](noise)
 - [Collision Library](libdemo)
+- [Randomized Art](ranart)
 
 ## PROJECTS
 - [Interactive Scene](scene)

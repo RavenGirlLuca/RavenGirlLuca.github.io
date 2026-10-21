@@ -53,8 +53,12 @@ function updateBattle(battleJSON) {
       }
     }
 
-    if (currentAttackLoop + 1 >= battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].totalLoops) currentAttackIndex++;
-    currentAttackLoop++;
+    if (currentAttackLoop + 1 >= battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].totalLoops) {
+      currentAttackIndex++;
+      currentAttackLoop = 0;
+    }
+    else currentAttackLoop++;
+
     currentAttackFrame = 0;
   }
   currentAttackFrame++;

@@ -48,7 +48,7 @@ class Bullet {
       this.px  += vx;
       this.py  += vy;
 
-      if (this.px >= this.sx && this.px <= this.sx + 15 && this.py >= this.sy && this.py <= this.sy + 15 ) {
+      if (this.px >= this.sx - 10 && this.px <= this.sx + 10 && this.py >= this.sy - 10 && this.py <= this.sy + 10 ) {
         spawnBullets("normal", "normal", 10, felosBulletBlank, this.px, this.py, this.px, this.py, 0, this.vel, 0, 360, this.siz/2, 0, 0, 0, 0);
         this.px = -999999999;
         this.py = -999999999;
@@ -73,8 +73,8 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
 
       let ang = (((maxAng - minAng)/amount)*i)+minAng; //if u want the bullets to spawn along a ring, or a semi circle, this handles that using min, and max Ang
 
-      let sx  = Math.cos(radians(ang)) * sdist;
-      let sy  = Math.sin(radians(ang)) * sdist;
+      let sx  = (Math.cos(radians(ang)) * sdist) + px;
+      let sy  = (Math.sin(radians(ang)) * sdist) + py;
 
       bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
     }

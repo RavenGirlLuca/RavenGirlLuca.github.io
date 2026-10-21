@@ -7,21 +7,21 @@
         {
             "attacks" : [
                 {
-                    "framesPerLoop" : 30,
-                    "totalLoops" : 15,
+                    "framesPerLoop" : 2,
+                    "totalLoops" : 150,
                     "emptyLoops" : 5,
                     "bullets" : [
                         {
                             "bulletType" : "bomb",
                             "type" : "normal",
-                            "amount" : 25,
+                            "amount" : 20,
                             "image" : "felosBulletRed",
                             "x1" : 0,
                             "y1" : 0,
                             "x2" : 0,
                             "y2" : 0,
                             "sdist" : 275,
-                            "vel" : 2,
+                            "vel" : 3,
                             "minAng" : 0,
                             "maxAng" : 360,
                             "siz" : 10,
