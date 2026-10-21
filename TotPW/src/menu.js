@@ -373,6 +373,11 @@ function diffMenu() {
       player.dif = 1;
       nextAttackFrame = 30;
       state = 'GAME';
+
+      currentAttackIndex = 0;
+      currentAttackLoop  = 0;
+      currentAttackFrame = 0;
+
       loadBattle(bossFinalJSON);
       currentBattle = bossFinalJSON;
       felosMusic.start();

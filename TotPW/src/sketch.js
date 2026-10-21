@@ -18,6 +18,7 @@ async function setup() {
   await loadJSONs();
 
   loadData();
+  buildLookupTable()
 }
 
 function draw() {

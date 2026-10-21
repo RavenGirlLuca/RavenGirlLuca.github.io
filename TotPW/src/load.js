@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.2.2-BETA';
+const VERSION = 'v0.2.3-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
@@ -19,6 +19,10 @@ let enemyName;
 let enemyBG;
 let enemyMusic;
 let currentBattle;
+
+let currentAttackIndex = 0;
+let currentAttackLoop  = 0;
+let currentAttackFrame = 0;
 
 //Settings
 let cheaterMode = false;

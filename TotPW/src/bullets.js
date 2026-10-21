@@ -1,9 +1,13 @@
 let bullets = []; //bullet array, stores all bullets on screen
 
 class Bullet {
-  constructor(px,py,vel,ang,siz,crv) {
+  constructor(typ,img,px,py,sx,sy,vel,ang,siz,crv) {
+    this.typ = typ; //Bullet type, used for special bullets like Bombs
+    this.img = img; //Image used for bullet
     this.px  = px;  //X Position in the game
     this.py  = py;  //Y Position in the game
+    this.sx  = sx;  //Special X position used for certain bullets
+    this.sy  = sy;  //Special Y position used for certain bullets
     this.vel = vel; //Vector velocity, combined with angle to move the px and py
     this.ang = ang; //Angle, used with velocity to determain the new bullet pos
     this.siz = siz; //Bullets sized, used for both draw and determening collision with the player
@@ -20,7 +24,7 @@ class Bullet {
     rotate(this.ang+90);
 
     imageMode(CENTER); 
-    image(felosBulletBlank, 0, 0,16*WINDOWMULTIPLIER,16*WINDOWMULTIPLIER);
+    image(this.img, 0, 0,16*WINDOWMULTIPLIER,16*WINDOWMULTIPLIER);
 
     pop();
   }
@@ -36,23 +40,135 @@ class Bullet {
 
   update() {
     //updates the bullets position in the game
-    let vx = Math.cos(radians(this.ang)) * this.vel;
-    let vy = Math.sin(radians(this.ang)) * this.vel;
+    if (this.typ === "bomb") {
+      let vx = Math.cos(radians(this.ang)) * this.vel;
+      let vy = Math.sin(radians(this.ang)) * this.vel;
 
-    this.ang += this.crv;
-    this.px  += vx;
-    this.py  += vy;
+      this.ang += this.crv;
+      this.px  += vx;
+      this.py  += vy;
+
+      if (this.px >= this.sx && this.px <= this.sx + 15 && this.py >= this.sy && this.py <= this.sy + 15 ) {
+        spawnBullets("normal", "normal", 10, felosBulletBlank, this.px, this.py, this.px, this.py, 0, this.vel, 0, 360, this.siz/2, 0, 0, 0, 0);
+        this.px = -999999999;
+        this.py = -999999999;
+      }
+    }
+    else {
+      let vx = Math.cos(radians(this.ang)) * this.vel;
+      let vy = Math.sin(radians(this.ang)) * this.vel;
+
+      this.ang += this.crv;
+      this.px  += vx;
+      this.py  += vy;
+    }
   }
 }
 
-function spawnBullets(type,amount,img,x1,y1,x2,y2,vel,minAng,maxAng,siz,crv) {
-  for (let i = 0; i < amount; i++) {
-    let px  = lerp(x1,x2,((i+1)/amount)); //if u want the bullets to spawn evenly along a line, this handles that using x1, x2, y1, and y2
-    let py  = lerp(y1,y2,((i+1)/amount));
+function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,maxAng,siz,crv,p1,p2,currentLoop) {
+  if (type === "normal") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1,x2,((i+1)/amount)); //if u want the bullets to spawn evenly along a line, this handles that using x1, x2, y1, and y2
+      let py  = lerp(y1,y2,((i+1)/amount));
 
-    let ang = (((maxAng - minAng)/amount)*i)+minAng; //if u want the bullets to spawn along a ring, or a semi circle, this handles that using min, and max Ang
+      let ang = (((maxAng - minAng)/amount)*i)+minAng; //if u want the bullets to spawn along a ring, or a semi circle, this handles that using min, and max Ang
 
-    bullets.push(new Bullet(px,py,vel,ang,siz,crv));
+      let sx  = Math.cos(radians(ang)) * sdist;
+      let sy  = Math.sin(radians(ang)) * sdist;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
+  }
+
+  else if (type === "xLeft") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1 - (currentLoop * p1),x2 - (currentLoop * p1),((i+1)/amount));
+      let py  = lerp(y1,y2,((i+1)/amount));
+
+      let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
+  }
+
+  else if (type === "xRight") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1 + (currentLoop * p1),x2 + (currentLoop * p1),((i+1)/amount));
+      let py  = lerp(y1,y2,((i+1)/amount));
+
+      let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
+  }
+
+  else if (type === "yUp") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1,x2,((i+1)/amount));
+      let py  = lerp(y1 - (currentLoop * p2),y2 - (currentLoop * p2),((i+1)/amount));
+
+      let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
+  }
+
+  else if (type === "yDown") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1,x2,((i+1)/amount));
+      let py  = lerp(y1 + (currentLoop * p2),y2 + (currentLoop * p2),((i+1)/amount));
+
+      let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      let sx  = Math.cos(radians(ang)) * sdist;
+      let sy  = Math.sin(radians(ang)) * sdist;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
+  }
+
+  else if (type === "xLeftyUp") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1 - (currentLoop * p1),x2 - (currentLoop * p1),((i+1)/amount));
+      let py  = lerp(y1 - (currentLoop * p2),y2 - (currentLoop * p2),((i+1)/amount));
+
+      let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
+  }
+
+  else if (type === "xLeftyDown") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1 - (currentLoop * p1),x2 - (currentLoop * p1),((i+1)/amount));
+      let py  = lerp(y1 + (currentLoop * p2),y2 + (currentLoop * p2),((i+1)/amount));
+
+      let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
+  }
+
+  else if (type === "xRightyUp") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1 + (currentLoop * p1),x2 + (currentLoop * p1),((i+1)/amount));
+      let py  = lerp(y1 - (currentLoop * p2),y2 - (currentLoop * p2),((i+1)/amount));
+
+      let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
+  }
+
+  else if (type === "xRightyDown") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1 + (currentLoop * p1),x2 + (currentLoop * p1),((i+1)/amount));
+      let py  = lerp(y1 + (currentLoop * p2),y2 + (currentLoop * p2),((i+1)/amount));
+
+      let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
   }
 }
 
