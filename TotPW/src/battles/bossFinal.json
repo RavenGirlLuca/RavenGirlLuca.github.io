@@ -9,7 +9,7 @@
                 {
                     "framesPerLoop" : 2,
                     "totalLoops" : 150,
-                    "emptyLoops" : 5,
+                    "emptyLoops" : 150,
                     "bullets" : [
                         {
                             "bulletType" : "bomb",
@@ -32,6 +32,100 @@
                     ],
                     "altBullets" : [
 
+                    ]
+                },
+
+                {
+                    "framesPerLoop" : 5,
+                    "totalLoops" : 30,
+                    "emptyLoops" : 15,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "xRight",
+                            "amount" : 20,
+                            "image" : "felosBulletRed",
+                            "x1" : 25,
+                            "y1" : 25,
+                            "x2" : 25,
+                            "y2" : 25,
+                            "sdist" : 275,
+                            "vel" : 3,
+                            "minAng" : 0,
+                            "maxAng" : 360,
+                            "siz" : 10,
+                            "curve" : 0,
+                            "paramater1" : 15,
+                            "paramater2" : 15
+                        },
+                        
+                        {
+                            "bulletType" : "normal",
+                            "type" : "xLeft",
+                            "amount" : 20,
+                            "image" : "felosBulletRed",
+                            "x1" : 575,
+                            "y1" : 575,
+                            "x2" : 575,
+                            "y2" : 575,
+                            "sdist" : 275,
+                            "vel" : 3,
+                            "minAng" : 0,
+                            "maxAng" : 360,
+                            "siz" : 10,
+                            "curve" : 0,
+                            "paramater1" : 15,
+                            "paramater2" : 15
+                        }
+                    ],
+                    "altBullets" : [
+
+                    ]
+                },
+
+                {
+                    "framesPerLoop" : 10,
+                    "totalLoops" : 15,
+                    "emptyLoops" : 5,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 20,
+                            "image" : "felosBulletRed",
+                            "x1" : 25,
+                            "y1" : 25,
+                            "x2" : 25,
+                            "y2" : 575,
+                            "sdist" : 275,
+                            "vel" : 3,
+                            "minAng" : 0,
+                            "maxAng" : 0,
+                            "siz" : 10,
+                            "curve" : 0,
+                            "paramater1" : 15,
+                            "paramater2" : 15
+                        }
+                    ],
+                    "altBullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 20,
+                            "image" : "felosBulletRed",
+                            "x1" : 575,
+                            "y1" : 25,
+                            "x2" : 575,
+                            "y2" : 575,
+                            "sdist" : 275,
+                            "vel" : 3,
+                            "minAng" : 180,
+                            "maxAng" : 180,
+                            "siz" : 10,
+                            "curve" : 0,
+                            "paramater1" : 15,
+                            "paramater2" : 15
+                        }
                     ]
                 }
             ]

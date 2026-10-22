@@ -96,54 +96,56 @@ class Player {
 
   update() {
     //handles most player functions that happen each frame
-    if (!this.ded) {
-      //Running
-      this.run = (keyIsDown(SHIFT) || mobileRun);
-      if (this.run) {
-        this.spd = this.baseSpeed*1.5;
-      }
-      else          {
-        this.spd = this.baseSpeed;
-      }
+    if (!activeDialog) {
+      if (!this.ded) {
+        //Running
+        this.run = (keyIsDown(SHIFT) || mobileRun);
+        if (this.run) {
+          this.spd = this.baseSpeed*1.5;
+        }
+        else          {
+          this.spd = this.baseSpeed;
+        }
 
-      //Movement
-      if ((keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) && ((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)))) {
-        this.spd *= 0.707;
-      }
+        //Movement
+        if ((keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) && ((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)))) {
+          this.spd *= 0.707;
+        }
 
-      if ((keyIsDown(UP_ARROW) || currentDir === 'UP') && this.gameBoxCol(this.px,this.py - this.spd))        {
-        this.py -= this.spd;
-      }
-      if ((keyIsDown(DOWN_ARROW) || currentDir === 'DOWN') && this.gameBoxCol(this.px,this.py + this.spd))    {
-        this.py += this.spd;
-      }
-      if ((keyIsDown(LEFT_ARROW) || currentDir === 'LEFT') && this.gameBoxCol(this.px - this.spd ,this.py))   {
-        this.px -= this.spd;
-      }
-      if ((keyIsDown(RIGHT_ARROW) || currentDir === 'RIGHT') && this.gameBoxCol(this.px + this.spd, this.py)) {
-        this.px += this.spd;
-      }
+        if ((keyIsDown(UP_ARROW) || currentDir === 'UP') && this.gameBoxCol(this.px,this.py - this.spd))        {
+          this.py -= this.spd;
+        }
+        if ((keyIsDown(DOWN_ARROW) || currentDir === 'DOWN') && this.gameBoxCol(this.px,this.py + this.spd))    {
+          this.py += this.spd;
+        }
+        if ((keyIsDown(LEFT_ARROW) || currentDir === 'LEFT') && this.gameBoxCol(this.px - this.spd ,this.py))   {
+          this.px -= this.spd;
+        }
+        if ((keyIsDown(RIGHT_ARROW) || currentDir === 'RIGHT') && this.gameBoxCol(this.px + this.spd, this.py)) {
+          this.px += this.spd;
+        }
 
-      this.skirtPhysics();
+        this.skirtPhysics();
 
-      if (cheaterMode) this.liv = 5;
+        if (cheaterMode) this.liv = 5;
 
-      if (this.liv <= 0) {
-        this.ded = true;
+        if (this.liv <= 0) {
+          this.ded = true;
+        }
       }
-    }
-    
-    else {
-      state = 'DEAD';
-      felosMusic.stop();
-      gameoverSFX.start();
+      
+      else {
+        state = 'DEAD';
+        felosMusic.stop();
+        gameoverSFX.start();
 
-      if      (player.dif === 1 && player.easyScr < player.scr) player.easyScr = player.scr;
-      else if (player.dif === 2 && player.normScr < player.scr) player.normScr = player.scr;
-      else if (player.dif === 3 && player.hardScr < player.scr) player.hardScr = player.scr;
-      else if (player.dif === 4 && player.mastScr < player.scr) player.mastScr = player.scr;
-      else if (player.dif === 5 && player.masoScr < player.scr) player.masoScr = player.scr;
-      saveData();
+        if      (player.dif === 1 && player.easyScr < player.scr) player.easyScr = player.scr;
+        else if (player.dif === 2 && player.normScr < player.scr) player.normScr = player.scr;
+        else if (player.dif === 3 && player.hardScr < player.scr) player.hardScr = player.scr;
+        else if (player.dif === 4 && player.mastScr < player.scr) player.mastScr = player.scr;
+        else if (player.dif === 5 && player.masoScr < player.scr) player.masoScr = player.scr;
+        saveData();
+      }
     }
   }
 }

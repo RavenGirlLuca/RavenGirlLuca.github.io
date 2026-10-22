@@ -76,6 +76,11 @@ function draw() {
     state = 'MAINMENU';
   }
 
+  if (activeDialog) {
+    updateDialog();
+    drawDialog();
+  }
+
   mouseIsClicked = false;
 }
 

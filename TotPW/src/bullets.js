@@ -40,27 +40,29 @@ class Bullet {
 
   update() {
     //updates the bullets position in the game
-    if (this.typ === "bomb") {
-      let vx = Math.cos(radians(this.ang)) * this.vel;
-      let vy = Math.sin(radians(this.ang)) * this.vel;
+    if (!activeDialog) {
+      if (this.typ === "bomb") {
+        let vx = Math.cos(radians(this.ang)) * this.vel;
+        let vy = Math.sin(radians(this.ang)) * this.vel;
 
-      this.ang += this.crv;
-      this.px  += vx;
-      this.py  += vy;
+        this.ang += this.crv;
+        this.px  += vx;
+        this.py  += vy;
 
-      if (this.px >= this.sx - 10 && this.px <= this.sx + 10 && this.py >= this.sy - 10 && this.py <= this.sy + 10 ) {
-        spawnBullets("normal", "normal", 10, felosBulletBlank, this.px, this.py, this.px, this.py, 0, this.vel, 0, 360, this.siz/2, 0, 0, 0, 0);
-        this.px = -999999999;
-        this.py = -999999999;
+        if (this.px >= this.sx - 10 && this.px <= this.sx + 10 && this.py >= this.sy - 10 && this.py <= this.sy + 10 ) {
+          spawnBullets("normal", "normal", 10, felosBulletBlank, this.px, this.py, this.px, this.py, 0, this.vel, 0, 360, this.siz/2, 0, 0, 0, 0);
+          this.px = -999999999;
+          this.py = -999999999;
+        }
       }
-    }
-    else {
-      let vx = Math.cos(radians(this.ang)) * this.vel;
-      let vy = Math.sin(radians(this.ang)) * this.vel;
+      else {
+        let vx = Math.cos(radians(this.ang)) * this.vel;
+        let vy = Math.sin(radians(this.ang)) * this.vel;
 
-      this.ang += this.crv;
-      this.px  += vx;
-      this.py  += vy;
+        this.ang += this.crv;
+        this.px  += vx;
+        this.py  += vy;
+      }
     }
   }
 }
@@ -87,6 +89,9 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
 
       let ang = (((maxAng - minAng)/amount)*i)+minAng;
 
+      let sx  = (Math.cos(radians(ang)) * sdist) + px;
+      let sy  = (Math.sin(radians(ang)) * sdist) + py;
+
       bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
     }
   }
@@ -98,6 +103,9 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
 
       let ang = (((maxAng - minAng)/amount)*i)+minAng;
 
+      let sx  = (Math.cos(radians(ang)) * sdist) + px;
+      let sy  = (Math.sin(radians(ang)) * sdist) + py;
+
       bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
     }
   }
@@ -108,6 +116,9 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
       let py  = lerp(y1 - (currentLoop * p2),y2 - (currentLoop * p2),((i+1)/amount));
 
       let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      let sx  = (Math.cos(radians(ang)) * sdist) + px;
+      let sy  = (Math.sin(radians(ang)) * sdist) + py;
 
       bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
     }
@@ -134,6 +145,9 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
 
       let ang = (((maxAng - minAng)/amount)*i)+minAng;
 
+      let sx  = (Math.cos(radians(ang)) * sdist) + px;
+      let sy  = (Math.sin(radians(ang)) * sdist) + py;
+
       bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
     }
   }
@@ -144,6 +158,9 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
       let py  = lerp(y1 + (currentLoop * p2),y2 + (currentLoop * p2),((i+1)/amount));
 
       let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      let sx  = (Math.cos(radians(ang)) * sdist) + px;
+      let sy  = (Math.sin(radians(ang)) * sdist) + py;
 
       bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
     }
@@ -156,6 +173,9 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
 
       let ang = (((maxAng - minAng)/amount)*i)+minAng;
 
+      let sx  = (Math.cos(radians(ang)) * sdist) + px;
+      let sy  = (Math.sin(radians(ang)) * sdist) + py;
+
       bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
     }
   }
@@ -166,6 +186,9 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
       let py  = lerp(y1 + (currentLoop * p2),y2 + (currentLoop * p2),((i+1)/amount));
 
       let ang = (((maxAng - minAng)/amount)*i)+minAng;
+
+      let sx  = (Math.cos(radians(ang)) * sdist) + px;
+      let sy  = (Math.sin(radians(ang)) * sdist) + py;
 
       bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
     }

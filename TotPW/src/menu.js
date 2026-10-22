@@ -310,10 +310,9 @@ function deadMenu() {
       player.reset();
       state = 'MAINMENU';
 
-      attackFrame     = 0;
-      nextAttackFrame = 30;
-      currentAttack   = 0;
-      attacks         = 0;
+      currentAttackFrame   = 0;
+      currentAttackIndex   = 0;
+      currentAttackLoop    = 0;
 
       bullets = [];
       menuMusic.start();
