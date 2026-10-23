@@ -50,7 +50,7 @@ class Bullet {
         this.py  += vy;
 
         if (this.px >= this.sx - 10 && this.px <= this.sx + 10 && this.py >= this.sy - 10 && this.py <= this.sy + 10 ) {
-          spawnBullets("normal", "normal", 10, felosBulletBlank, this.px, this.py, this.px, this.py, 0, this.vel, 0, 360, this.siz/2, 0, 0, 0, 0);
+          spawnBullets("normal", "normal", Math.floor(lerp(4,10,player.dif/5)), felosBulletBlank, this.px, this.py, this.px, this.py, 0, this.vel, 0, 360, this.siz/2, 0, 0, 0, 0);
           this.px = -999999999;
           this.py = -999999999;
         }

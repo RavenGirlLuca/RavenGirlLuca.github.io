@@ -377,9 +377,9 @@ function diffMenu() {
       currentAttackLoop  = 0;
       currentAttackFrame = 0;
 
-      loadBattle(bossFinalJSON);
-      currentBattle = bossFinalJSON;
-      felosMusic.start();
+      loadBattle(bossFirstJSON);
+      currentBattle = bossFirstJSON;
+      enemyMusic.start();
       menuMusic.stop();
     }
   }

@@ -1,7 +1,7 @@
 async function loadBattle(battleJSON) {
   enemyName   = battleJSON.name;
   enemySprite = imageLookupTable[battleJSON.sprite];
-  enemyMusic  = battleJSON.music;
+  enemyMusic  = musicLookupTable[battleJSON.music];
   enemyBG     = battleJSON.background;
 }
 
@@ -82,6 +82,6 @@ function endBattle() {
   currentAttackLoop    = 0;
 
   bullets = [];
+  enemyMusic.stop();
   menuMusic.start();
-  gameoverSFX.stop();
 }

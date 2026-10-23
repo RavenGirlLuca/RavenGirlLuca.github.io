@@ -1,4 +1,5 @@
 let imageLookupTable = {}
+let musicLookupTable = {}
 
 function buildLookupTable() {
     imageLookupTable = {
@@ -8,6 +9,12 @@ function buildLookupTable() {
         "felosBulletGreen"  : felosBulletGreen,
         "felosBulletBlue"   : felosBulletBlue,
         "felosBulletPurple" : felosBulletPurple,
-        "felosSprite"       : felosSprite
+        "felosSprite"       : felosSprite,
+        "acciaioSprite"     : acciaioSprite
+    }
+
+    musicLookupTable = {
+        "acciaioMusic" : acciaioMusic,
+        "felosMusic" : felosMusic
     }
 }

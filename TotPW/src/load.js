@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.2.5-BETA';
+const VERSION = 'v0.2.6-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
@@ -25,7 +25,7 @@ let currentAttackLoop  = 0;
 let currentAttackFrame = 0;
 
 //Dialog
-let activeDialog = true;
+let activeDialog = false;
 let currentDialog;
 let currentDialogProfile;
 let currentDialogName;
@@ -59,6 +59,7 @@ async function loadImages() {
   playerBottomNormal = await loadImage('/TotPW/src/assets/playerbottom.png');
   playerSkirtNormal  = await loadImage('/TotPW/src/assets/playerskirt.png');
   mainMenuBg0        = await loadImage('/TotPW/src/assets/felosBG.png');
+  acciaioSprite      = await loadImage('/TotPW/src/assets/acciaio.png');
 }
 
 //Define GIFs
@@ -76,9 +77,10 @@ let gameoverSFX;
 
 async function loadAudio() {
   //Load Audio
-  felosMusic  = await loadSound('/TotPW/src/assets/PRISMATIC-WITCH-I.ogg');
-  menuMusic   = await loadSound('/TotPW/src/assets/MENU-I.ogg');
-  gameoverSFX = await loadSound('/TotPW/src/assets/GAMEOVER-I.ogg');
+  felosMusic   = await loadSound('/TotPW/src/assets/PRISMATIC-WITCH-I.ogg');
+  acciaioMusic = await loadSound('/TotPW/src/assets/ACCIAIO.ogg');
+  menuMusic    = await loadSound('/TotPW/src/assets/MENU-I.ogg');
+  gameoverSFX  = await loadSound('/TotPW/src/assets/GAMEOVER-I.ogg');
 
   felosMusic.loop(true);
   menuMusic.loop(true);
@@ -99,5 +101,6 @@ let bossFinalJSON;
 
 async function loadJSONs() {
   //Load JSONs
+  bossFirstJSON = await loadJSON('/TotPW/src/battles/bossFirst.json');
   bossFinalJSON = await loadJSON('/TotPW/src/battles/bossFinal.json');
 }

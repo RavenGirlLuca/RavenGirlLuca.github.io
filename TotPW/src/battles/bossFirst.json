@@ -1,0 +1,105 @@
+{
+    "name" : "ACCIAIO\nTHE BRASS BLADE",
+    "sprite" : "acciaioSprite",
+    "music" : "acciaioMusic",
+    "background" : "NIL",
+    "difs" : [
+        {
+            "attacks" : [
+                {
+                    "framesPerLoop" : 20,
+                    "totalLoops" : 20,
+                    "emptyLoops" : 0,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "yDown",
+                            "amount" : 5,
+                            "image" : "felosBulletRed",
+                            "x1" : 25,
+                            "y1" : -200,
+                            "x2" : 25,
+                            "y2" : 600,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 0,
+                            "maxAng" : 0,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 15,
+                            "paramater2" : 5
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "yDown",
+                            "amount" : 5,
+                            "image" : "felosBulletRed",
+                            "x1" : 575,
+                            "y1" : -200,
+                            "x2" : 575,
+                            "y2" : 600,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 180,
+                            "maxAng" : 180,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 15,
+                            "paramater2" : 5
+                        }
+                    ],
+                    "altBullets" : [
+
+                    ]
+                },
+
+                {
+                    "framesPerLoop" : 20,
+                    "totalLoops" : 20,
+                    "emptyLoops" : 0,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "xRight",
+                            "amount" : 5,
+                            "image" : "felosBulletRed",
+                            "x1" : -200,
+                            "y1" : 25,
+                            "x2" : 600,
+                            "y2" : 25,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 90,
+                            "maxAng" : 90,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 5,
+                            "paramater2" : 5
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "xRight",
+                            "amount" : 5,
+                            "image" : "felosBulletRed",
+                            "x1" : -200,
+                            "y1" : 575,
+                            "x2" : 600,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 5,
+                            "paramater2" : 5
+                        }
+                    ],
+                    "altBullets" : [
+
+                    ]
+                }
+            ]
+        }
+    ]
+}
