@@ -50,7 +50,8 @@ class Bullet {
         this.py  += vy;
 
         if (this.px >= this.sx - 10 && this.px <= this.sx + 10 && this.py >= this.sy - 10 && this.py <= this.sy + 10 ) {
-          spawnBullets("normal", "normal", Math.floor(lerp(4,10,player.dif/5)), felosBulletBlank, this.px, this.py, this.px, this.py, 0, this.vel, 0, 360, this.siz/2, 0, 0, 0, 0);
+          let ranBombRad = Math.floor(random(0,360));
+          spawnBullets("normal", "normal", Math.floor(lerp(4,10,player.dif/5)), felosBulletBlank, this.px, this.py, this.px, this.py, 0, this.vel, ranBombRad, ranBombRad+360, this.siz/2, 0, 0, 0, 0);
           this.px = -999999999;
           this.py = -999999999;
         }
@@ -82,105 +83,7 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
     }
   }
 
-  else if (type === "xLeft") {
-    for (let i = 0; i < amount; i++) {
-      let px  = lerp(x1 - (currentLoop * p1),x2 - (currentLoop * p1),((i+1)/amount));
-      let py  = lerp(y1,y2,((i+1)/amount));
-
-      let ang = (((maxAng - minAng)/amount)*i)+minAng;
-
-      let sx  = (Math.cos(radians(ang)) * sdist) + px;
-      let sy  = (Math.sin(radians(ang)) * sdist) + py;
-
-      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
-    }
-  }
-
-  else if (type === "xRight") {
-    for (let i = 0; i < amount; i++) {
-      let px  = lerp(x1 + (currentLoop * p1),x2 + (currentLoop * p1),((i+1)/amount));
-      let py  = lerp(y1,y2,((i+1)/amount));
-
-      let ang = (((maxAng - minAng)/amount)*i)+minAng;
-
-      let sx  = (Math.cos(radians(ang)) * sdist) + px;
-      let sy  = (Math.sin(radians(ang)) * sdist) + py;
-
-      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
-    }
-  }
-
-  else if (type === "yUp") {
-    for (let i = 0; i < amount; i++) {
-      let px  = lerp(x1,x2,((i+1)/amount));
-      let py  = lerp(y1 - (currentLoop * p2),y2 - (currentLoop * p2),((i+1)/amount));
-
-      let ang = (((maxAng - minAng)/amount)*i)+minAng;
-
-      let sx  = (Math.cos(radians(ang)) * sdist) + px;
-      let sy  = (Math.sin(radians(ang)) * sdist) + py;
-
-      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
-    }
-  }
-
-  else if (type === "yDown") {
-    for (let i = 0; i < amount; i++) {
-      let px  = lerp(x1,x2,((i+1)/amount));
-      let py  = lerp(y1 + (currentLoop * p2),y2 + (currentLoop * p2),((i+1)/amount));
-
-      let ang = (((maxAng - minAng)/amount)*i)+minAng;
-
-      let sx  = Math.cos(radians(ang)) * sdist;
-      let sy  = Math.sin(radians(ang)) * sdist;
-
-      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
-    }
-  }
-
-  else if (type === "xLeftyUp") {
-    for (let i = 0; i < amount; i++) {
-      let px  = lerp(x1 - (currentLoop * p1),x2 - (currentLoop * p1),((i+1)/amount));
-      let py  = lerp(y1 - (currentLoop * p2),y2 - (currentLoop * p2),((i+1)/amount));
-
-      let ang = (((maxAng - minAng)/amount)*i)+minAng;
-
-      let sx  = (Math.cos(radians(ang)) * sdist) + px;
-      let sy  = (Math.sin(radians(ang)) * sdist) + py;
-
-      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
-    }
-  }
-
-  else if (type === "xLeftyDown") {
-    for (let i = 0; i < amount; i++) {
-      let px  = lerp(x1 - (currentLoop * p1),x2 - (currentLoop * p1),((i+1)/amount));
-      let py  = lerp(y1 + (currentLoop * p2),y2 + (currentLoop * p2),((i+1)/amount));
-
-      let ang = (((maxAng - minAng)/amount)*i)+minAng;
-
-      let sx  = (Math.cos(radians(ang)) * sdist) + px;
-      let sy  = (Math.sin(radians(ang)) * sdist) + py;
-
-      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
-    }
-  }
-
-  else if (type === "xRightyUp") {
-    for (let i = 0; i < amount; i++) {
-      let px  = lerp(x1 + (currentLoop * p1),x2 + (currentLoop * p1),((i+1)/amount));
-      let py  = lerp(y1 - (currentLoop * p2),y2 - (currentLoop * p2),((i+1)/amount));
-
-      let ang = (((maxAng - minAng)/amount)*i)+minAng;
-
-      let sx  = (Math.cos(radians(ang)) * sdist) + px;
-      let sy  = (Math.sin(radians(ang)) * sdist) + py;
-
-      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
-    }
-  }
-
-  else if (type === "xRightyDown") {
+  else if (type === "moveSpawn") {
     for (let i = 0; i < amount; i++) {
       let px  = lerp(x1 + (currentLoop * p1),x2 + (currentLoop * p1),((i+1)/amount));
       let py  = lerp(y1 + (currentLoop * p2),y2 + (currentLoop * p2),((i+1)/amount));

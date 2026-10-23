@@ -62,6 +62,9 @@ function updateBattle(battleJSON) {
       }
 
       if (currentAttackLoop + 1 >= battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].totalLoops + battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].emptyLoops ) {
+        if (battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].clearBullets) {
+          bullets = [];
+        }
         currentAttackIndex++;
         currentAttackLoop = 0;
       }

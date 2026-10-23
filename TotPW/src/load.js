@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.2.6-BETA';
+const VERSION = 'v0.2.7-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;

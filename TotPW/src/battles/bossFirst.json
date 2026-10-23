@@ -8,12 +8,13 @@
             "attacks" : [
                 {
                     "framesPerLoop" : 20,
-                    "totalLoops" : 20,
+                    "totalLoops" : 12,
                     "emptyLoops" : 0,
+                    "clearBullets" : false,
                     "bullets" : [
                         {
                             "bulletType" : "normal",
-                            "type" : "yDown",
+                            "type" : "moveSpawn",
                             "amount" : 5,
                             "image" : "felosBulletRed",
                             "x1" : 25,
@@ -26,12 +27,12 @@
                             "maxAng" : 0,
                             "siz" : 15,
                             "curve" : 0,
-                            "paramater1" : 15,
+                            "paramater1" : 0,
                             "paramater2" : 5
                         },
                         {
                             "bulletType" : "normal",
-                            "type" : "yDown",
+                            "type" : "moveSpawn",
                             "amount" : 5,
                             "image" : "felosBulletRed",
                             "x1" : 575,
@@ -44,7 +45,7 @@
                             "maxAng" : 180,
                             "siz" : 15,
                             "curve" : 0,
-                            "paramater1" : 15,
+                            "paramater1" : 0,
                             "paramater2" : 5
                         }
                     ],
@@ -55,12 +56,13 @@
 
                 {
                     "framesPerLoop" : 20,
-                    "totalLoops" : 20,
+                    "totalLoops" : 12,
                     "emptyLoops" : 0,
+                    "clearBullets" : false,
                     "bullets" : [
                         {
                             "bulletType" : "normal",
-                            "type" : "xRight",
+                            "type" : "moveSpawn",
                             "amount" : 5,
                             "image" : "felosBulletRed",
                             "x1" : -200,
@@ -74,11 +76,11 @@
                             "siz" : 15,
                             "curve" : 0,
                             "paramater1" : 5,
-                            "paramater2" : 5
+                            "paramater2" : 0
                         },
                         {
                             "bulletType" : "normal",
-                            "type" : "xRight",
+                            "type" : "moveSpawn",
                             "amount" : 5,
                             "image" : "felosBulletRed",
                             "x1" : -200,
@@ -92,7 +94,235 @@
                             "siz" : 15,
                             "curve" : 0,
                             "paramater1" : 5,
+                            "paramater2" : 0
+                        }
+                    ],
+                    "altBullets" : [
+
+                    ]
+                },
+
+                {
+                    "framesPerLoop" : 20,
+                    "totalLoops" : 12,
+                    "emptyLoops" : 0,
+                    "clearBullets" : false,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "moveSpawn",
+                            "amount" : 5,
+                            "image" : "felosBulletRed",
+                            "x1" : 25,
+                            "y1" : -200,
+                            "x2" : 25,
+                            "y2" : 600,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 0,
+                            "maxAng" : 0,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
                             "paramater2" : 5
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "moveSpawn",
+                            "amount" : 5,
+                            "image" : "felosBulletRed",
+                            "x1" : 575,
+                            "y1" : -200,
+                            "x2" : 575,
+                            "y2" : 600,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 180,
+                            "maxAng" : 180,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 5
+                        }
+                    ],
+                    "altBullets" : [
+
+                    ]
+                },
+                
+                {
+                    "framesPerLoop" : 20,
+                    "totalLoops" : 13,
+                    "emptyLoops" : 0,
+                    "clearBullets" : true,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "moveSpawn",
+                            "amount" : 5,
+                            "image" : "felosBulletRed",
+                            "x1" : 25,
+                            "y1" : -200,
+                            "x2" : 25,
+                            "y2" : 600,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 0,
+                            "maxAng" : 0,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 5
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "moveSpawn",
+                            "amount" : 5,
+                            "image" : "felosBulletRed",
+                            "x1" : -200,
+                            "y1" : 575,
+                            "x2" : 600,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 5,
+                            "paramater2" : 0
+                        }
+                    ],
+                    "altBullets" : [
+
+                    ]
+                },
+
+                {
+                    "framesPerLoop" : 13,
+                    "totalLoops" : 38,
+                    "emptyLoops" : 0,
+                    "clearBullets" : true,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 11,
+                            "image" : "felosBulletOrange",
+                            "x1" : 25,
+                            "y1" : 575,
+                            "x2" : 175,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 11,
+                            "image" : "felosBulletOrange",
+                            "x1" : 550,
+                            "y1" : 575,
+                            "x2" : 400,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0
+                        }
+                    ],
+                    "altBullets" : [
+                        {
+                            "bulletType" : "bomb",
+                            "type" : "normal",
+                            "amount" : 1,
+                            "image" : "felosBulletOrange",
+                            "x1" : 50,
+                            "y1" : 575,
+                            "x2" : 50,
+                            "y2" : 25,
+                            "sdist" : 300,
+                            "vel" : 4,
+                            "minAng" : 90,
+                            "maxAng" : 90,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0
+                        },
+
+                        {
+                            "bulletType" : "bomb",
+                            "type" : "normal",
+                            "amount" : 1,
+                            "image" : "felosBulletOrange",
+                            "x1" : 550,
+                            "y1" : 575,
+                            "x2" : 550,
+                            "y2" : 25,
+                            "sdist" : 300,
+                            "vel" : 4,
+                            "minAng" : 90,
+                            "maxAng" : 90,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0
+                        }
+                    ]
+                },
+
+                {
+                    "framesPerLoop" : 13,
+                    "totalLoops" : 38,
+                    "emptyLoops" : 0,
+                    "clearBullets" : true,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 5,
+                            "image" : "felosBulletOrange",
+                            "x1" : 10,
+                            "y1" : 575,
+                            "x2" : 75,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 5,
+                            "image" : "felosBulletOrange",
+                            "x1" : 590,
+                            "y1" : 575,
+                            "x2" : 525,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0
                         }
                     ],
                     "altBullets" : [
