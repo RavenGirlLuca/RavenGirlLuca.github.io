@@ -342,6 +342,9 @@ function startMenu() {
 
   text("CLICK ANYWHERE\nTO START",(GAMEWIDTH/2)*WINDOWMULTIPLIER,(GAMEHEIGHT*(1/3))*WINDOWMULTIPLIER);
 
+  textSize(48*WINDOWMULTIPLIER);
+  text("!!FLASHING LIGHTS!!\n!!WARNING!!",(GAMEWIDTH/2)*WINDOWMULTIPLIER,(GAMEHEIGHT*(4/5))*WINDOWMULTIPLIER);
+
   if (mouseIsClicked) {
     mouseIsClicked = false;
     state = 'MAINMENU';
