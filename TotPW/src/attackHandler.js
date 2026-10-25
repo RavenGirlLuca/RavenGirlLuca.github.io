@@ -32,6 +32,7 @@ function updateBattle(battleJSON) {
             battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].bullets[i].curve,
             battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].bullets[i].paramater1,
             battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].bullets[i].paramater2,
+            battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].bullets[i].paramater3,
             currentAttackLoop
           );
         }
@@ -55,6 +56,7 @@ function updateBattle(battleJSON) {
               battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].altBullets[i].curve,
               battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].altBullets[i].paramater1,
               battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].altBullets[i].paramater2,
+              battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].altBullets[i].paramater3,
               currentAttackLoop
             );
           }

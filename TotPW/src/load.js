@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.2.7-BETA';
+const VERSION = 'v0.2.8-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
@@ -41,9 +41,13 @@ let felosBulletYellow;
 let felosBulletGreen;
 let felosBulletBlue;
 let felosBulletPurple;
+let acciaioBullet;
+let bomb;
+let bombShrap;
 let playerTopNormal;
 let playerBottomNormal;
 let playerSkirtNormal;
+let acciaioSprite;
 let mainMenuBg0;
 
 async function loadImages() {
@@ -55,11 +59,14 @@ async function loadImages() {
   felosBulletGreen   = await loadImage('/TotPW/src/assets/bulletgreen.png');
   felosBulletBlue    = await loadImage('/TotPW/src/assets/bulletblue.png');
   felosBulletPurple  = await loadImage('/TotPW/src/assets/bulletpurple.png');
+  acciaioBullet      = await loadImage('/TotPW/src/assets/acciaioBullet.png');
+  bomb               = await loadImage('/TotPW/src/assets/bomb.png');
+  bombShrap          = await loadImage('/TotPW/src/assets/bombShrap.png');
   playerTopNormal    = await loadImage('/TotPW/src/assets/playertop.png');
   playerBottomNormal = await loadImage('/TotPW/src/assets/playerbottom.png');
   playerSkirtNormal  = await loadImage('/TotPW/src/assets/playerskirt.png');
-  mainMenuBg0        = await loadImage('/TotPW/src/assets/felosBG.png');
   acciaioSprite      = await loadImage('/TotPW/src/assets/acciaio.png');
+  mainMenuBg0        = await loadImage('/TotPW/src/assets/felosBG.png');
 }
 
 //Define GIFs

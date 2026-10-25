@@ -50,10 +50,15 @@ class Bullet {
         this.py  += vy;
 
         if (this.px >= this.sx - 10 && this.px <= this.sx + 10 && this.py >= this.sy - 10 && this.py <= this.sy + 10 ) {
-          let ranBombRad = Math.floor(random(0,360));
-          spawnBullets("normal", "normal", Math.floor(lerp(4,10,player.dif/5)), felosBulletBlank, this.px, this.py, this.px, this.py, 0, this.vel, ranBombRad, ranBombRad+360, this.siz/2, 0, 0, 0, 0);
-          this.px = -999999999;
-          this.py = -999999999;
+          push();
+
+          translate(this.px, this.py);
+          let bombAng = atan2(player.py - this.py, player.px - this.px);
+
+          pop();
+          spawnBullets("normal", "normal", Math.floor(lerp(4,10,player.dif/5)), bombShrap, this.px, this.py, this.px, this.py, 0, this.vel, bombAng, bombAng + 360, this.siz/2, 0, 0, 0, 0);
+          this.px = -999999;
+          this.py = -999999;
         }
       }
       else {
@@ -68,7 +73,7 @@ class Bullet {
   }
 }
 
-function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,maxAng,siz,crv,p1,p2,currentLoop) {
+function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,maxAng,siz,crv,p1,p2,p3,currentLoop) {
   if (type === "normal") {
     for (let i = 0; i < amount; i++) {
       let px  = lerp(x1,x2,((i+1)/amount)); //if u want the bullets to spawn evenly along a line, this handles that using x1, x2, y1, and y2
@@ -90,6 +95,19 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
 
       let ang = (((maxAng - minAng)/amount)*i)+minAng;
 
+      let sx  = (Math.cos(radians(ang)) * sdist) + px;
+      let sy  = (Math.sin(radians(ang)) * sdist) + py;
+
+      bullets.push(new Bullet(bulletType,img,px,py,sx,sy,vel,ang,siz,crv));
+    }
+  }
+
+  else if (type === "rotate") {
+    for (let i = 0; i < amount; i++) {
+      let px  = lerp(x1,x2,((i+1)/amount));
+      let py  = lerp(y1,y2,((i+1)/amount));
+
+      let ang = ((((maxAng - minAng)/amount)*i)+minAng)+(currentLoop * p3);
       let sx  = (Math.cos(radians(ang)) * sdist) + px;
       let sy  = (Math.sin(radians(ang)) * sdist) + py;
 

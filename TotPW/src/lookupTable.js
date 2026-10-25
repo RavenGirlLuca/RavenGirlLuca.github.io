@@ -10,7 +10,10 @@ function buildLookupTable() {
         "felosBulletBlue"   : felosBulletBlue,
         "felosBulletPurple" : felosBulletPurple,
         "felosSprite"       : felosSprite,
-        "acciaioSprite"     : acciaioSprite
+        "acciaioSprite"     : acciaioSprite,
+        "acciaioBullet"     : acciaioBullet,
+        "bomb"              : bomb,
+        "bombShrap"         : bombShrap
     }
 
     musicLookupTable = {
