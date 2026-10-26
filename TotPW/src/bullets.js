@@ -12,6 +12,8 @@ class Bullet {
     this.ang = ang; //Angle, used with velocity to determain the new bullet pos
     this.siz = siz; //Bullets sized, used for both draw and determening collision with the player
     this.crv = crv; //Bullet tragectory curve, used on some attacks to curve the bullet path
+
+    this.grz = false; //Checks if the bullet has grazed the player
   }
 
   draw() {
@@ -117,20 +119,36 @@ function spawnBullets(bulletType,type,amount,img,x1,y1,x2,y2,sdist,vel,minAng,ma
 }
 
 function updateBullets() {
+  let graze = false;
   for (let i = bullets.length-1; i >= 0; i--) {
     bullets[i].update();
 
     //if bullet collides with player, delete it
-    if (player.px + player.siz > bullets[i].px && player.px < bullets[i].px + bullets[i].siz && player.py + player.siz > bullets[i].py && player.py < bullets[i].py + bullets[i].siz) {
+    if (player.px + player.siz > bullets[i].px && 
+        player.px < bullets[i].px + bullets[i].siz && 
+        player.py + player.siz > bullets[i].py && 
+        player.py < bullets[i].py + bullets[i].siz) {
       player.bulletCol();
       bullets.splice(i,1); 
     }
 
+    //player graze, if get close to a bullet and dont get hit, you get + 10 to your score
+    else if (player.px + player.siz > (bullets[i].px - (bullets[i].siz*0.25)) && 
+             player.px < (bullets[i].px - (bullets[i].siz*0.25)) + (bullets[i].siz*1.5) && 
+             player.py + player.siz > (bullets[i].py - (bullets[i].siz*0.25)) && 
+             player.py < (bullets[i].py - (bullets[i].siz*0.25)) + (bullets[i].siz*1.5)) {
+      graze = true;
+      if (!bullets[i].grz) {
+        player.scr += 10;
+        bullets[i].grz = true;
+      }
+    }
     //if despawnCheck comes back as true, delete the bullet inside the array, should hypothetically save RAM... maybe
     else if (bullets[i].despawnCheck()) {
       bullets.splice(i,1); 
     }
   }
+  player.grz = graze;
 }
 
 function drawBullets() {

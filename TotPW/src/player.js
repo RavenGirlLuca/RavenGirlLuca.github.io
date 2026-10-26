@@ -33,11 +33,11 @@ class Player {
     this.srt = 0;              //skirt rotation, while the player is moving the skirt will be rotated with a physics sim to simulate cloth moving with inertia
     this.sps = this.px;        //skirt position, used with px to calculate how fast the players going
     this.skv = 0;              //skirt velocity
+    this.grz = false;          //graze, if the player gets close to a bullet they get points but they cant infinitly grind the same bullet, this controls that
   }
 
   draw() {
     //draws the player
-
     image(playerTopNormal,   (this.px-(this.siz*0.25))*WINDOWMULTIPLIER,(this.py-(this.siz*0.5))*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,);
     image(playerBottomNormal,(this.px-(this.siz*0.25))*WINDOWMULTIPLIER,(this.py+this.siz)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,);
 
@@ -84,7 +84,8 @@ class Player {
     this.pvx = 0;              
     this.spd = this.baseSpeed; 
     this.siz = 15;             
-    this.run = false;         
+    this.run = false;   
+    this.fcs = false;
     this.liv = 5;              
     this.dif = 1;              
     this.ded = false;          
@@ -100,8 +101,12 @@ class Player {
       if (!this.ded) {
         //Running
         this.run = (keyIsDown(SHIFT) || mobileRun);
+        this.fcs = (keyIsDown(CONTROL));
         if (this.run) {
           this.spd = this.baseSpeed*1.5;
+        }
+        else if (this.fcs) {
+          this.spd = this.baseSpeed*0.5;
         }
         else          {
           this.spd = this.baseSpeed;
