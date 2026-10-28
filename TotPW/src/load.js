@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.2.9-BETA';
+const VERSION = 'v0.3.0-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
@@ -26,9 +26,11 @@ let currentAttackFrame = 0;
 
 //Dialog
 let activeDialog = false;
+let currentDialogLine = 0;
 let currentDialog;
 let currentDialogProfile;
 let currentDialogName;
+let isDialogEndBattle = false;
 
 //Settings
 let cheaterMode = false;

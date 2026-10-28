@@ -40,11 +40,11 @@ function createData(inputName) {
   storeItem('hardScore', 0);
   storeItem('masterScore', 0);
   storeItem('masochistScore', 0);
-  storeItem('easyComplete', false);
-  storeItem('normalComplete', false);
-  storeItem('hardComplete', false);
-  storeItem('masterComplete', false);
-  storeItem('masochistComplete', false);
+  storeItem('easyComplete', 0);
+  storeItem('normalComplete', 0);
+  storeItem('hardComplete', 0);
+  storeItem('masterComplete', 0);
+  storeItem('masochistComplete', 0);
 
   loadData();
 }

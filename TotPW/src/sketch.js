@@ -77,7 +77,6 @@ function draw() {
   }
 
   if (activeDialog) {
-    updateDialog();
     drawDialog();
   }
 
@@ -104,6 +103,12 @@ function keyPressed() {
       state = 'MAINMENU';
       player.reset();
       bullets = [];
+    }
+  }
+
+  if (activeDialog) {
+    if (key === 'Enter') {
+      updateDialog();
     }
   }
 }

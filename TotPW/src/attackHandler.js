@@ -3,12 +3,22 @@ async function loadBattle(battleJSON) {
   enemySprite = imageLookupTable[battleJSON.sprite];
   enemyMusic  = musicLookupTable[battleJSON.music];
   enemyBG     = battleJSON.background;
+  if (battleJSON.hasDialog) {
+    isDialogEndBattle = false;
+    activeDialog = true;
+    currentDialog = battleJSON.startDialog;
+    currentDialogName = battleJSON.textName;
+    currentDialogProfile = imageLookupTable[battleJSON.faceSprite];
+  }
+  else {
+    activeDialog = false;
+  }
 }
 
 function updateBattle(battleJSON) {
   if (!activeDialog) {
     if (currentAttackIndex >= battleJSON.difs[player.dif - 1].attacks.length) {
-      endBattle();
+      endBattle(battleJSON);
       return;
     }
 
@@ -78,7 +88,15 @@ function updateBattle(battleJSON) {
   }
 }
 
-function endBattle() {
+function endBattle(battleJSON) {
+  isDialogEndBattle = true;
+  activeDialog = true;
+  currentDialog = battleJSON.endDialog;
+  currentDialogName = battleJSON.textName;
+  currentDialogProfile = imageLookupTable[battleJSON.faceSprite];
+}
+
+function endBattle2() {
   player.reset();
   state = 'MAINMENU';
 
