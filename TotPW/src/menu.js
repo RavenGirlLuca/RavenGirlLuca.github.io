@@ -373,7 +373,6 @@ function diffMenu() {
     fill(64,49,141);
     if (mouseIsClicked) {
       player.dif = 1;
-      nextAttackFrame = 30;
       state = 'GAME';
 
       currentAttackIndex = 0;
@@ -382,7 +381,6 @@ function diffMenu() {
 
       loadBattle(bossFirstJSON);
       currentBattle = bossFirstJSON;
-      enemyMusic.start();
       menuMusic.stop();
     }
   }
@@ -396,9 +394,14 @@ function diffMenu() {
     fill(85,160,73);
     if (mouseIsClicked) {
       player.dif = 2;
-      nextAttackFrame = 25;
       state = 'GAME';
-      felosMusic.start();
+
+      currentAttackIndex = 0;
+      currentAttackLoop  = 0;
+      currentAttackFrame = 0;
+
+      loadBattle(bossFirstJSON);
+      currentBattle = bossFirstJSON;
       menuMusic.stop();
     }
   }
@@ -412,9 +415,14 @@ function diffMenu() {
     fill(136,57,50);
     if (mouseIsClicked) {
       player.dif = 3;
-      nextAttackFrame = 20;
       state = 'GAME';
-      felosMusic.start();
+
+      currentAttackIndex = 0;
+      currentAttackLoop  = 0;
+      currentAttackFrame = 0;
+
+      loadBattle(bossFirstJSON);
+      currentBattle = bossFirstJSON;
       menuMusic.stop();
     }
   }
@@ -428,9 +436,14 @@ function diffMenu() {
     fill(80,80,80);
     if (mouseIsClicked) {
       player.dif = 4;
-      nextAttackFrame = 15;
       state = 'GAME';
-      felosMusic.start();
+
+      currentAttackIndex = 0;
+      currentAttackLoop  = 0;
+      currentAttackFrame = 0;
+
+      loadBattle(bossFirstJSON);
+      currentBattle = bossFirstJSON;
       menuMusic.stop();
     }
   }
@@ -444,9 +457,14 @@ function diffMenu() {
     fill(80,80,80);
     if (mouseIsClicked) {
       player.dif = 5;
-      nextAttackFrame = 10;
       state = 'GAME';
-      felosMusic.start();
+
+      currentAttackIndex = 0;
+      currentAttackLoop  = 0;
+      currentAttackFrame = 0;
+
+      loadBattle(bossFirstJSON);
+      currentBattle = bossFirstJSON;
       menuMusic.stop();
     }
   }
