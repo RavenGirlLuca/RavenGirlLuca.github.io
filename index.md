@@ -10,6 +10,7 @@
 - [Collision Library](libdemo)
 - [Randomized Art](ranart)
 - [Grid Demo](grid)
+- [Rect Grid](rectgrid)
 
 ## PROJECTS
 - [Interactive Scene](scene)

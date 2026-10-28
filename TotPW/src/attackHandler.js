@@ -84,6 +84,10 @@ function updateBattle(battleJSON) {
 
       currentAttackFrame = 0;
     }
+    if (!(currentAttackLoop + 1 <= battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].totalLoops)) {
+      drawIndicatorGrid(battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].indicators);
+    }
+    
     currentAttackFrame++;
   }
 }
