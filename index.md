@@ -9,6 +9,7 @@
 - [Perlin Noise](noise)
 - [Collision Library](libdemo)
 - [Randomized Art](ranart)
+- [Grid Demo](grid)
 
 ## PROJECTS
 - [Interactive Scene](scene)
