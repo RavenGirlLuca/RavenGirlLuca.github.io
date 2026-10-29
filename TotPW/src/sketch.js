@@ -18,7 +18,8 @@ async function setup() {
   await loadJSONs();
 
   loadData();
-  buildLookupTable()
+  buildLookupTable();
+  player.getSprite();
 }
 
 function draw() {

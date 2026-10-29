@@ -38,8 +38,8 @@ class Player {
 
   draw() {
     //draws the player
-    image(playerTopNormal,   (this.px-(this.siz*0.25))*WINDOWMULTIPLIER,(this.py-(this.siz*0.5))*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,);
-    image(playerBottomNormal,(this.px-(this.siz*0.25))*WINDOWMULTIPLIER,(this.py+this.siz)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,);
+    image(imageLookupTable["playerTop"],   (this.px-(this.siz*0.25))*WINDOWMULTIPLIER,(this.py-(this.siz*0.5))*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,);
+    image(imageLookupTable["playerBottom"],(this.px-(this.siz*0.25))*WINDOWMULTIPLIER,(this.py+this.siz)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,);
 
     push();
     
@@ -49,7 +49,7 @@ class Player {
     angleMode(DEGREES);
     rotate(-this.srt);
 
-    image(playerSkirtNormal,0,(this.siz*1.25)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER);
+    image(imageLookupTable["playerSkirt"],0,(this.siz*1.25)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER,(this.siz*1.5)*WINDOWMULTIPLIER);
 
     pop();
   }
@@ -95,6 +95,14 @@ class Player {
     this.skv = 0; 
   }
 
+  getSprite() {
+    if (this.name === "GREENGUY") {
+      imageLookupTable["playerTop"]    = greenGuyTop;
+      imageLookupTable["playerBottom"] = greenGuyBottom;
+      imageLookupTable["playerSkirt"]  = greenGuyUFO;
+    }
+  }
+
   update() {
     //handles most player functions that happen each frame
     if (!activeDialog) {
@@ -137,6 +145,8 @@ class Player {
         if (this.liv <= 0) {
           this.ded = true;
         }
+
+        console.log(this.name);
       }
       
       else {

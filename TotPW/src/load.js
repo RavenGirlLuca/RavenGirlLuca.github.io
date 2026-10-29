@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.3.1-BETA';
+const VERSION = 'v0.3.2-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
@@ -49,6 +49,9 @@ let bombShrap;
 let playerTopNormal;
 let playerBottomNormal;
 let playerSkirtNormal;
+let greenGuyTop;
+let greenGuyBottom;
+let greenGuyUFO;
 let acciaioSprite;
 let mainMenuBg0;
 let arrowUp;
@@ -77,6 +80,9 @@ async function loadImages() {
   playerTopNormal    = await loadImage('/TotPW/src/assets/playertop.png');
   playerBottomNormal = await loadImage('/TotPW/src/assets/playerbottom.png');
   playerSkirtNormal  = await loadImage('/TotPW/src/assets/playerskirt.png');
+  greenGuyTop        = await loadImage('/TotPW/src/assets/greenguytop.png');
+  greenGuyBottom     = await loadImage('/TotPW/src/assets/greenguybottom.png');
+  greenGuyUFO        = await loadImage('/TotPW/src/assets/greenguyufo.png');
   acciaioSprite      = await loadImage('/TotPW/src/assets/acciaio.png');
   mainMenuBg0        = await loadImage('/TotPW/src/assets/felosBG.png');
   arrowUp            = await loadImage('/TotPW/src/assets/arrowup.png');
