@@ -17,11 +17,6 @@ async function loadBattle(battleJSON) {
 
 function updateBattle(battleJSON) {
   if (!activeDialog) {
-    if (currentAttackIndex >= battleJSON.difs[player.dif - 1].attacks.length) {
-      endBattle(battleJSON);
-      return;
-    }
-
     if (currentAttackFrame >= battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].framesPerLoop) {
       if (currentAttackLoop + 1 <= battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].totalLoops) {
         for (let i = 0; i < battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].bullets.length; i++) {
@@ -83,8 +78,13 @@ function updateBattle(battleJSON) {
       else currentAttackLoop++;
 
       currentAttackFrame = 0;
+
+      if (currentAttackIndex >= battleJSON.difs[player.dif - 1].attacks.length) {
+        endBattle(battleJSON);
+        return;
+      }
     }
-    if (!(currentAttackLoop + 1 <= battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].totalLoops)) {
+    if ((!(currentAttackLoop + 1 <= battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].totalLoops))) {
       drawIndicatorGrid(battleJSON.difs[player.dif - 1].attacks[currentAttackIndex].indicators);
     }
     

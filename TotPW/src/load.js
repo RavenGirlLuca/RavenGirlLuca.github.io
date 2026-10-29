@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.3.0-BETA';
+const VERSION = 'v0.3.1-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
@@ -51,6 +51,16 @@ let playerBottomNormal;
 let playerSkirtNormal;
 let acciaioSprite;
 let mainMenuBg0;
+let arrowUp;
+let arrowDown;
+let arrowLeft;
+let arrowRight;
+let arrowUpRight;
+let arrowDownLeft;
+let arrowUpLeft;
+let arrowDownRight;
+let spiralClockwise;
+let spiralCounterClockwise;
 
 async function loadImages() {
   //Load Images
@@ -69,6 +79,16 @@ async function loadImages() {
   playerSkirtNormal  = await loadImage('/TotPW/src/assets/playerskirt.png');
   acciaioSprite      = await loadImage('/TotPW/src/assets/acciaio.png');
   mainMenuBg0        = await loadImage('/TotPW/src/assets/felosBG.png');
+  arrowUp            = await loadImage('/TotPW/src/assets/arrowup.png');
+  arrowDown          = await loadImage('/TotPW/src/assets/arrowdown.png');
+  arrowLeft          = await loadImage('/TotPW/src/assets/arrowleft.png');
+  arrowRight         = await loadImage('/TotPW/src/assets/arrowright.png');
+  arrowUpRight       = await loadImage('/TotPW/src/assets/arrowupright.png');
+  arrowDownLeft      = await loadImage('/TotPW/src/assets/arrowdownleft.png');
+  arrowUpLeft        = await loadImage('/TotPW/src/assets/arrowupleft.png');
+  arrowDownRight     = await loadImage('/TotPW/src/assets/arrowdownright.png');
+  spiralClockwise    = await loadImage('/TotPW/src/assets/spiralclockwise.png');
+  spiralCounterClockwise = await loadImage('/TotPW/src/assets/spiralcounterclockwise.png');
 }
 
 //Define GIFs

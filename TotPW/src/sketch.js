@@ -61,11 +61,11 @@ function draw() {
     player.update();
 
     drawGameBox();
+    updateBattle(currentBattle);
     drawStatMenu();
     drawEnemy();
     drawBullets();
     player.draw();
-    updateBattle(currentBattle);
   }
 
   else if (state === 'DEAD') {

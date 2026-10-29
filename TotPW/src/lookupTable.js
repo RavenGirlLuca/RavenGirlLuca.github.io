@@ -13,7 +13,17 @@ function buildLookupTable() {
         "acciaioSprite"     : acciaioSprite,
         "acciaioBullet"     : acciaioBullet,
         "bomb"              : bomb,
-        "bombShrap"         : bombShrap
+        "bombShrap"         : bombShrap,
+        "arrowUp"           : arrowUp,
+        "arrowDown"         : arrowDown,
+        "arrowLeft"         : arrowLeft,
+        "arrowRight"        : arrowRight,
+        "arrowUpRight"      : arrowUpRight,
+        "arrowDownLeft"     : arrowDownLeft,
+        "arrowUpLeft"       : arrowUpLeft,
+        "arrowDownRight"    : arrowDownRight,
+        "spiralClockwise"   : spiralClockwise,
+        "spiralCounterClockwise" : spiralCounterClockwise
     }
 
     musicLookupTable = {
