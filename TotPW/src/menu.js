@@ -806,6 +806,7 @@ function dataMenu() {
 
   if(!(currentInputName === '') && keyIsDown(ENTER) && currentInputName.length <= 8) {
     createData(currentInputName);
+    player.getSprite();
     state = 'MAINMENU';
   }
 }
