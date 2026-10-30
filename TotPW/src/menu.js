@@ -214,16 +214,14 @@ function mainMenu() {
   rect(buttonX*WINDOWMULTIPLIER,buttonY*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
 
   if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+80)*WINDOWMULTIPLIER && mouseY < (buttonY+80)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
-    //fill(85,160,73);
-    fill(80,80,80);
+    fill(85,160,73);
     if (mouseIsClicked) {
       mouseIsClicked = false;
-      //state = 'BONUSMENU';
+      state = 'BONUSMENU';
     }
   }
   else {
-    //fill(148,224,137);
-    fill(80,80,80);
+    fill(148,224,137);
   } 
 
   rect(buttonX*WINDOWMULTIPLIER,(buttonY+80)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
@@ -840,6 +838,151 @@ function nameMenu() {
 
   if(!(currentInputName === '') && keyIsDown(ENTER) && currentInputName.length <= 8) {
     storeItem('name', currentInputName);
+    player.name = currentInputName
+    player.getSprite();
     state = 'MAINMENU';
   }
+}
+
+function bonusMenu() {
+  //Bonus Content menu, this menu contains the Lore, Bonus Fights, Moding, an Art Book, and Credits
+  textAlign(CENTER);
+
+  stroke("WHITE");
+  strokeWeight(4);
+  textSize(40*WINDOWMULTIPLIER);
+
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > buttonY*WINDOWMULTIPLIER && mouseY < buttonY*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      mouseIsClicked = false;
+    }
+  }
+  else {
+    fill(80,80,80);
+  } 
+
+  rect(buttonX*WINDOWMULTIPLIER,buttonY*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+80)*WINDOWMULTIPLIER && mouseY < (buttonY+80)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      mouseIsClicked = false;
+    }
+  }
+  else {
+    fill(80,80,80);
+  } 
+
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+80)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+160)*WINDOWMULTIPLIER && mouseY < (buttonY+160)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(136,57,50);
+    if (mouseIsClicked) {
+      mouseIsClicked = false;
+      state = "MODMENU"
+    }
+  }
+  else {
+    fill(184,105,98);
+  } 
+
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+160)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+240)*WINDOWMULTIPLIER && mouseY < (buttonY+240)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      mouseIsClicked = false;
+    }
+  }
+  else {
+    fill(80,80,80);
+  } 
+
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+240)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+
+  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+320)*WINDOWMULTIPLIER && mouseY < (buttonY+320)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      mouseIsClicked = false;
+    }
+  }
+  else {
+    fill(80,80,80);
+  } 
+
+  rect(buttonX*WINDOWMULTIPLIER,(buttonY+320)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+
+  noStroke();
+  fill("WHITE");
+
+  text("LORE",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+15)*WINDOWMULTIPLIER);
+  text("FIGHTS",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+95)*WINDOWMULTIPLIER);
+  text("MODING",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+175)*WINDOWMULTIPLIER);
+  text("ART",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+255)*WINDOWMULTIPLIER);
+  text("CREDITS",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+335)*WINDOWMULTIPLIER);
+
+  textAlign(LEFT);
+  textSize(60*WINDOWMULTIPLIER);
+  text("BONUS CONTENT",10*WINDOWMULTIPLIER,100*WINDOWMULTIPLIER);
+}
+
+function modMenu() {
+  //This menu lets you load a mod into the game, read the modding guide, or possibly look into a public mod database if i have time
+  textAlign(CENTER);
+  stroke("WHITE");
+  strokeWeight(4);
+  textSize(40*WINDOWMULTIPLIER);
+
+  if (mouseX > 100*WINDOWMULTIPLIER && 
+    mouseX < 100*WINDOWMULTIPLIER + 600*WINDOWMULTIPLIER && 
+    mouseY > 200*WINDOWMULTIPLIER && 
+    mouseY < 200*WINDOWMULTIPLIER + 80*WINDOWMULTIPLIER) {
+    fill(64,49,141);
+    if (mouseIsClicked) {
+      mouseIsClicked = false;
+    }
+  }
+  else {
+    fill(120,105,196);
+  } 
+
+  rect(100*WINDOWMULTIPLIER,200*WINDOWMULTIPLIER,600*WINDOWMULTIPLIER,80*WINDOWMULTIPLIER);
+
+  if (mouseX > 100*WINDOWMULTIPLIER && 
+    mouseX < 100*WINDOWMULTIPLIER + 600*WINDOWMULTIPLIER && 
+    mouseY > 305*WINDOWMULTIPLIER && 
+    mouseY < 305*WINDOWMULTIPLIER + 80*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      mouseIsClicked = false;
+    }
+  }
+  else {
+    fill(80,80,80);
+  } 
+
+  rect(100*WINDOWMULTIPLIER,305*WINDOWMULTIPLIER,600*WINDOWMULTIPLIER,80*WINDOWMULTIPLIER);
+
+  if (mouseX > 100*WINDOWMULTIPLIER && 
+    mouseX < 100*WINDOWMULTIPLIER + 600*WINDOWMULTIPLIER && 
+    mouseY > 410*WINDOWMULTIPLIER && 
+    mouseY < 410*WINDOWMULTIPLIER + 80*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      mouseIsClicked = false;
+    }
+  }
+  else {
+    fill(80,80,80);
+  } 
+
+  rect(100*WINDOWMULTIPLIER,410*WINDOWMULTIPLIER,600*WINDOWMULTIPLIER,80*WINDOWMULTIPLIER);
+
+  noStroke();
+  fill("WHITE");
+
+  text("LOAD",(100+(600/2))*WINDOWMULTIPLIER,((200+(80/2))+15)*WINDOWMULTIPLIER);
+  text("GUIDE",(100+(600/2))*WINDOWMULTIPLIER,((305+(80/2))+15)*WINDOWMULTIPLIER);
+  text("DATABASE",(100+(600/2))*WINDOWMULTIPLIER,((410+(80/2))+15)*WINDOWMULTIPLIER);
 }

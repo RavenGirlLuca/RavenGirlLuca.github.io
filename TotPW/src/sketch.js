@@ -46,7 +46,7 @@ function draw() {
   }
   
   else if (state === 'BONUSMENU') {
-    
+    bonusMenu();
   }
 
   else if (state === 'OPTIONSMENU') {
@@ -55,6 +55,10 @@ function draw() {
 
   else if (state === 'LEVELMENU') {
     
+  }
+
+  else if (state === 'MODMENU') {
+    modMenu();
   }
 
   else if (state === 'GAME') {

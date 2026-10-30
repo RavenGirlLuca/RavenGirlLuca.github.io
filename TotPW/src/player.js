@@ -101,6 +101,11 @@ class Player {
       imageLookupTable["playerBottom"] = greenGuyBottom;
       imageLookupTable["playerSkirt"]  = greenGuyUFO;
     }
+    else {
+      imageLookupTable["playerTop"]    = playerTopNormal;
+      imageLookupTable["playerBottom"] = playerBottomNormal;
+      imageLookupTable["playerSkirt"]  = playerSkirtNormal;
+    }
   }
 
   update() {
