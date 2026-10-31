@@ -350,144 +350,123 @@ function startMenu() {
   }
 }
 
-let diffMenuButtonX = 30;
-let diffMenuButtonY = GAMEHEIGHT*(3/8);
-let diffMenuButtonW = (GAMEWIDTH/2)-40;
-let diffMenuButtonH = 80;
+let currentJSONIndex = 0;
+let currentDif = 0;
 
 function diffMenu() {
+  push();
+  imageMode(CENTER);
+  rectMode(CENTER);
   textAlign(CENTER);
-  noStroke();
-  fill("WHITE");
-  textSize(64*WINDOWMULTIPLIER);
 
-  text("SELECT A\nDIFFICULTY",(GAMEWIDTH/2)*WINDOWMULTIPLIER,(GAMEHEIGHT*(1/8))*WINDOWMULTIPLIER);
-
-  textSize(40*WINDOWMULTIPLIER);
   stroke("WHITE");
-  strokeWeight(4);
-
-  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > buttonY*WINDOWMULTIPLIER && mouseY < buttonY*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
-    fill(64,49,141);
-    if (mouseIsClicked) {
-      player.dif = 1;
-      state = 'GAME';
-
-      currentAttackIndex = 0;
-      currentAttackLoop  = 0;
-      currentAttackFrame = 0;
-
-      loadBattle(bossFirstJSON);
-      currentBattle = bossFirstJSON;
-      menuMusic.stop();
-    }
-  }
-  else {
-    fill(120,105,196);
-  } 
-
-  rect(buttonX*WINDOWMULTIPLIER,buttonY*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
-
-  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+80)*WINDOWMULTIPLIER && mouseY < (buttonY+80)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
-    fill(85,160,73);
-    if (mouseIsClicked) {
-      player.dif = 2;
-      state = 'GAME';
-
-      currentAttackIndex = 0;
-      currentAttackLoop  = 0;
-      currentAttackFrame = 0;
-
-      loadBattle(bossFirstJSON);
-      currentBattle = bossFirstJSON;
-      menuMusic.stop();
-    }
-  }
-  else {
-    fill(148,224,137);
-  } 
-
-  rect(buttonX*WINDOWMULTIPLIER,(buttonY+80)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
-
-  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+160)*WINDOWMULTIPLIER && mouseY < (buttonY+160)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
-    fill(136,57,50);
-    if (mouseIsClicked) {
-      player.dif = 3;
-      state = 'GAME';
-
-      currentAttackIndex = 0;
-      currentAttackLoop  = 0;
-      currentAttackFrame = 0;
-
-      loadBattle(bossFirstJSON);
-      currentBattle = bossFirstJSON;
-      menuMusic.stop();
-    }
-  }
-  else {
-    fill(184,105,98);
-  } 
-
-  rect(buttonX*WINDOWMULTIPLIER,(buttonY+160)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
-
-  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+240)*WINDOWMULTIPLIER && mouseY < (buttonY+240)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
-    fill(80,80,80);
-    if (mouseIsClicked) {
-      player.dif = 4;
-      state = 'GAME';
-
-      currentAttackIndex = 0;
-      currentAttackLoop  = 0;
-      currentAttackFrame = 0;
-
-      loadBattle(bossFirstJSON);
-      currentBattle = bossFirstJSON;
-      menuMusic.stop();
-    }
-  }
-  else {
-    fill(159,159,159);
-  } 
-
-  rect(buttonX*WINDOWMULTIPLIER,(buttonY+240)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
-
-  if (mouseX > buttonX*WINDOWMULTIPLIER && mouseX < buttonX*WINDOWMULTIPLIER + buttonW*WINDOWMULTIPLIER && mouseY > (buttonY+320)*WINDOWMULTIPLIER && mouseY < (buttonY+320)*WINDOWMULTIPLIER + buttonH*WINDOWMULTIPLIER) {
-    fill(80,80,80);
-    if (mouseIsClicked) {
-      player.dif = 5;
-      state = 'GAME';
-
-      currentAttackIndex = 0;
-      currentAttackLoop  = 0;
-      currentAttackFrame = 0;
-
-      loadBattle(bossFirstJSON);
-      currentBattle = bossFirstJSON;
-      menuMusic.stop();
-    }
-  }
-  else {
-    fill(159,159,159);
-  } 
-
-  rect(buttonX*WINDOWMULTIPLIER,(buttonY+320)*WINDOWMULTIPLIER,buttonW*WINDOWMULTIPLIER,buttonH*WINDOWMULTIPLIER);
+  strokeWeight(4*WINDOWMULTIPLIER);
+  rect(width/2,height/2.5,256*WINDOWMULTIPLIER,256*WINDOWMULTIPLIER)
 
   noStroke();
-  fill("WHITE");
+  image(imageLookupTable[jsonArray[currentJSONIndex].coverSprite],width/2,height/2.5,256*WINDOWMULTIPLIER,256*WINDOWMULTIPLIER);
+  text(jsonArray[currentJSONIndex].coverName,width/2,height/6)
 
-  text("EASY",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+15)*WINDOWMULTIPLIER);
-  text("NORMAL",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+95)*WINDOWMULTIPLIER);
-  text("HARD",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+175)*WINDOWMULTIPLIER);
-  text("MASTER",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+255)*WINDOWMULTIPLIER);
-  text("MASOCHIST",(buttonX+(buttonW/2))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+335)*WINDOWMULTIPLIER);
+  rect(width/2,3*height/4,170*WINDOWMULTIPLIER,64*WINDOWMULTIPLIER)
 
-  textAlign(LEFT);
+  if (mouseX > (width/2) - (128*WINDOWMULTIPLIER) && 
+    mouseX < ((width/2) - (128*WINDOWMULTIPLIER)) + 256*WINDOWMULTIPLIER && 
+    mouseY > (height/2.5) - (128*WINDOWMULTIPLIER) && 
+    mouseY < ((height/2.5) - (128*WINDOWMULTIPLIER)) + 256*WINDOWMULTIPLIER) {
+    fill(80,80,80);
+    if (mouseIsClicked) {
+      currentBattleDif = currentDif;
+      currentDif = 0;
+      currentBattleJSON = currentJSONIndex;
+      currentJSONIndex = 0;
 
-  text("SCR: " + player.easyScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+15)*WINDOWMULTIPLIER);
-  text("SCR: " + player.normScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+95)*WINDOWMULTIPLIER);
-  text("SCR: " + player.hardScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+175)*WINDOWMULTIPLIER);
-  text("SCR: " + player.mastScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+255)*WINDOWMULTIPLIER);
-  text("SCR: " + player.masoScr,(buttonX+(buttonW+20))*WINDOWMULTIPLIER,(buttonY+(buttonH/2)+335)*WINDOWMULTIPLIER);
+      player.dif = jsonArray[currentBattleJSON].difs[currentBattleDif].dmg;
+      state = 'GAME';
+
+      currentAttackIndex = 0;
+      currentAttackLoop  = 0;
+      currentAttackFrame = 0;
+
+      loadBattle(jsonArray[currentBattleJSON]);
+      currentBattle = jsonArray[currentBattleJSON];
+      menuMusic.stop();
+    }
+  }
+  else {
+    fill(159,159,159);
+  }  
+
+  if (jsonArray[currentJSONIndex - 1]) {
+    if (mouseX > (width/2) - (243*WINDOWMULTIPLIER) && 
+      mouseX < ((width/2) - (243*WINDOWMULTIPLIER)) + 86*WINDOWMULTIPLIER && 
+      mouseY > (height/2.5) - (64*WINDOWMULTIPLIER) && 
+      mouseY < ((height/2.5) - (64*WINDOWMULTIPLIER)) + 128*WINDOWMULTIPLIER) {
+      fill(80,80,80);
+      if (mouseIsClicked) {
+        currentJSONIndex--;
+        currentDif = 0;
+      }
+    }
+    else {
+      fill(159,159,159);
+    } 
+
+    rect((width/2) - (200*WINDOWMULTIPLIER),height/2.5,86*WINDOWMULTIPLIER,128*WINDOWMULTIPLIER)
+  }
+
+  if (jsonArray[currentJSONIndex + 1]) {
+    if (mouseX > (width/2) + (175*WINDOWMULTIPLIER) && 
+      mouseX < ((width/2) + (175*WINDOWMULTIPLIER)) + 86*WINDOWMULTIPLIER && 
+      mouseY > (height/2.5) - (64*WINDOWMULTIPLIER) && 
+      mouseY < ((height/2.5) - (64*WINDOWMULTIPLIER)) + 128*WINDOWMULTIPLIER) {
+      fill(80,80,80);
+      if (mouseIsClicked) {
+        currentJSONIndex++;
+        currentDif = 0;
+      }
+    }
+    else {
+      fill(159,159,159);
+    } 
+
+    rect((width/2) + (200*WINDOWMULTIPLIER),height/2.5,86*WINDOWMULTIPLIER,128*WINDOWMULTIPLIER)
+  }
+
+  if (currentDif > 0) {
+    if (mouseX > (width/2) - (182*WINDOWMULTIPLIER) && 
+      mouseX < ((width/2) - (182*WINDOWMULTIPLIER)) + 64*WINDOWMULTIPLIER && 
+      mouseY > (3*height/4) - (32*WINDOWMULTIPLIER) && 
+      mouseY < ((3*height/4) - (32*WINDOWMULTIPLIER)) + 64*WINDOWMULTIPLIER) {
+      fill(80,80,80);
+      if (mouseIsClicked) {
+        currentDif--;
+      }
+    }
+    else {
+      fill(159,159,159);
+    } 
+
+    rect((width/2) - (150*WINDOWMULTIPLIER),3*height/4,64*WINDOWMULTIPLIER,64*WINDOWMULTIPLIER)
+  }
+
+  if (currentDif < jsonArray[currentJSONIndex].difs.length) {
+    if (mouseX > (width/2) + (118*WINDOWMULTIPLIER) && 
+      mouseX < ((width/2) + (118*WINDOWMULTIPLIER)) + 64*WINDOWMULTIPLIER && 
+      mouseY > (3*height/4) - (32*WINDOWMULTIPLIER) && 
+      mouseY < ((3*height/4) - (32*WINDOWMULTIPLIER)) + 64*WINDOWMULTIPLIER) {
+      fill(80,80,80);
+      if (mouseIsClicked) {
+        currentDif++;
+      }
+    }
+    else {
+      fill(159,159,159);
+    }  
+
+    rect((width/2) + (150*WINDOWMULTIPLIER),3*height/4,64*WINDOWMULTIPLIER,64*WINDOWMULTIPLIER)
+  }
+
+  pop();
 }
 
 let settingsButtonX = 20;
@@ -496,6 +475,7 @@ let settingsButtonW = 240;
 let settingsButtonH = 60;
 
 function settingsMenu() {
+  //Settings Menu, Mainly used for debug features
   textAlign(CENTER);
   noStroke();
   fill("WHITE");
@@ -776,6 +756,7 @@ function settingsMenu() {
 }
 
 function dataMenu() {
+  //Creates all required data for the game, and if you reset your player data
   textAlign(CENTER);
   noStroke();
   fill("WHITE");
@@ -810,6 +791,7 @@ function dataMenu() {
 }
 
 function nameMenu() {
+  //Used for when you change your name without reseting data
   textAlign(CENTER);
   noStroke();
   fill("WHITE");
@@ -881,6 +863,7 @@ function bonusMenu() {
     if (mouseIsClicked) {
       mouseIsClicked = false;
       state = "MODMENU"
+      fileInput.show();
     }
   }
   else {
@@ -941,6 +924,7 @@ function modMenu() {
     fill(64,49,141);
     if (mouseIsClicked) {
       mouseIsClicked = false;
+      modData = [];
     }
   }
   else {

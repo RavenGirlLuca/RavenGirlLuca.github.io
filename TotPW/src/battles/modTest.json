@@ -1,0 +1,358 @@
+{
+    "name" : "JOHN TEST",
+    "coverName" : "TEST",
+    "textName" : "TEST",
+    "sprite" : "felosSprite",
+    "coverSprite" : "felosSprite",
+    "faceSprite" : "felosSprite",
+    "music" : "felosMusic",
+    "background" : "NIL",
+    "hasDialog" : true,
+    "hadEndDialog" : true,
+    "startDialog" : [
+        "Modded Dialog Test",
+        "This is Dialog\nIn a Mod"
+    ],
+    "endDialog" : [
+        "Blah Blah Blah END",
+        "More Dialog\nThis is a New Line ENDER",
+        "Blah Blah Blah\nSomething Something\nBlah Blah Blah ENDEST"
+    ],
+    "difs" : [
+        {
+            "dmg" : 1,
+            "attacks" : [
+                {
+                    "framesPerLoop" : 20,
+                    "totalLoops" : 12,
+                    "emptyLoops" : 0,
+                    "clearBullets" : false,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "moveSpawn",
+                            "amount" : 5,
+                            "image" : "acciaioBullet",
+                            "x1" : 25,
+                            "y1" : -200,
+                            "x2" : 25,
+                            "y2" : 600,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 0,
+                            "maxAng" : 0,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 5,
+                            "paramater3" : 0
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "moveSpawn",
+                            "amount" : 5,
+                            "image" : "acciaioBullet",
+                            "x1" : 575,
+                            "y1" : -200,
+                            "x2" : 575,
+                            "y2" : 600,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 180,
+                            "maxAng" : 180,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 5,
+                            "paramater3" : 0
+                        }
+                    ],
+                    "altBullets" : [
+
+                    ],
+                    "indicators" : []
+                },
+                
+                {
+                    "framesPerLoop" : 20,
+                    "totalLoops" : 11,
+                    "emptyLoops" : 2,
+                    "clearBullets" : true,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "moveSpawn",
+                            "amount" : 5,
+                            "image" : "acciaioBullet",
+                            "x1" : 25,
+                            "y1" : -200,
+                            "x2" : 25,
+                            "y2" : 600,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 0,
+                            "maxAng" : 0,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 5,
+                            "paramater3" : 0
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "moveSpawn",
+                            "amount" : 5,
+                            "image" : "acciaioBullet",
+                            "x1" : -200,
+                            "y1" : 575,
+                            "x2" : 600,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 3,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 5,
+                            "paramater2" : 0,
+                            "paramater3" : 0
+                        }
+                    ],
+                    "altBullets" : [
+
+                    ],
+                    "indicators" : [
+                        [[2,0],[3,0],[2,0],[0,0],[0,0],[0,0],[2,0],[3,0],[2,0]],
+                        [[2,0],[3,0],[2,0],[0,0],[0,0],[0,0],[2,0],[3,0],[2,0]],
+                        [[2,0],[3,0],[2,0],[0,0],[0,0],[0,0],[2,0],[3,0],[2,0]],
+                        [[2,0],[3,0],[2,0],[0,0],[0,0],[0,0],[2,0],[3,0],[2,0]],
+                        [[2,0],[3,0],[2,0],[0,0],[0,0],[0,0],[2,0],[3,0],[2,0]],
+                        [[2,0],[3,0],[2,0],[0,0],[0,0],[0,0],[2,0],[3,0],[2,0]],
+                        [[2,0],[3,0],[2,0],[0,0],[0,0],[0,0],[2,0],[3,0],[2,0]],
+                        [[2,0],[3,0],[2,0],[0,0],[0,0],[0,0],[2,0],[3,0],[2,0]],
+                        [[2,"arrowUp"],[3,"arrowUp"],[2,"arrowUp"],[0,0],[0,0],[0,0],[2,"arrowUp"],[3,"arrowUp"],[2,"arrowUp"]]
+                    ]
+                }
+            ]
+        },
+        {
+            "dmg" : 3,
+            "attacks" : [
+                {
+                    "framesPerLoop" : 13,
+                    "totalLoops" : 36,
+                    "emptyLoops" : 2,
+                    "clearBullets" : false,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 5,
+                            "image" : "acciaioBullet",
+                            "x1" : 10,
+                            "y1" : 25,
+                            "x2" : 75,
+                            "y2" : 25,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 90,
+                            "maxAng" : 90,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 0
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 5,
+                            "image" : "acciaioBullet",
+                            "x1" : 575,
+                            "y1" : 575,
+                            "x2" : 510,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 0
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 5,
+                            "image" : "acciaioBullet",
+                            "x1" : 25,
+                            "y1" : 10,
+                            "x2" : 25,
+                            "y2" : 75,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 0,
+                            "maxAng" : 0,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 0
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 5,
+                            "image" : "acciaioBullet",
+                            "x1" : 575,
+                            "y1" : 575,
+                            "x2" : 575,
+                            "y2" : 510,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 180,
+                            "maxAng" : 180,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 0
+                        }
+                    ],
+                    "altBullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "rotate",
+                            "amount" : 6,
+                            "image" : "acciaioBullet",
+                            "x1" : 25,
+                            "y1" : 25,
+                            "x2" : 25,
+                            "y2" : 25,
+                            "sdist" : 0,
+                            "vel" : 4,
+                            "minAng" : 0,
+                            "maxAng" : 360,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 3
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "rotate",
+                            "amount" : 6,
+                            "image" : "acciaioBullet",
+                            "x1" : 575,
+                            "y1" : 25,
+                            "x2" : 575,
+                            "y2" : 25,
+                            "sdist" : 0,
+                            "vel" : 4,
+                            "minAng" : 0,
+                            "maxAng" : 360,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 3
+                        }
+                    ],
+                    "indicators" : []
+                },
+
+                {
+                    "framesPerLoop" : 13,
+                    "totalLoops" : 38,
+                    "emptyLoops" : 0,
+                    "clearBullets" : true,
+                    "bullets" : [
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 11,
+                            "image" : "acciaioBullet",
+                            "x1" : 25,
+                            "y1" : 575,
+                            "x2" : 175,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 0
+                        },
+                        {
+                            "bulletType" : "normal",
+                            "type" : "normal",
+                            "amount" : 11,
+                            "image" : "acciaioBullet",
+                            "x1" : 550,
+                            "y1" : 575,
+                            "x2" : 400,
+                            "y2" : 575,
+                            "sdist" : 0,
+                            "vel" : 6,
+                            "minAng" : 270,
+                            "maxAng" : 270,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 0
+                        }
+                    ],
+                    "altBullets" : [
+                        {
+                            "bulletType" : "bomb",
+                            "type" : "normal",
+                            "amount" : 1,
+                            "image" : "bomb",
+                            "x1" : 50,
+                            "y1" : 575,
+                            "x2" : 50,
+                            "y2" : 25,
+                            "sdist" : 300,
+                            "vel" : 3,
+                            "minAng" : 90,
+                            "maxAng" : 90,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 0
+                        },
+
+                        {
+                            "bulletType" : "bomb",
+                            "type" : "normal",
+                            "amount" : 1,
+                            "image" : "bomb",
+                            "x1" : 550,
+                            "y1" : 575,
+                            "x2" : 550,
+                            "y2" : 25,
+                            "sdist" : 300,
+                            "vel" : 3,
+                            "minAng" : 90,
+                            "maxAng" : 90,
+                            "siz" : 15,
+                            "curve" : 0,
+                            "paramater1" : 0,
+                            "paramater2" : 0,
+                            "paramater3" : 0
+                        }
+                    ],
+                    "indicators" : []
+                }
+            ]
+        }
+    ]
+}

@@ -16,6 +16,7 @@ async function setup() {
   await loadAudio();
   await loadFonts();
   await loadJSONs();
+  await loadObjects();
 
   loadData();
   buildLookupTable();
@@ -107,6 +108,7 @@ function keyPressed() {
     if (key === 'Escape') {
       state = 'MAINMENU';
       player.reset();
+      fileInput.hide();
       bullets = [];
     }
   }

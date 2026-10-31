@@ -1,5 +1,5 @@
 //Important Global Variables
-const VERSION = 'v0.3.3-BETA';
+const VERSION = 'v0.4.0-BETA';
 
 const GAMEBOXX = 25;
 const GAMEBOXY = 25;
@@ -20,6 +20,8 @@ let enemyBG;
 let enemyMusic;
 let currentBattle;
 
+let currentBattleJSON  = 0;
+let currentBattleDif   = 0;
 let currentAttackIndex = 0;
 let currentAttackLoop  = 0;
 let currentAttackFrame = 0;
@@ -34,6 +36,9 @@ let isDialogEndBattle = false;
 
 //Settings
 let cheaterMode = false;
+
+//Moding
+let modData = [];
 
 //Define Images
 let felosBulletBlank;
@@ -132,10 +137,19 @@ async function loadFonts() {
 }
 
 //Define JSONs
+let bossFirstJSON;
 let bossFinalJSON;
 
 async function loadJSONs() {
   //Load JSONs
   bossFirstJSON = await loadJSON('/TotPW/src/battles/bossFirst.json');
   bossFinalJSON = await loadJSON('/TotPW/src/battles/bossFinal.json');
+}
+
+async function loadObjects() {
+  fileInput = createFileInput(loadMod, true);
+  fileInput.position(((windowWidth - width)/2) + (100*WINDOWMULTIPLIER), ((windowHeight - height)/2) + (200*WINDOWMULTIPLIER));
+  fileInput.size(600*WINDOWMULTIPLIER,80*WINDOWMULTIPLIER)
+  fileInput.style('opacity', '0'); 
+  fileInput.hide();
 }

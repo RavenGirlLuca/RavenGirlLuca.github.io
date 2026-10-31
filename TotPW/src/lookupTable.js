@@ -1,7 +1,9 @@
 let imageLookupTable = {};
 let musicLookupTable = {};
+let jsonArray  = [];
 
 function buildLookupTable() {
+  //Builds all Lookup Tables with Required Game Content
   imageLookupTable = {
     "playerTop"         : playerTopNormal,
     "playerBottom"      : playerBottomNormal,
@@ -33,4 +35,13 @@ function buildLookupTable() {
     "acciaioMusic" : acciaioMusic,
     "felosMusic" : felosMusic
   }
+
+  jsonArray  = [
+    bossFirstJSON
+  ]
+}
+
+function addLookupTable(table, itemName, itemData) {
+  //Adds data to existing lookup tables, used mainly for modding
+  table[itemName] = itemData;
 }
