@@ -952,13 +952,15 @@ function modMenu() {
     mouseX < 100*WINDOWMULTIPLIER + 600*WINDOWMULTIPLIER && 
     mouseY > 410*WINDOWMULTIPLIER && 
     mouseY < 410*WINDOWMULTIPLIER + 80*WINDOWMULTIPLIER) {
-    fill(80,80,80);
+    fill(64,49,141);
     if (mouseIsClicked) {
       mouseIsClicked = false;
+      state = "DATABASEMENU"
+      fileInput.hide();
     }
   }
   else {
-    fill(80,80,80);
+    fill(120,105,196);
   } 
 
   rect(100*WINDOWMULTIPLIER,410*WINDOWMULTIPLIER,600*WINDOWMULTIPLIER,80*WINDOWMULTIPLIER);
@@ -969,4 +971,67 @@ function modMenu() {
   text("LOAD",(100+(600/2))*WINDOWMULTIPLIER,((200+(80/2))+15)*WINDOWMULTIPLIER);
   text("GUIDE",(100+(600/2))*WINDOWMULTIPLIER,((305+(80/2))+15)*WINDOWMULTIPLIER);
   text("DATABASE",(100+(600/2))*WINDOWMULTIPLIER,((410+(80/2))+15)*WINDOWMULTIPLIER);
+}
+
+let currentDatabasePage = 0;
+
+function databaseMenu() {
+  stroke("WHITE");
+  strokeWeight(2*WINDOWMULTIPLIER);
+  textSize(8*WINDOWMULTIPLIER);
+  textAlign(LEFT);
+  fill(0,0,0);
+
+  for (let i = 0; i < 5; i ++) {
+    rect(
+      0,
+      ((100*(i+1))-50)*WINDOWMULTIPLIER,
+      width,
+      100*WINDOWMULTIPLIER,
+    )
+
+    if (modDatabaseIndexFile[i]) {
+      image(modDatabaseCovers[i + (currentDatabasePage*5)],1*WINDOWMULTIPLIER,((100*(i+1))-49)*WINDOWMULTIPLIER,98*WINDOWMULTIPLIER,98*WINDOWMULTIPLIER)
+
+      push();
+
+      noStroke();
+      fill("WHITE");
+      text("NAME: "       + modDatabaseIndexFile[i + (currentDatabasePage*5)].name,  100*WINDOWMULTIPLIER,((100*(i+1))-40)*WINDOWMULTIPLIER);
+      text("AUTHOR: "     + modDatabaseIndexFile[i + (currentDatabasePage*5)].author,100*WINDOWMULTIPLIER,((100*(i+1))-30)*WINDOWMULTIPLIER);
+      text("DESCIPTION: " + modDatabaseIndexFile[i + (currentDatabasePage*5)].desc,  100*WINDOWMULTIPLIER,((100*(i+1))-20)*WINDOWMULTIPLIER);
+      pop();
+
+      if (
+        mouseX > width-(90*WINDOWMULTIPLIER) && 
+        mouseX < (width-(90*WINDOWMULTIPLIER)) + (80*WINDOWMULTIPLIER) && 
+        mouseY > ((100*(i+1))-40)*WINDOWMULTIPLIER && 
+        mouseY < (((100*(i+1))-40)*WINDOWMULTIPLIER) + (80*WINDOWMULTIPLIER)) {
+        fill(80,80,80);
+        if (mouseIsClicked) {
+          mouseIsClicked = false;
+          fetchDatabaseMod(i + (currentDatabasePage*5));
+        }
+      }
+      else {
+        fill(0,0,0);
+      } 
+
+      rect(
+        width-(90*WINDOWMULTIPLIER),
+        ((100*(i+1))-40)*WINDOWMULTIPLIER,
+        80*WINDOWMULTIPLIER,
+        80*WINDOWMULTIPLIER,
+      )
+
+      image(
+        downloadIcon,
+        width-(80*WINDOWMULTIPLIER),
+        ((100*(i+1))-30)*WINDOWMULTIPLIER,
+        60*WINDOWMULTIPLIER,
+        60*WINDOWMULTIPLIER,
+      )
+    }
+    fill(0,0,0);
+  }
 }

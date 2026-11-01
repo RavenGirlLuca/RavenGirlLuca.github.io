@@ -3,7 +3,7 @@
 // Sept 27, 26
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Full modding engine with a Open Database
 
 async function setup() {
   let { w, h } = calculateCanvasSize();
@@ -17,6 +17,8 @@ async function setup() {
   await loadFonts();
   await loadJSONs();
   await loadObjects();
+
+  await loadDatabase();
 
   loadData();
   buildLookupTable();
@@ -60,6 +62,10 @@ function draw() {
 
   else if (state === 'MODMENU') {
     modMenu();
+  }
+
+  else if (state === 'DATABASEMENU') {
+    databaseMenu();
   }
 
   else if (state === 'GAME') {

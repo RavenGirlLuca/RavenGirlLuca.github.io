@@ -39,8 +39,12 @@ let cheaterMode = false;
 
 //Moding
 let modData = [];
+let modDatabaseIndexFile;
+let modDatabaseURL = 'https://raw.githubusercontent.com/RavenGirlLuca/totpwdatabase/main';
+let modDatabaseCovers = [];
 
 //Define Images
+let downloadIcon;
 let felosBulletBlank;
 let felosBulletRed;
 let felosBulletOrange;
@@ -72,6 +76,7 @@ let spiralCounterClockwise;
 
 async function loadImages() {
   //Load Images
+  downloadIcon       = await loadImage('/TotPW/src/assets/download.png');
   felosBulletBlank   = await loadImage('/TotPW/src/assets/bullet.png');
   felosBulletRed     = await loadImage('/TotPW/src/assets/bulletred.png');
   felosBulletOrange  = await loadImage('/TotPW/src/assets/bulletorange.png');
@@ -152,4 +157,18 @@ async function loadObjects() {
   fileInput.size(600*WINDOWMULTIPLIER,80*WINDOWMULTIPLIER)
   fileInput.style('opacity', '0'); 
   fileInput.hide();
+}
+
+async function loadDatabase() {
+  modDatabaseIndexFile = await loadJSON(modDatabaseURL + "/index.json");
+
+  for (let i = 0; i < modDatabaseIndexFile.length; i++) {
+    modDatabaseCovers.push(
+      await loadImage(
+        modDatabaseURL + modDatabaseIndexFile[i].coverURL
+      )
+    )
+  }
+
+  console.log(modDatabaseCovers)
 }
