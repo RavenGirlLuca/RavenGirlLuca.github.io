@@ -11,6 +11,7 @@
 - [Randomized Art](ranart)
 - [Grid Demo](grid)
 - [Rect Grid](rectgrid)
+- [Conways Game of Life](cgol)
 
 ## PROJECTS
 - [Interactive Scene](scene)
