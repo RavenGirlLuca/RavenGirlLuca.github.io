@@ -1,107 +1,150 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
-
-let grid = [];
-let mouseClick = false;
-let newGrid;
-let running = true;
+const CELL_SIZE = 10;
+const RENDER_ON_MULTIPLES_OF = 1;
+let rows;
+let cols;
+let grid;
+let autoPlayIsOn = false;
+let input;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
+  rows = Math.floor(height/CELL_SIZE);
+  cols = Math.floor(width/CELL_SIZE);
+  grid = generateEmptyGrid(cols, rows);
 
-  grid = genGrid(width/10,height/10);
+  input = createFileInput(handleFile);
+  input.position(0, 0);
 }
 
 function draw() {
   background(220);
-  updateGrid(grid);
-  drawGrid(grid);
-  mouseClick = false;
-}
-
-function drawGrid(aGrid) {
-  for(let y = 0; y < aGrid.length; y++) {
-    for(let x = 0; x < aGrid[y].length; x++) {
-      if (aGrid[y][x] === 1) fill('black');
-      else                   fill('white');
-
-      rect(
-        x * (width/aGrid[y].length),
-        y * (height/aGrid.length),
-        width/aGrid[y].length,
-        height/aGrid.length
-      );
-    }
+  if (autoPlayIsOn && frameCount % RENDER_ON_MULTIPLES_OF === 0) {
+    grid = updateGrid();
   }
+  displayGrid();
 }
 
-function updateGrid(aGrid) {
-  newGrid = [...aGrid];
-  for (let y = 0; y < aGrid.length; y++) {
-    for (let x = 0; x < aGrid[y].length; x++) {
-      let population = 0;
-      if (
-        mouseX > x * (width/aGrid[y].length) &&
-        mouseX < (x * (width/aGrid[y].length)) + width/aGrid[y].length  &&
-        mouseY > y * (height/aGrid.length) &&
-        mouseY < (y * (height/aGrid.length)) + height/aGrid.length
-      ) {
-        if (mouseClick) {
-          if (aGrid[y][x] === 0) aGrid[y][x] = 1;
-          else aGrid[y][x] = 0;
+function handleFile(file) {
+  grid = createJSON(file.data, '');
+}
+
+function updateGrid() {
+  //make another array to hold next turn
+  let nextTurn = generateEmptyGrid(cols, rows);
+
+  //look at every cell
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      let neighbours = 0;
+
+      //look at every neighbour
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          //don't fall off the edge
+          if (x+j >= 0 && x+j < cols && y+i >= 0 && y+i < rows) {
+            neighbours += grid[y+i][x+j];
+          }
         }
       }
 
-      //CONWAY RULES
-      if (running) {
-        for (let ny = y - 1; ny <= y + 1; ny++) {
-          for (let nx = x - 1; nx <= x + 1; nx++) {
-            if ((nx !== x || ny !== y) && aGrid[ny]?.[nx] !== undefined) {
-              if (aGrid[ny][nx] === 1) {
-                population++;
-              }
-            }
-          }
-        }
-        
-        if (aGrid[y][x] === 0) {
-          if (population === 3) {
-            newGrid[y][x] = 1;
-          }
+      //don't count self as neighbour
+      neighbours -= grid[y][x];
+
+      //apply the rules
+      if (grid[y][x] === 0) {  //currently dead
+        if (neighbours === 3) {
+          nextTurn[y][x] = 1;
         }
         else {
-          if (population < 2 || population > 3) {
-            newGrid[y][x] = 0;
-          }
+          nextTurn[y][x] = 0;
+        }
+      }
+
+      if (grid[y][x] === 1) {  //currently alive
+        if (neighbours === 2 || neighbours === 3) {
+          nextTurn[y][x] = 1;
+        }
+        else {
+          nextTurn[y][x] = 0;
         }
       }
     }
   }
-  aGrid = newGrid;
-}
-
-function genGrid(rows,cols) {
-  let aGrid = [];
-  for(let y = 0; y < cols; y++) {
-    aGrid.push([]);
-    for(let x = 0; x < rows; x++) {
-      //aGrid[y].push(floor((random(0,100))/50));
-      aGrid[y].push(0);
-    }
-  }
-  return aGrid;
-}
-
-function mouseClicked() {
-  mouseClick = true;
+  return nextTurn;
 }
 
 function keyPressed() {
-  if (key === 'p') {
-    running = !running;
+  if (key === 'r') {
+    grid = generateRandomGrid(cols, rows);
   }
+  else if (key === 'e') {
+    grid = generateEmptyGrid(cols, rows);
+  }
+  else if (key === ' ') {
+    grid = updateGrid();
+  }
+  else if (key === 'a') {
+    autoPlayIsOn = !autoPlayIsOn;
+  }
+}
+
+function mousePressed() {
+  let x = Math.floor(mouseX/CELL_SIZE);
+  let y = Math.floor(mouseY/CELL_SIZE);
+
+  //self
+  toggleCell(x, y);
+}
+
+function toggleCell(x, y) {
+  //make sure you're in the grid
+  if (x >= 0 && x < cols && y >= 0 && y < rows) {
+    if (grid[y][x] === 0) {
+      grid[y][x] = 1;
+    }
+    else if (grid[y][x] === 1) {
+      grid[y][x] = 0;
+    }
+  }
+}
+
+function displayGrid() {
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      if (grid[y][x] === 0) {
+        fill('white');
+      }
+      else if (grid[y][x] === 1) {
+        fill('black');
+      }
+      square(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE);
+    }
+  }
+}
+
+function generateRandomGrid(cols, rows) {
+  let newGrid = [];
+  for (let y = 0; y < rows; y++) {
+    newGrid.push([]);
+    for (let x = 0; x < cols; x++) {
+      if (random(100) < 50) {
+        newGrid[y].push(0);
+      }
+      else {
+        newGrid[y].push(1);
+      }
+    }
+  }
+  return newGrid;
+}
+
+function generateEmptyGrid(cols, rows) {
+  let newGrid = [];
+  for (let y = 0; y < rows; y++) {
+    newGrid.push([]);
+    for (let x = 0; x < cols; x++) {
+      newGrid[y].push(0);
+    }
+  }
+  return newGrid;
 }

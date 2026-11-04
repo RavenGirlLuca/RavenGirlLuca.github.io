@@ -150,8 +150,6 @@ class Player {
         if (this.liv <= 0) {
           this.ded = true;
         }
-
-        console.log(this.name);
       }
       
       else {

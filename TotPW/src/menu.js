@@ -31,6 +31,9 @@ function drawGameBox() {
   rect(GAMEBOXX*WINDOWMULTIPLIER,GAMEBOXY*WINDOWMULTIPLIER,GAMEBOXW*WINDOWMULTIPLIER,GAMEBOXH*WINDOWMULTIPLIER);
 }
 
+function menuButton(x,y,w,h,color1,color2) {
+  //used to create menu buttons
+}
 
 function drawStatMenu() {
   //Draws a green border around the players stats, including if their health, if theyre running, their name, and what difficulty their playing on, and if theire alive
