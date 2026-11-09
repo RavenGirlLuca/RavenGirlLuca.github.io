@@ -17,4 +17,4 @@
 ## PROJECTS
 - [Interactive Scene](scene)
 - [Tower of the Prismatic Witch](TotPW)
-- [Booleans Calculator](bool)
+- [RayTracer](raytracer)
