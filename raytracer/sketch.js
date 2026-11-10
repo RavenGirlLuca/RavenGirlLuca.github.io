@@ -7,11 +7,14 @@
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  angleMode(DEGREES);
+  noStroke();
 }
 
 function draw() {
   background(220);
   player.update();
-  player.draw();
+
+  player.raycast();
+  let fps = Math.floor(frameRate());
+  text(fps, 50, 50);
 }
