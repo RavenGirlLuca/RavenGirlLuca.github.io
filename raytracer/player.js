@@ -88,7 +88,6 @@ class Player{
   }
 
   raycast() {
-    let multiplier = height/this.rayLength;
     let wallWidth  = width/this.rayCount;
     let py = height/2;
 
@@ -117,7 +116,10 @@ class Player{
         rayLength += this.raySegmentLength;
       }
 
-      let wallHeight = height - (rayLength*multiplier);
+      let correctedDistance = rayLength * cos(radians(rayAngle - this.dir));
+      if (correctedDistance < 1) correctedDistance = 1;
+      let wallHeight = ((TILE_SIZE * height) / correctedDistance);
+
       push();
       rectMode(CENTER);
       rect(px + (wallWidth / 2),py,wallWidth,wallHeight);

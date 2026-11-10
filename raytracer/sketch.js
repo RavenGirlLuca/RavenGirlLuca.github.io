@@ -15,6 +15,8 @@ function draw() {
   player.update();
 
   player.raycast();
+  player.drawDebug();
+  drawDebugWorld();
   let fps = Math.floor(frameRate());
   text(fps, 50, 50);
 }
