@@ -7,32 +7,51 @@
 
 let FLOOR_COLOR_1;
 let FLOOR_COLOR_2;
+let ROOF_COLOR_1;
+let ROOF_COLOR_2;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
-  FLOOR_COLOR_1 = color(0, 0, 0);
-  FLOOR_COLOR_2 = color(255, 255, 255);
+  FLOOR_COLOR_1 = color(6,6,15);
+  FLOOR_COLOR_2 = color(76, 87, 96);
+  ROOF_COLOR_1  = color(12,12,30);;
+  ROOF_COLOR_2  = color(147, 168, 172);;
 }
 
 function draw() {
-  background(220);
+  background(147, 168, 172);
   player.update();
 
-  drawFloor()
+  drawRoof();
+  drawFloor();
   player.raycast();
   let fps = Math.floor(frameRate());
   text(fps, 50, 50);
 }
 
 function drawFloor() {
+  push();
+  noStroke();
+  let horizon = Math.floor(height / 2);
 
-  for (let y = height; y > height/2; y--) {
-    let i = (1/(height/2)) * (y-(height/2));
-    let c = lerpColor(FLOOR_COLOR_1, FLOOR_COLOR_2, i);
-    push();
-    stroke(c);
-    line(0, y, width, y);
-    pop();
+  for (let y = height; y >= horizon; y--) {
+    let i = map(y, horizon, height, 0, 1);
+    fill(lerpColor(FLOOR_COLOR_1, FLOOR_COLOR_2, i));
+    rect(0, y, width, 1);
   }
+  pop();
+}
+
+function drawRoof() {
+  push();
+  noStroke();
+  let horizon = Math.floor(height / 2);
+
+  for (let y = 0; y <= horizon; y++) {
+    let i = map(horizon, y, height, 0, 1);
+    fill(lerpColor(ROOF_COLOR_1, ROOF_COLOR_2, i));
+    rect(0, y, width, 1);
+  }
+  pop();
 }

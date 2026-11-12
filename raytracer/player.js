@@ -12,7 +12,7 @@ class Player{
       [2,0],[2,1],[2,2]]
 
     this.rayCount = 140;
-    this.rayLength = 200;
+    this.rayLength = 400;
     this.raySegmentLength = 2;
     this.fov = 70;
   }
@@ -100,7 +100,9 @@ class Player{
 
       let rayLength = 0;
       let hit = false;
-      let px = i * wallWidth
+      let px = i * wallWidth;
+      let wallColor = color(255,255,255);
+      let wallID = 1;
       
       while (rayLength < this.rayLength) {
         let mapX = Math.floor(rayX / TILE_SIZE);
@@ -109,6 +111,7 @@ class Player{
         if (mapY >= 0 && mapY < world.length && mapX >= 0 && mapX < world[mapY].length) {
           if (world[mapY][mapX] > 0) {
             hit = true;
+            wallID = world[mapY][mapX];
             break;
           }
         }
@@ -120,13 +123,21 @@ class Player{
 
       if (!hit) continue;
 
+      if (wallID === 1) wallColor = color(76, 87, 96);
+      if (wallID === 2) wallColor = color(147, 168, 172);
+      if (wallID === 3) wallColor = color(215, 206, 178);
+      if (wallID === 4) wallColor = color(165, 158, 140);
+      if (wallID === 5) wallColor = color(102, 99, 91);
+
+      push();
       let correctedDistance = rayLength * cos(radians(rayAngle - this.dir));
       let wallHeight = ((TILE_SIZE * height) / correctedDistance);
 
-      push();
+      let c = map(correctedDistance*2, 0, height, 0, 1);
+      fill(lerpColor(wallColor, color(12,12,30), c));
+
       rectMode(CENTER);
-      fill(constrain(255-correctedDistance,0,255))
-      rect(px + (wallWidth / 2),py,wallWidth,wallHeight);
+      rect(px + (wallWidth / 2),py,wallWidth+1,wallHeight);
       pop();
     }
   }
