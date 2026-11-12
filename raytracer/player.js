@@ -99,6 +99,7 @@ class Player{
       let stepY = sin(radians(rayAngle)) * this.raySegmentLength;
 
       let rayLength = 0;
+      let hit = false;
       let px = i * wallWidth
       
       while (rayLength < this.rayLength) {
@@ -107,6 +108,7 @@ class Player{
 
         if (mapY >= 0 && mapY < world.length && mapX >= 0 && mapX < world[mapY].length) {
           if (world[mapY][mapX] > 0) {
+            hit = true;
             break;
           }
         }
@@ -116,12 +118,14 @@ class Player{
         rayLength += this.raySegmentLength;
       }
 
+      if (!hit) continue;
+
       let correctedDistance = rayLength * cos(radians(rayAngle - this.dir));
-      if (correctedDistance < 1) correctedDistance = 1;
       let wallHeight = ((TILE_SIZE * height) / correctedDistance);
 
       push();
       rectMode(CENTER);
+      fill(constrain(255-correctedDistance,0,255))
       rect(px + (wallWidth / 2),py,wallWidth,wallHeight);
       pop();
     }
