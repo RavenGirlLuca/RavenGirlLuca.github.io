@@ -9,8 +9,8 @@ class Player{
     this.checkWorld = [
       [0,0],[0,1],[0,2],
       [1,0],[1,1],[1,2],
-      [2,0],[2,1],[2,2]]
-
+      [2,0],[2,1],[2,2]];
+    this.currentGrid = [];
     this.rayCount = 90;
     this.rayLength = 400;
     this.raySegmentLength = 2;
@@ -27,7 +27,9 @@ class Player{
     this.checkWorld = [
       [y-1,x-1],[y-1,x],[y-1,x+1],
       [y  ,x-1],[y  ,x],[y  ,x+1],
-      [y+1,x-1],[y+1,x],[y+1,x+1]]
+      [y+1,x-1],[y+1,x],[y+1,x+1]];
+
+    this.currentGrid = [y, x];
   }
 
   collision(x, y) {
@@ -72,6 +74,14 @@ class Player{
     if (keyIsDown('s') || keyIsDown(DOWN_ARROW)) {
       moveX -= cos(radians(this.dir)) * this.speed;
       moveY -= sin(radians(this.dir)) * this.speed;
+    }
+    if (keyIsDown('q')) {
+      moveX += cos(radians(this.dir - 90)) * this.speed;
+      moveY += sin(radians(this.dir - 90)) * this.speed;
+    }
+    if (keyIsDown('e')) {
+      moveX += cos(radians(this.dir + 90)) * this.speed;
+      moveY += sin(radians(this.dir + 90)) * this.speed;
     }
     
     if (!this.collision(this.x + moveX, this.y)) {

@@ -8,9 +8,10 @@
 async function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
+  loadPathfindingGrid();
   await testAddBillboard();
 
-  player = new Player(100,100)
+  player = new Player(100,100);
 }
 
 function draw() {

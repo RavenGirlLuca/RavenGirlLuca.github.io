@@ -1,5 +1,6 @@
 const TILE_SIZE = 20;
 
+let PfWorld;
 let world = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -49,4 +50,8 @@ function drawDebugWorld() {
       }
     }
   }
+}
+
+function loadPathfindingGrid() {
+  PfWorld = new PF.Grid(world);
 }
