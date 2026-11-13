@@ -5,16 +5,19 @@ class Player{
     this.size = 10;
     this.dir = 0;
     this.speed = 2;
-    this.turnSpeed = 2;
+    this.turnSpeed = 1.5;
     this.checkWorld = [
       [0,0],[0,1],[0,2],
       [1,0],[1,1],[1,2],
       [2,0],[2,1],[2,2]]
 
-    this.rayCount = 140;
+    this.rayCount = 90;
     this.rayLength = 400;
     this.raySegmentLength = 2;
     this.fov = 70;
+    this.drawOrder = [];
+
+    this.wallWidth = width/this.rayCount;
   }
 
   setWorldTiles() {
@@ -49,21 +52,24 @@ class Player{
   }
 
   movement() {
-    if (keyIsDown(LEFT_ARROW)) {
+    if (keyIsDown('a') || keyIsDown(LEFT_ARROW)) {
       this.dir -= this.turnSpeed;
     }
-    if (keyIsDown(RIGHT_ARROW)) {
+    if (keyIsDown('d') || keyIsDown(RIGHT_ARROW)) {
       this.dir += this.turnSpeed;
     }
+
+    if (this.dir > 360) this.dir -= 360;
+    if (this.dir < 0)   this.dir += 360
 
     let moveX = 0;
     let moveY = 0;
 
-    if (keyIsDown(UP_ARROW)) {
+    if (keyIsDown('w') || keyIsDown(UP_ARROW)) {
       moveX += cos(radians(this.dir)) * this.speed;
       moveY += sin(radians(this.dir)) * this.speed;
     }
-    if (keyIsDown(DOWN_ARROW)) {
+    if (keyIsDown('s') || keyIsDown(DOWN_ARROW)) {
       moveX -= cos(radians(this.dir)) * this.speed;
       moveY -= sin(radians(this.dir)) * this.speed;
     }
@@ -77,20 +83,49 @@ class Player{
     }
   }
 
-  drawDebug() {
-    fill('red');
-    rect(this.x, this.y, this.size, this.size);
+  update() {
+    this.drawOrder = [];
+    this.setWorldTiles();
+    this.movement();
+    this.raycast();
+    this.billboard();
+    this.drawOrder.sort((a, b) => b.dist - a.dist);
   }
 
-  update() {
-    this.setWorldTiles()
-    this.movement()
+  billboard() {
+    let playerCenterX = this.x + (this.size / 2);
+    let playerCenterY = this.y + (this.size / 2);
+
+    for (let billboard of billboards) {
+      let dx = billboard.x - playerCenterX;
+      let dy = billboard.y - playerCenterY;
+      let dist = sqrt((dx * dx) + (dy * dy));
+
+      let angleToBillboard = degrees(atan2(dy, dx));
+      let angleDiff = angleToBillboard - this.dir;
+
+      while (angleDiff > 180) angleDiff -= 360;
+      while (angleDiff < -180) angleDiff += 360;
+
+      if (abs(angleDiff) < (this.fov / 2) + 20) {
+        let correctedDist = dist * cos(radians(angleDiff));
+        if (correctedDist <= 0.1) continue;
+
+        let screenX = map(angleDiff, -this.fov / 2, this.fov / 2, 0, width);
+        let projectedSize = (billboard.size * (height/2)) / correctedDist;
+
+        this.drawOrder.push({
+          type: 'billboard',
+          dist: dist,
+          img: billboard.img,
+          position: screenX,
+          size: projectedSize
+        });
+      }
+    }
   }
 
   raycast() {
-    let wallWidth  = width/this.rayCount;
-    let py = height/2;
-
     for (let i = 0; i < this.rayCount; i++) {
       let rayAngle = (((this.fov/this.rayCount) * i) - this.fov/2) + this.dir;
       let rayX  = this.x + (this.size/2);
@@ -100,7 +135,7 @@ class Player{
 
       let rayLength = 0;
       let hit = false;
-      let px = i * wallWidth;
+      let px = i * this.wallWidth;
       let wallColor = color(255,255,255);
       let wallID = 1;
       
@@ -123,24 +158,57 @@ class Player{
 
       if (!hit) continue;
 
-      if (wallID === 1) wallColor = color(76, 87, 96);
-      if (wallID === 2) wallColor = color(147, 168, 172);
-      if (wallID === 3) wallColor = color(215, 206, 178);
-      if (wallID === 4) wallColor = color(165, 158, 140);
-      if (wallID === 5) wallColor = color(102, 99, 91);
+      if (wallID === 1)      wallColor = color(76, 87, 96);
+      else if (wallID === 2) wallColor = color(147, 168, 172);
+      else if (wallID === 3) wallColor = color(215, 206, 178);
+      else if (wallID === 4) wallColor = color(165, 158, 140);
+      else if (wallID === 5) wallColor = color(102, 99, 91);
+      else                   wallColor = color(255, 255, 255);
 
       push();
       let correctedDistance = rayLength * cos(radians(rayAngle - this.dir));
       let wallHeight = ((TILE_SIZE * height) / correctedDistance);
 
-      let c = map(correctedDistance*2, 0, height, 0, 1);
-      fill(lerpColor(wallColor, color(12,12,30), c));
+      let c = color(lerpColor(wallColor, color(12,12,30), map(correctedDistance*2, 0, height, 0, 1)));
 
-      rectMode(CENTER);
-      rect(px + (wallWidth / 2),py,wallWidth+1,wallHeight);
+      this.drawOrder.push({
+        type: 'wall',
+        dist: rayLength,
+        wallHeight: wallHeight,
+        color: c,
+        position: px
+      })
+
       pop();
     }
   }
+
+  draw() {
+    for (let object of this.drawOrder) {
+      if (object.type === 'wall') {
+        this.drawWalls(object.position, object.wallHeight, object.color);
+      }
+
+      else if (object.type === 'billboard') {
+        this.drawBillboard(object.position, object.size, object.img);
+      }
+    }
+  }
+
+  drawWalls(x, h, c) {
+    push();
+    fill(c);
+    rectMode(CENTER);
+    rect(x + (this.wallWidth / 2),height/2,this.wallWidth+1,h);
+    pop();
+  }
+
+  drawBillboard(x, size, img) {
+    push();
+    imageMode(CENTER);
+    image(img, x, height/2, size, size)
+    pop();
+  }
 }
 
-let player = new Player(100,100);
+let player;
