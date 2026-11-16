@@ -9,16 +9,21 @@ async function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
   loadPathfindingGrid();
-  await testAddBillboard();
+  testImage = await loadImage('/TotPW/src/assets/felos.gif');
+  finder = new PF.AStarFinder({ allowDiagonal: true, dontCrossCorners: true });
+
+  loadEnemy(testImage, null, 160, 160, 0.75, null, 48, null);
 
   player = new Player(100,100);
 }
 
 function draw() {
   background(147, 168, 172);
+  updateEnemies();
   player.update();
 
   player.draw();
+  billboards = [];
 
   let fps = Math.floor(frameRate());
   text(fps, 50, 50);

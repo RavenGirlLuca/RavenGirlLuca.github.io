@@ -41,7 +41,7 @@ class Player{
           y             < (tile[0] * TILE_SIZE) + TILE_SIZE &&
           y + this.size >  tile[0] * TILE_SIZE              
         ) {
-          if (world[tile[0]][tile[1]] === 0) {
+          if (world[tile[0]][tile[1]] === 0 || world[tile[0]][tile[1]] === 3) {
             //do nothing
           }
           else {
@@ -154,7 +154,7 @@ class Player{
         let mapY = Math.floor(rayY / TILE_SIZE);
 
         if (mapY >= 0 && mapY < world.length && mapX >= 0 && mapX < world[mapY].length) {
-          if (world[mapY][mapX] > 0) {
+          if (world[mapY][mapX] > 0 && world[mapY][mapX] !== 3) {
             hit = true;
             wallID = world[mapY][mapX];
             break;
@@ -170,7 +170,6 @@ class Player{
 
       if (wallID === 1)      wallColor = color(76, 87, 96);
       else if (wallID === 2) wallColor = color(147, 168, 172);
-      else if (wallID === 3) wallColor = color(215, 206, 178);
       else if (wallID === 4) wallColor = color(165, 158, 140);
       else if (wallID === 5) wallColor = color(102, 99, 91);
       else                   wallColor = color(255, 255, 255);
