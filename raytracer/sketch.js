@@ -1,6 +1,6 @@
-// Project Title
-// Your Name
-// Date
+// Raycaster
+// Luca
+// Iono
 //
 // Extra for Experts:
 // Made a working 3d raycaster
@@ -12,7 +12,8 @@ async function setup() {
   testImage = await loadImage('/TotPW/src/assets/felos.gif');
   finder = new PF.AStarFinder({ allowDiagonal: true, dontCrossCorners: true });
 
-  loadEnemy(testImage, null, 160, 160, 0.75, null, 48, null);
+  loadEnemy(testImage, 'melee', 160, 160, 0.75, 60, 48, 15, 75);
+  loadEnemy(testImage, 'ranged', 160, 160, 0.75, 120, 48, 10, 50);
 
   player = new Player(100,100);
 }

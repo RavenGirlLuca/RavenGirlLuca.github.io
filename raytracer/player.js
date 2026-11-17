@@ -16,8 +16,10 @@ class Player{
     this.raySegmentLength = 2;
     this.fov = 70;
     this.drawOrder = [];
-
     this.wallWidth = width/this.rayCount;
+
+    this.health = 100;
+    this.damage = 25;
   }
 
   setWorldTiles() {
@@ -100,6 +102,8 @@ class Player{
     this.raycast();
     this.billboard();
     this.drawOrder.sort((a, b) => b.dist - a.dist);
+
+    console.log(player.health);
   }
 
   billboard() {

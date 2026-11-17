@@ -1,7 +1,7 @@
 let enemies = [];
 let finder;
 
-function loadEnemy(img, type, x, y, speed, aSpeed, size, dmg) {
+function loadEnemy(img, type, x, y, speed, aSpeed, size, dmg, health) {
   enemies.push({
     img: img,
     type: type,
@@ -10,7 +10,9 @@ function loadEnemy(img, type, x, y, speed, aSpeed, size, dmg) {
     speed: speed,
     aSpeed: aSpeed,
     size: size,
-    dmg: dmg
+    dmg: dmg,
+    health: health,
+    cooldown: 0,
   });
 }
 
@@ -21,7 +23,10 @@ function updateEnemies(){
     let playerGridX = floor(player.x/TILE_SIZE);
     let playerGridY = floor(player.y/TILE_SIZE);
     
-    if (!(enemyGridX === playerGridX && enemyGridY === playerGridY)) {
+    if (
+      (dist(enemy.x, enemy.y, player.x, player.y) >= 20  && enemy.type === 'melee' ) ||
+      (dist(enemy.x, enemy.y, player.x, player.y) >= 80 && enemy.type === 'ranged')
+    ) {
       let path = finder.findPath(
         enemyGridX,
         enemyGridY, 
@@ -29,13 +34,26 @@ function updateEnemies(){
         playerGridY, 
         PfWorld.clone());
 
-      if (path.length >=1) {
+      if (path.length >=2) {
         let angle = atan2(path[1][1] - path[0][1], path[1][0] - path[0][0]);
         
         enemy.x += cos(angle)*enemy.speed;
         enemy.y += sin(angle)*enemy.speed;
       }
     }
+
+    if (
+      (dist(enemy.x, enemy.y, player.x, player.y) <= 30  && enemy.type === 'melee' ) ||
+      (dist(enemy.x, enemy.y, player.x, player.y) <= 100 && enemy.type === 'ranged')
+    ) {
+      if (enemy.cooldown === 0) {
+        player.health -= enemy.dmg;
+
+        enemy.cooldown = enemy.aSpeed;
+      }
+    }
+
+    if (enemy.cooldown > 0) enemy.cooldown--;
 
     billboards.push({
       img: enemy.img,
