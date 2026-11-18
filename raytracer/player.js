@@ -19,6 +19,7 @@ class Player{
     this.wallWidth = width/this.rayCount;
 
     this.health = 100;
+    this.maxHealth = 100;
     this.damage = 25;
   }
 
@@ -43,7 +44,7 @@ class Player{
           y             < (tile[0] * TILE_SIZE) + TILE_SIZE &&
           y + this.size >  tile[0] * TILE_SIZE              
         ) {
-          if (world[tile[0]][tile[1]] === 0 || world[tile[0]][tile[1]] === 3) {
+          if (world[tile[0]][tile[1]] === 0) {
             //do nothing
           }
           else {
@@ -103,7 +104,9 @@ class Player{
     this.billboard();
     this.drawOrder.sort((a, b) => b.dist - a.dist);
 
-    console.log(player.health);
+    if (this.health <= 0) {
+      state = 'DEAD';
+    }
   }
 
   billboard() {
@@ -158,7 +161,7 @@ class Player{
         let mapY = Math.floor(rayY / TILE_SIZE);
 
         if (mapY >= 0 && mapY < world.length && mapX >= 0 && mapX < world[mapY].length) {
-          if (world[mapY][mapX] > 0 && world[mapY][mapX] !== 3) {
+          if (world[mapY][mapX] > 0) {
             hit = true;
             wallID = world[mapY][mapX];
             break;
@@ -172,11 +175,16 @@ class Player{
 
       if (!hit) continue;
 
-      if (wallID === 1)      wallColor = color(76, 87, 96);
-      else if (wallID === 2) wallColor = color(147, 168, 172);
-      else if (wallID === 4) wallColor = color(165, 158, 140);
-      else if (wallID === 5) wallColor = color(102, 99, 91);
-      else                   wallColor = color(255, 255, 255);
+      if (wallID === 1)      wallColor = color(255, 255, 255);
+      else if (wallID === 2) wallColor = color(0, 0, 0);
+      else if (wallID === 3) wallColor = color(255, 0, 0);
+      else if (wallID === 4) wallColor = color(255, 136, 0);
+      else if (wallID === 5) wallColor = color(238, 255, 0);
+      else if (wallID === 6) wallColor = color(102, 255, 0);
+      else if (wallID === 7) wallColor = color(0, 255, 204);
+      else if (wallID === 8) wallColor = color(0, 64, 255);
+      else if (wallID === 9) wallColor = color(204, 0, 255);
+      
 
       push();
       let correctedDistance = rayLength * cos(radians(rayAngle - this.dir));
@@ -197,6 +205,7 @@ class Player{
   }
 
   draw() {
+    //WORLD
     for (let object of this.drawOrder) {
       if (object.type === 'wall') {
         this.drawWalls(object.position, object.wallHeight, object.color);
@@ -206,6 +215,10 @@ class Player{
         this.drawBillboard(object.position, object.size, object.img);
       }
     }
+
+    //UI
+    fill('RED');
+    rect(0, 0, lerp(0, width, this.health/this.maxHealth), 40);
   }
 
   drawWalls(x, h, c) {
