@@ -21,6 +21,9 @@ class Player{
     this.health = 100;
     this.maxHealth = 100;
     this.damage = 25;
+    this.currentLevel = 0;
+    this.endX = 0;
+    this.endY = 0;
   }
 
   setWorldTiles() {
@@ -96,8 +99,21 @@ class Player{
     }
   }
 
+  endLevel() {
+    if (
+      this.x + this.size > this.endX &&
+      this.x             < this.endX + TILE_SIZE &&
+      this.y + this.size > this.endY &&
+      this.y             < this.endY + TILE_SIZE
+    ) {
+      this.currentLevel++;
+      this.loadLevel();
+    }
+  }
+
   update() {
     this.drawOrder = [];
+    this.endLevel();
     this.setWorldTiles();
     this.movement();
     this.raycast();
@@ -232,8 +248,18 @@ class Player{
   drawBillboard(x, size, img) {
     push();
     imageMode(CENTER);
-    image(img, x, height/2, size, size)
+    image(img, x, height/2, size, size);
     pop();
+  }
+
+  loadLevel() {
+    world     = worlds[this.currentLevel];
+    this.x    = worldSpawns[this.currentLevel][0];
+    this.y    = worldSpawns[this.currentLevel][1];
+    this.endX = worldEnds[this.currentLevel][0];
+    this.endY = worldEnds[this.currentLevel][1];
+
+    loadPathfindingGrid();
   }
 }
 

@@ -12,13 +12,8 @@ async function setup() {
   noStroke();
   textAlign(CENTER);
   textSize(96);
-  loadPathfindingGrid();
   testImage = await loadImage('/raytracer/assets/bee-bees.gif');
   finder = new PF.AStarFinder({ allowDiagonal: true, dontCrossCorners: true });
-
-  for (let i = 0; i < 100; i++) {
-    loadEnemy(testImage, 'melee', 250, 250, random(0.2,1), 60, random(24, 86), 1, 75);
-  }
 }
 
 function draw() {
@@ -47,8 +42,9 @@ function mouseClicked() {
     shootAtEnemies();
   }
   else if (state === 'START') {
+    player = new Player(0,0);
+    player.loadLevel();
     state = 'GAME';
-    player = new Player(100,100);
   }
   else if (state === 'DEAD') {
     state = 'GAME';
