@@ -83,6 +83,7 @@ function shootAtEnemies() {
 
     if (angleComp < 10 && angleComp > -10) {
       enemy.health -= 30;
+      return;
     }
   }
 }

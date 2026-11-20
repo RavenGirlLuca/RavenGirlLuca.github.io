@@ -121,8 +121,8 @@ let worlds = [
   ]
 ];
 
-let worldSpawns = [[2*TILE_SIZE,2*TILE_SIZE],[15.5*TILE_SIZE,15.5*TILE_SIZE],[23.5*TILE_SIZE,23.5*TILE_SIZE]];
-let worldEnds = [[6*TILE_SIZE,28*TILE_SIZE],[2*TILE_SIZE,30*TILE_SIZE],[]];
+let worldSpawns = [[2*TILE_SIZE,2*TILE_SIZE],[15.5*TILE_SIZE,15.5*TILE_SIZE],[23.5*TILE_SIZE,2.5*TILE_SIZE]];
+let worldEnds = [[6*TILE_SIZE,26*TILE_SIZE],[2*TILE_SIZE,29*TILE_SIZE],[32*TILE_SIZE,40*TILE_SIZE]];
 
 let PfWorld;
 let worldEnd = [];

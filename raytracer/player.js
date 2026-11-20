@@ -5,7 +5,7 @@ class Player{
     this.size = 10;
     this.dir = 0;
     this.speed = 2;
-    this.turnSpeed = 1.5;
+    this.turnSpeed = 2;
     this.checkWorld = [
       [0,0],[0,1],[0,2],
       [1,0],[1,1],[1,2],
@@ -107,6 +107,7 @@ class Player{
       this.y             < this.endY + TILE_SIZE
     ) {
       this.currentLevel++;
+      enemies = [];
       this.loadLevel();
     }
   }
@@ -253,6 +254,9 @@ class Player{
   }
 
   loadLevel() {
+    if (this.currentLevel === 3) {
+      state = 'END';
+    }
     world     = worlds[this.currentLevel];
     this.x    = worldSpawns[this.currentLevel][0];
     this.y    = worldSpawns[this.currentLevel][1];
@@ -260,6 +264,52 @@ class Player{
     this.endY = worldEnds[this.currentLevel][1];
 
     loadPathfindingGrid();
+ 
+    if (this.currentLevel === 0) {
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 23*TILE_SIZE, 3*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 6*TILE_SIZE, 21*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 13*TILE_SIZE, 18*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+    }
+
+    if (this.currentLevel === 1) {
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 1*TILE_SIZE, 1*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 24*TILE_SIZE, 21*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 1*TILE_SIZE, 17*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+    }
+
+    if (this.currentLevel === 2) {
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 2*TILE_SIZE, 1*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 46*TILE_SIZE, 1*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 45*TILE_SIZE, 46*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+
+      for (let i = 0; i < 20; i++) {
+        loadEnemy(testImage, 'melee', 1*TILE_SIZE, 45*TILE_SIZE, random(0.25, 1.25), 10, random(16, 64), 1, random(50, 500));
+      }
+    }
   }
 }
 
