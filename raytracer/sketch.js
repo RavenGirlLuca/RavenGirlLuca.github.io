@@ -62,7 +62,8 @@ function mouseClicked() {
     state = 'GAME';
   }
   else if (state === 'DEAD') {
+    player = new Player(0,0);
+    player.loadLevel();
     state = 'GAME';
-    player = new Player(100,100);
   }
 }
