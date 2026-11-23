@@ -13,6 +13,7 @@
 - [Rect Grid](rectgrid)
 - [Conways Game of Life](cgol)
 - [Char Movement Demo](char)
+- [Walker](walker)
 
 ## PROJECTS
 - [Interactive Scene](scene)
