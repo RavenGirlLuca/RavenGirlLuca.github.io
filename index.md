@@ -14,6 +14,7 @@
 - [Conways Game of Life](cgol)
 - [Char Movement Demo](char)
 - [Walker](walker)
+- [Firework](firework)
 
 ## PROJECTS
 - [Interactive Scene](scene)
